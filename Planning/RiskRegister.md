@@ -1,8 +1,10 @@
 # Risk Register
 TODO Overview....  
-[[_TOC_]]
+# Contents
+1. [Scheduling Errors](#sched)
+9. [API No Longer Supported](#api)
 
-## **1. Scheduling Errors**
+## **1. Scheduling Errors**<a name="sched"></a>
 >### **Description**
 >In the event that the timeline of the project is underestimated, and sprint deliverables are not delivered on time or up to scratch.  
 >### **Impact and Likelihood**
@@ -71,7 +73,7 @@ TODO Overview....
 >### **Monitoring Strategy**
 >### **Mitigation Plan**
 
-## **9. API No Longer Supported**
+## **9. API No Longer Supported**<a name="api"></a>
 >### **Description**
 >### **Impact and Likelihood**
 >### **Monitoring Strategy**
