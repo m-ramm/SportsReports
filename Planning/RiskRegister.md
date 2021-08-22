@@ -1,5 +1,5 @@
 # Risk Register
-TODO Overview....  
+The following risk register outlines potential risks that could affect the delivery/success of the project.
 # Contents
 1. [Scheduling Errors](#sched)
 2. [Team Member Leaves](#leaves)
@@ -10,6 +10,9 @@ TODO Overview....
 7. [Loss of Data/Code](#lossdata)
 8. [Client Unsatisfied Post-Sprint](#unsatisfied)
 9. [API No Longer Supported](#api)
+
+# Risk Matrix
+![RiskMatrix Not Found](Pictures/RiskMatrix.jpg "Risk Matrix")
 
 ## **1. Scheduling Errors**<a name="sched"></a>
 >### **Description**
@@ -57,31 +60,56 @@ TODO Overview....
 
 ## **5. Temporary Illness/Incapacitation**<a name="illness"></a>
 >### **Description**
-> Occurs when a team member is temporarily out of action and cannot contribute to the project for a certain period (EG has COVID)
+>Occurs when a team member is temporarily out of action and cannot contribute to the project for a certain period (EG has COVID).
 >### **Impact and Likelihood**
+>Low likelihood of occurring, especially while in lockdown.
+>Impact would be moderate, as it is effectively losing a team member for a certain period, and could delay deliverables.
 >### **Monitoring Strategy**
+>N/A
 >### **Mitigation Plan**
+>Wear face masks, use hand sanitiser. If someone does get ill, then delegate their tasks until the team member can return. May have to delay deliverables if needed.
 
 ## **6. Conflict in Future Direction of Project**<a name="vision"></a>
 >### **Description**
+>If at some stage later in the project, the vision between team members starts to conflict. Some people may want to take the project in a different direction to others, and conflict can arise.
 >### **Impact and Likelihood**
+>High likelihood of occurring, as people will always have slightly different views on where to steer the project and what features to implement.
+>Low impact, because acceptance and compromising on different views is achievable.
 >### **Monitoring Strategy**
+>N/A
 >### **Mitigation Plan**
+>If there is a conflict, both ideas are listened to and discussed thoroughly. Aim to reach a compromise with both parties, and if a compromise cannot be reached, the scrum master and product owner get the final say on the course of action.
 
 ## **7. Loss of Data / Code**<a name="lossdata"></a>
 >### **Description**
+>Hardware failure or other issues that may cause a loss of data and/or code. For example, if someone's local machine breaks down.
 >### **Impact and Likelihood**
+>Low likelihood of occurring, as hardware breaking issues are rare.
+>High impact, because of the potential for large amounts of progress and development time could be lost.
 >### **Monitoring Strategy**
+>N/A
 >### **Mitigation Plan**
+>Keep care of devices. Frequent pushes to git repo to backup progress.
 
 ## **8. Client Unsatisfied After Sprint**<a name="unsatisfied"></a>
 >### **Description**
+>If the client sees the end result of a sprint and is unsatisfied with what is produced. 
 >### **Impact and Likelihood**
+>Low likelihood of occurring, due to processes in place (meetings with product owner)
+>High impact, because if the client is unsatisfied, then the sprint is a huge waste of developer time and may need to be done again or revised.
 >### **Monitoring Strategy**
+>Have an open line of communication with the product owner and have meetings showing progress.
+>Also frequent team meetings will allow the scrum master to keep a close eye on what is happening.
 >### **Mitigation Plan**
+>If the client does end up unsatisfied, discuss with them what changes they want to see and add these items to the product backlog (with high priority). This is the only way to progress once the sprint itself is finished, and it may be costly in terms of time.
 
 ## **9. API No Longer Supported**<a name="api"></a>
 >### **Description**
+>The apis used to retrieve sports data may be discontinued. Another possibility is that they are updated and current code in the project no longer works.
 >### **Impact and Likelihood**
+>Moderate likelihood of occurring, especially in the long-term. Support for the API will most likely not last forever.
+>Moderate Impact, as refactoring may need to be done.
 >### **Monitoring Strategy**
+>Continue to check the websites and documentation of the APIs, and be aware of upcoming updates/changes to the API.
 >### **Mitigation Plan**
+>Collect a source of alternative APIs just in case the current API no longer is supported. In the long term, the potential to create our own API/data-source will completely mitigate this risk all together.
