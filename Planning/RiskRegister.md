@@ -2,6 +2,13 @@
 TODO Overview....  
 # Contents
 1. [Scheduling Errors](#sched)
+2. [Team Member Leaves](#leaves)
+3. [Feature Creep](#creep)
+4. [Ambiguous Requirements](#ambig)
+5. [Temporary Illness](#illness)
+6. [Conflict in Vision](#vision)
+7. [Loss of Data/Code](#lossdata)
+8. [Client Unsatisfied Post-Sprint](#unsatisfied)
 9. [API No Longer Supported](#api)
 
 ## **1. Scheduling Errors**<a name="sched"></a>
@@ -15,7 +22,7 @@ TODO Overview....
 >### **Mitigation Plan**
 >Catching any scheduling flaws early will help the process. Once they are identified, extra personel can be shifted from features that are ahead of schedule to help implement the tougher feature.
 
-## **2. Team Member Leaves / MIA**
+## **2. Team Member Leaves / MIA**<a name="leaves"></a>
 >### **Description**
 >If a team member leaves midway through a sprint, and is not reachable by any communication.
 >### **Impact and Likelihood**
@@ -26,7 +33,7 @@ TODO Overview....
 >### **Mitigation Plan**
 >In the event that this does happen, an urgent meeting will be scheduled to discuss how the missing persons remaining tasks will be delegated between remaining members. This may also involve changing what will be delivered in the current sprint (IE delaying a feature)
 
-## **3. May Have Feature Creep**
+## **3. May Have Feature Creep**<a name="creep"></a>
 >### **Description**
 >When unnecessary and excessive new features keep getting added to the project. May lose the practicality and could bloat the software, conflicting with the project vision, and detracting from user experience.
 >### **Impact and Likelihood**
@@ -37,7 +44,7 @@ TODO Overview....
 >### **Mitigation Plan**
 >Have clear requirements at project inception. At each meeting with the product owner, revise all features that are in the queue for their usefulness to the project. Lower the priority/remove features that conflict with the project vision at each revision of the product backlog.
 
-## **4. Ambiguous Requirements from Client**
+## **4. Ambiguous Requirements from Client**<a name="ambig"></a>
 >### **Description**
 >May occur when the product owner does not have a clear understanding of what features they want in the project.
 >### **Impact and Likelihood**
@@ -48,26 +55,26 @@ TODO Overview....
 >### **Mitigation Plan**
 >If requirements from the product owner are vague, schedule another urgent meeting with them to clear up issues. If the product owner cannot elaborate further, a choice can be made to either axe the feature, or for the scrum master and team to fill in the blanks and continue implementing the feature.  
 
-## **5. Temporary Illness/Incapacitation**
+## **5. Temporary Illness/Incapacitation**<a name="illness"></a>
 >### **Description**
 > Occurs when a team member is temporarily out of action and cannot contribute to the project for a certain period (EG has COVID)
 >### **Impact and Likelihood**
 >### **Monitoring Strategy**
 >### **Mitigation Plan**
 
-## **6. Conflict in Future Direction of Project**
+## **6. Conflict in Future Direction of Project**<a name="vision"></a>
 >### **Description**
 >### **Impact and Likelihood**
 >### **Monitoring Strategy**
 >### **Mitigation Plan**
 
-## **7. Loss of Data / Code**
+## **7. Loss of Data / Code**<a name="lossdata"></a>
 >### **Description**
 >### **Impact and Likelihood**
 >### **Monitoring Strategy**
 >### **Mitigation Plan**
 
-## **8. Client Unsatisfied After Sprint**
+## **8. Client Unsatisfied After Sprint**<a name="unsatisfied"></a>
 >### **Description**
 >### **Impact and Likelihood**
 >### **Monitoring Strategy**
