@@ -1,6 +1,6 @@
-Team Process Model:
+**Team Process Model:**
 
-Features of scrum that the team will be doing:
+*Features of scrum that the team will be doing:*
 
 1. Product Backlog: The team will be creating a list of product backlog Items, these items would be broken down simplified tasks that would help achive the bigger project. Our product Backlog aims to contain:
     - Detailed backlog items, sorted by priority. The team will be working on high priority items first.
@@ -25,7 +25,7 @@ Features of scrum that the team will be doing:
 
 4. Backlog Refinement: Backlog refinement will be done by the team before beggining of a new sprint and team will explain theses tasks to the Product Owner and try to come up with some estimate that how much time it will take to complete these tasks. Also discussing what is feasable to achieve and what is not.  
 
-Features of Scrum that the team will not be doing:
+*Features of Scrum that the team will not be doing:*
 
 1. The Daily Scrum: The daily scrum is 15 minute meeting at the start of each day. Instead of doing a Daily Scrum, the team will
 be doing a weekly scrum, in which we will divide the weekly scrum 
