@@ -1,7 +1,7 @@
 # Table of contents
 1. [Why we are here](#Why-we-are-here)
 2. [Elevator pitch](#Elevator-pitch)
-3. [Product box](#Product-box)
+3. [Product box](#Product-box) \
     a. [The top three reasons people will use our app](#The-top-three-reasons-people-will-use-our-app)
 4. [Not list](#Not-list)
 5. [Meet our neighbours](#Meet-our-neighbours)
