@@ -1,13 +1,13 @@
 # Table of contents
-1. [Why we are here](#Why-we-are-here)\
-2. [Elevator pitch](#Elevator-pitch)\
-3. [Product box](#Product-box)\
-    a. [The top three reasons people will use our app](#The-top-three-reasons-people-will-use-our-app)\
-4. [Not list](#Not-list)\
-5. [Meet our neighbours](#Meet-our-neighbours)\
-6. [What keeps us up at night](#What-keeps-us-up-at-night)\
-7. [Size it up](#Size-it-up)\
-8. [What will give](#What-will-give)\
+1. [Why we are here](#Why-we-are-here)
+2. [Elevator pitch](#Elevator-pitch)
+3. [Product box](#Product-box)
+    a. [The top three reasons people will use our app](#The-top-three-reasons-people-will-use-our-app)
+4. [Not list](#Not-list)
+5. [Meet our neighbours](#Meet-our-neighbours)
+6. [What keeps us up at night](#What-keeps-us-up-at-night)
+7. [Size it up](#Size-it-up)
+8. [What will give](#What-will-give)
 9. [What it will take](#What-it-will-take)
 
 # Project vision
