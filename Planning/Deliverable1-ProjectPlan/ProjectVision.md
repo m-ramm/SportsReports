@@ -8,7 +8,7 @@
 [What keeps us up at night](#What-keeps-us-up-at-night)\
 [Size it up](#Size-it-up)\
 [What will give](#What-will-give)\
-[What it will take](#What-it-will-take)\
+[What it will take](#What-it-will-take)
 
 # Project vision
 ## Why we are here
@@ -19,28 +19,28 @@ For: Basketball, soccer and cricket fans\
 Who: Enjoy keeping updated on the latest statistics for their sports\
 The: Sports Reports Web App\
 Is a: Sports statistic tracking web app\
-That: Allows users to access all their sports statistics in a convenient location\  
+That: Allows users to access all their sports statistics in a convenient location  
 Unlike: ESPN Sports Centre our application will have a much cleaner UI that enables fast and easy access to any stats the user desires\
-Our product: promises to provide a much simpler and elegant UI which is user friendly and meets all the requirements that the users actually care about.\
+Our product: promises to provide a much simpler and elegant UI which is user friendly and meets all the requirements that the users actually care about
 
 ## Product box
 ### The top three reasons people will use our app
 Reliable Statistics: Users will come to our website to stay updated on their sports, therefore, users will be expecting reliable and up to date information. \
 Convenience: Users want convenience, they want to be able to open the web app and quickly navigate to the information they desire; therefore, sports reports need to have fast performance and an easily navigated interface.\
-Enjoyment: This web app is targeted towards the average sports fan who follows the sport in their free time for fun, therefore, this web application should provide an enjoyable experience free of frustrating interfaces and slow connections.\
+Enjoyment: This web app is targeted towards the average sports fan who follows the sport in their free time for fun, therefore, this web application should provide an enjoyable experience free of frustrating interfaces and slow connections.
 
-## not list
-![alt text](https://git.infotech.monash.edu/fit2101-s2-2021-projects/mash0019/blob/master/Planning/Pictures/NotTable.PNG?)
+## Not list
+![Click here for not list](https://git.infotech.monash.edu/fit2101-s2-2021-projects/mash0019/blob/master/Planning/Pictures/NotTable.PNG?)
 
 ## Meet out neighbours
 Our neighbours include\
     1. Website hosting service: https://www.hostinger.com/special-webhosting-offer?utm_medium=affiliate&utm_source=aff2952&utm_campaign=31&session=102ad7aa47bcdcd65161282e46fb9a \
     2. Soccer/Basketball API: https://www.api-football.com/widgets and https://www.api-basketball.com/, this project heavily relies on these APIs having accurate and up to date data, fortunately both APIs have excellent documentation and have continuing support. However, long term it would be sensible to develop our own API to reduce dependencies\
-    4. Gitlab: this project heavily relies on version control as all team members will work on different sections on different devices, however, Gitlab is very reliable, therefore, this is not a concern \ 
-    5. Slack/Messenger: the group will mainly use messenger and slack to communicate, if these were to fail, communication would be halted, again this is effectively a non-issue due to the reliability \ 
+    4. Gitlab: this project heavily relies on version control as all team members will work on different sections on different devices, however, Gitlab is very reliable, therefore, this is not a concern  
+    5. Slack/Messenger: the group will mainly use messenger and slack to communicate, if these were to fail, communication would be halted, again this is effectively a non-issue due to the reliability  
 
 ## What keeps us up at night
-Overreliance on APIs. Sports Reports requires consistently updated accurate data, if one of the APIs is discontinued or goes down for a period the application will completely lose function, fortunately, the APIs the team selected seem to be very reliable.\   
+Overreliance on APIs. Sports Reports requires consistently updated accurate data, if one of the APIs is discontinued or goes down for a period the application will completely lose function, fortunately, the APIs the team selected seem to be very reliable.   
 Having part-time team members, every team member has other units, therefore, the team may run into issues where they have other priorities
 
 ## Size it up
@@ -57,7 +57,7 @@ Will give:\
 Will not give: \
     - Quality of the UI \
     - Time taken to complete project \
-    - Budget (already at the minimum) \
+    - Budget (already at the minimum) 
 
 
 ## What it will take
