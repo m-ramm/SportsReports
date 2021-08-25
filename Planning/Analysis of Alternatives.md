@@ -67,7 +67,7 @@ JavaScript
 
 - Decision: which platform to choose for our project ?
 - Options: mobile app or web app, and for browsers Chrome or Firefox
-- Criteria: availability for audience, cost of maintenance, customer requirements, compatibility
+- Criteria: availability for audience, cost of maintenance, customer requirements, compatibility, experience of developers
 
 # Body
 
@@ -107,6 +107,8 @@ Advantages
 
 - Is the most popular browser, therefore it serves as the benchmark for where most users will interact with web app
 - Has good developer tools with which the developers have experience
+- The developers have developed apps for Chrome before
+- Developers have experience with its DevTools
 
 Disadvantages
 
@@ -121,10 +123,11 @@ Advantages
 Disadvantages
 
 - Isn&#39;t as popular as Chrome, so won&#39;t serve as a good benchmark
+- Developers have not used Firefox developer tools before
 
 # Decision
 
 Platform
 
 - Web App: as it will have a lower maintenance cost, and can target a wider audience
-- Browser: will target for Chrome as it&#39;s the most popular browser, but shouldn&#39;t make too much of a difference
+- Browser: will target for Chrome as it&#39;s the most popular browser, developers have more experience with Chrome as well but shouldn&#39;t make too much of a difference
