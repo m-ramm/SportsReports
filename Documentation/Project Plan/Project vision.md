@@ -59,7 +59,6 @@ Will not give: \
     - Time taken to complete project \
     - Budget (already at the minimum) 
 
-
 ## What it will take
 This project will take 5 people 7 weeks to complete for a budget of $7.50. The $7.50 is for hosting the web application \
 Each team member should spend 5+ hours on the project per week to ensure a quality product is delivered on time
