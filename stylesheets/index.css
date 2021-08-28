@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    background: white;
+}
+
+section {
+    position: relative;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    min-height: 400px;
+    padding: 100px 20vw;
+}
+
+.curves {
+    aspect-ratio: 1200/200;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;   
+}
+
+.layer1 {
+    background-image: url('../images/layered-waves-1.svg');
+}
+
+.layer2 {
+    background-image: url('../images/layered-waves-2.svg');
+}
+.bottom {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
