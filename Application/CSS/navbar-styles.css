@@ -2,6 +2,7 @@
 /* IMPORTANT */
 /* Initially done by Mursal, feel free to make changes!!! */
 /* If you know how to could you change the background colour of the nav bar? I can't figure it out - antony */
+/* Addressed background color in this doc - you can change it to whatever you like in header selector: Mursal */
 :root {
     --SRBlue: #66A9FF;
     --SROrange: #FFBC66;
@@ -9,6 +10,10 @@
 
 /* For Desktop */
 @media (min-width: 801px){
+
+header {
+    background-color: #66A9FF;
+}
 
 .navbar-nav {
         float:none;
