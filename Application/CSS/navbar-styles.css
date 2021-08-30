@@ -1,7 +1,6 @@
 
 /* IMPORTANT */
 /* Initially done by Mursal, feel free to make changes!!! */
-/* If you know how to could you change the background colour of the nav bar? I can't figure it out - antony */
 :root {
     --SRBlue: #66A9FF;
     --SROrange: #FFBC66;
@@ -9,6 +8,10 @@
 
 /* For Desktop */
 @media (min-width: 801px){
+
+header {
+    background-color: #66A9FF;
+}
 
 .navbar-nav {
         float:none;
@@ -22,25 +25,14 @@
         float:none;
 }
 
-
-.show {
-    background: none;
-    outline-style: none;
-    outline-color: transparent;
-    padding: 0%;
-    margin: 0%;
+.dropdown-menu.show {
+    margin-right: -1000px;
+    background-color: orange;
+    max-width: fit-content;
+    padding: 0.125rem;
 }
 
 .subnav > li {
     display: inline-block;
 }
-
-.subnav {
-    margin-right: -1000px;
-    background-color: var(--SRBlue);
-    max-width: fit-content;
-    padding: 0.125rem;
-} 
-
-
 }
