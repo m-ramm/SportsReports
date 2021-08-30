@@ -5,10 +5,12 @@ and formatting of common HTML elements such as h1, p etc. */
     --SROrange: #FFBC66;
 }
 
+header {
+    background-color: var(--SRBlue);
+}
+
 h1 {
     background-color: var(--SRBlue);
     color: var(--SROrange);
     text-align: center;
 }
-
-
