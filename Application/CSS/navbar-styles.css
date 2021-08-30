@@ -1,8 +1,11 @@
 
 /* IMPORTANT */
 /* Initially done by Mursal, feel free to make changes!!! */
-
-
+/* If you know how to could you change the background colour of the nav bar? I can't figure it out - antony */
+:root {
+    --SRBlue: #66A9FF;
+    --SROrange: #FFBC66;
+}
 
 /* For Desktop */
 @media (min-width: 801px){
@@ -21,14 +24,12 @@
 
 
 .show {
-    background: none;
+
     outline-style: none;
     outline-color: transparent;
     padding: 0%;
     margin: 0%;
 }
-
-
 
 .subnav > li {
     display: inline-block;
