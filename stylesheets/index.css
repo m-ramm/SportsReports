@@ -14,8 +14,18 @@ section {
     padding: 100px 20vw;
 }
 
+#mainLogo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.wrapper {
+    padding-bottom: 50px;
+}
+
 .curves {
-    aspect-ratio: 1200/200;
+    aspect-ratio: 1000/200;
     width: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -30,7 +40,25 @@ section {
     background-image: url('../images/layered-waves-2.svg');
 }
 .bottom {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.glow-text {
+    color: #FFBC66;
+    font-weight: bold;
+    text-align: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 3px #fae0be, 0 0 6px #ffdaaa;
+    }
+    to {
+        text-shadow: 0 0 10px #ffc67b, 0 0 13px #ffc67b;
+    }
 }
