@@ -24,7 +24,7 @@
 
 
 .show {
-
+    background: none;
     outline-style: none;
     outline-color: transparent;
     padding: 0%;
@@ -37,7 +37,7 @@
 
 .subnav {
     margin-right: -1000px;
-    background-color: orange;
+    background-color: var(--SRBlue);
     max-width: fit-content;
     padding: 0.125rem;
 } 
