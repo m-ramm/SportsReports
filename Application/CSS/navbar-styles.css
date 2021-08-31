@@ -28,7 +28,7 @@ header {
 .dropdown-menu.show {
     margin-right: -1000px;
     background-color: orange;
-    max-width: fit-content;
+    max-width: fit-content; 
     padding: 0.125rem;
 }
 
