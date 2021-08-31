@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--Script for the chosen graph-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="../JS Files/LiveMatch.js"></script>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -24,10 +28,12 @@
     .Time-Loc{
         background-color: bisque;
         height: 100px;
-
+    }
+    .Live-stats{
+        background-color: #b7d5fd;
     }
 
-
+    
 </style>
 
 
@@ -37,11 +43,14 @@
 
     <!-- create a table here -->
     <div class="row">
-        <div class="col-sm-4 col-md-4 col-lg-6">
-            <div class="p-3 border bg-danger">Live Stats</div>
+        <div class="col-sm-4 col-md-12 col-lg-6">
+            <div class="Live-stats p-3 border">Live Stats
+                <div id="chart_div" style="height: 40vw;"></div>
+            </div>
         </div>
-        <div class=" key-Events col-sm-4 col-md-4 col-lg-6">
+        <div class=" key-Events col-sm-4 col-md-12 col-lg-6">
             <div class="p-3 border bg-warning">Key Events</div>
+
 
             <table class="tabled">
                 <tr> 
@@ -59,6 +68,8 @@
         </div>    
     </div>
     </div>
+
+
 
     <!-- Optional JavaScript -->
 
