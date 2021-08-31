@@ -8,11 +8,16 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Our own mods -->
         <link rel="stylesheet" href="../CSS/base-styles.css">
+
         <title>Sports Reports</title>
     </head>
     <body>
         <!-- custom styles for this page -->
         <style>
+            .custom-select-team {
+                background-color: #76b2ff;
+                color: #FFBC66;
+            }
             .custom-table-row {
                 height: 500px;
             }
@@ -28,7 +33,8 @@
             .custom-select-graph-row {
                 height: 100px;
             }
-            /*DELETE THIS LATER, JUST FOR LOOKING AT LAYOUT 
+            /*DELETE THIS LATER, JUST FOR LOOKING AT LAYOUT */
+            /*
             .col-border {
                 outline: 2px solid var(--SRBlue);
             }
@@ -36,15 +42,24 @@
         </style>
 
         <header>
-            <h1>INSERT LEAGUE NAME Statistics</h1>
+            <h1>Premier League Stats</h1>
         </header>
 
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 justify-content-center text-center col-border"> 
-                    <h2> Select Team </h2>
+            <!-- Select team row -->
+            <div class="row custom-select-team">
+                <div class="col-sm-6 col-md-6 col-lg-6 justify-content-center text-right     col-border"> 
+                    <h2> Select team </h2>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6 d-flex align-items-center">
+                    <select name="Teams" id="teams">
+                        <option value="Arsenal">Arsenal</option>
+                        <option value="Watford">Wolves</option>
+                        <option value="Wolves">Watford</option>
+                    </select>
                 </div>
             </div>
+            <!-- Content row -->
             <div class="row">
                     <!-- Graph column -->
                     <div class="col-sm-8 col-md-8 col-lg-8 justify-content-center text-center col-border">
@@ -66,11 +81,76 @@
                             <div class="col-sm-12 col-md-12 col-lg-12 col-border">Select table data</div>
                         </div>
                         <div class="row custom-table-row">
-                            <div class="col-sm-12 col-md-12 col-lg-12">*INSERT TABLE*</div>
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <table style="margin-left:auto;margin-right:auto;">
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Player</th>
+                                        <th>Assists</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Antony Loose</td>
+                                        <td>9</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Troy Deeny</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Paul Pogba</td>
+                                        <td>7</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Gabriel Jesus</td>
+                                        <td>6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Saïd Benrahma</td>
+                                        <td>5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Mohamed Salah</td>
+                                        <td>4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Ricardo Pereira</td>
+                                        <td>3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Pascal Groß</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Ferran Torres</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Erikson</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Danny Ings</td>
+                                        <td>1</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
             </div>
         </div>
+
         <!-- Graph Scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
         <script src="StatsScript.js"></script>

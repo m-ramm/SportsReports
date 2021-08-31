@@ -1,3 +1,4 @@
+// FETCH FROM API
 
 var data = [13, 11, 15, 8] // replace with call to api
 var type = 'bar' // Replace this with selected graph type
