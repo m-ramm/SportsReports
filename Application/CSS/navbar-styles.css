@@ -2,15 +2,17 @@
 /* IMPORTANT */
 /* Initially done by Mursal, feel free to make changes!!! */
 :root {
-    --SRBlue: #66A9FF;
-    --SROrange: #FFBC66;
+    --SRBlue: #2D8883;
+    --SRBlueAccent: #41beb8;
+    --SRRed: #D9484F;
+    --SRRedAccent: #f55058;
 }
 
 /* For Desktop */
 @media (min-width: 801px){
 
 header {
-    background-color: #66A9FF;
+    background-color: var(--SRBlue);
 }
 
 .navbar-nav {
@@ -27,7 +29,7 @@ header {
 
 .dropdown-menu.show {
     margin-right: -1000px;
-    background-color: orange;
+    background-color: var(--SRRed);
     max-width: fit-content; 
     padding: 0.125rem;
 }

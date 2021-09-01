@@ -8,15 +8,14 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Our own mods -->
         <link rel="stylesheet" href="../CSS/base-styles.css">
-
         <title>Sports Reports</title>
     </head>
     <body>
         <!-- custom styles for this page -->
         <style>
             .custom-select-team {
-                background-color: #76b2ff;
-                color: #FFBC66;
+                background-color: #2D8883;
+                color: #FFF;
             }
             .custom-table-row {
                 height: 500px;
@@ -47,17 +46,15 @@
 
         <div class="container-fluid">
             <!-- Select team row -->
-            <div class="row custom-select-team">
-                <div class="col-sm-6 col-md-6 col-lg-6 justify-content-center text-right col-border"> 
-                    <h2> Select team </h2>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 d-flex align-items-center">
-                    <select name="Teams" id="teams">
-                        <option value="Arsenal">Arsenal</option>
-                        <option value="Watford">Wolves</option>
-                        <option value="Wolves">Watford</option>
-                    </select>
-                </div>
+            <div class="row custom-select-team justify-content-center text-center">
+                <h2> Select team </h2>
+            </div>
+            <div class="row justify-content-center d-flex align-items-start custom-select-team" style="height:35px;">
+                <select name="Teams" id="teams">
+                    <option value="Arsenal">Arsenal</option>
+                    <option value="Watford">Wolves</option>
+                    <option value="Wolves">Watford</option>
+                </select>
             </div>
             <!-- Content row -->
             <div class="row">
@@ -66,28 +63,28 @@
                         <div class="row custom-select-graph-row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
                                 <h3>Chart settings</h3>
-                                <select name="graphs" id="graphs">
-                                    <option value="Bar chart">Bar chart</option>
-                                    <option value="Line chart">Line chart</option>
-                                    <option value="Pie chart">Pie chart</option>
+                                <select name="graphs" id="graphType" onchange="updateSelect('graphType')">
+                                    <option value="bar">Bar chart</option>
+                                    <option value="line">Line chart</option>
+                                    <option value="scatter">Scatter chart</option>
                                 </select>
-                                <select name="players" id="players">
+                                <select name="players" id="players" onchange="updateSelect('players')">
                                     <option value="Troy Deeny">Troy Deeny</option>
                                     <option value="Harry Kane">Harry Kane</option>
                                     <option value="Robert Firmino">Robert Firmino</option>
                                     <option value="Marcus Rashford">Marcus Rashford</option>
                                 </select>
-                                <select name="seasons" id="seasons">
+                                <select name="seasons" id="seasons" onchange="updateSelect('seasons')">
                                     <option value="2018">2018</option>
                                     <option value="2019">2019</option>
                                     <option value="2020">2020</option>
                                     <option value="2021">2021</option>
                                 </select>
-                                <select name="statMode" id="statMode">
+                                <select name="statMode" id="statMode" onchange="updateSelect('statMode')">
                                     <option value="Total">Total</option>
                                     <option value="Average">Average</option>
                                 </select>
-                                <select name="statType" id="statType">
+                                <select name="statType" id="statType" onchange="updateSelect('statType')">
                                     <option value="Goals">Goals</option>
                                     <option value="Assists">Assists</option>
                                     <option value="Red cards">Red cards</option>

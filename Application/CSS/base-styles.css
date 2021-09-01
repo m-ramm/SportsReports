@@ -1,10 +1,10 @@
 /* These are the styles used on evety page, they include colour scheme
 and formatting of common HTML elements such as h1, p etc. */
 :root {
-    --SRBlue: #559eff;
-    --SRBlueAccent: #b7d5fd;
-    --SROrange: #FFBC66;
-    --SROrangeAccent: #ffdcb0;
+    --SRBlue: #2D8883;
+    --SRBlueAccent: #41beb8;
+    --SRRed: #D9484F;
+    --SRRedAccent: #f55058;
 }
 
 body {
@@ -17,13 +17,13 @@ header {
 
 h1 {
     background-color: var(--SRBlue);
-    color: var(--SROrange);
+    color: #FFF;
     text-align: center;
     margin: 0;
 }
 
 h3 {
-    color: var(--SRBlue);
+    color: #FFF;
     text-align: center;
     margin: 0;
 }
@@ -31,11 +31,13 @@ h3 {
 select {
     background: var(--SRBlueAccent);
     border-color: transparent;
+    color: #FFF;
     text-shadow: 0 1px 0 black;
 }
 
 select option {
-    background: var(--SROrangeAccent);
+    background: var(--SRRedAccent);
+    color: #FFF;
     text-shadow: 0 1px 0 black;
 }
 
@@ -52,7 +54,7 @@ table tr:nth-child(odd) td {
 }
 
 table tr:nth-child(even) td { 
-    background-color: var(--SROrangeAccent);
+    background-color: var(--SRRedAccent);
 }
 
 table th {
@@ -63,4 +65,5 @@ table th {
 
 table td {
     padding: 4px 10px 10px;
+    color: #FFF
 }
