@@ -1,0 +1,66 @@
+/* These are the styles used on evety page, they include colour scheme
+and formatting of common HTML elements such as h1, p etc. */
+:root {
+    --SRBlue: #559eff;
+    --SRBlueAccent: #b7d5fd;
+    --SROrange: #FFBC66;
+    --SROrangeAccent: #ffdcb0;
+}
+
+body {
+    background-color: var(--SRBlueAccent);
+}
+
+header {
+    background-color: var(--SRBlue);
+}
+
+h1 {
+    background-color: var(--SRBlue);
+    color: var(--SROrange);
+    text-align: center;
+    margin: 0;
+}
+
+h3 {
+    color: var(--SRBlue);
+    text-align: center;
+    margin: 0;
+}
+
+select {
+    background: var(--SRBlueAccent);
+    border-color: transparent;
+    text-shadow: 0 1px 0 black;
+}
+
+select option {
+    background: var(--SROrangeAccent);
+    text-shadow: 0 1px 0 black;
+}
+
+/* Table styling */ 
+table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* colour every other element orange */
+table tr:nth-child(odd) td { 
+    background-color: var(--SRBlueAccent);
+}
+
+table tr:nth-child(even) td { 
+    background-color: var(--SROrangeAccent);
+}
+
+table th {
+    background-color: var(--SRBlue);
+    color: #FFF;
+    padding: 3px 55px 3px 55px
+}
+
+table td {
+    padding: 4px 10px 10px;
+}
