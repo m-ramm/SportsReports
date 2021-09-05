@@ -8,15 +8,15 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- Our own mods -->
         <link rel="stylesheet" href="../CSS/base-styles.css">
-
+        <link rel="stylesheet" href="../CSS/navbar-styles.css">
         <title>Sports Reports</title>
     </head>
     <body>
         <!-- custom styles for this page -->
         <style>
             .custom-select-team {
-                background-color: #76b2ff;
-                color: #FFBC66;
+                background-color: #2D8883;
+                color: #FFF;
             }
             .custom-table-row {
                 height: 500px;
@@ -43,21 +43,77 @@
 
         <header>
             <h1>Premier League Stats</h1>
+
+            <nav class="navbar navbar-expand-lg navbar-light"> 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+      
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                          <a class="nav-link" href="../navbar.html">Home</a>
+                        </li>
+      
+                        <li class="nav-item dropdown">
+                          <a id="soccer" class="nav-link dropdown-toggle" href="#" id="soccerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-refer>
+                              Soccer
+                          </a>
+      
+                          <ul class="dropdown-menu" aria-labelledby="soccerDropdown">
+                              <div class="subnav">
+                                  <li><a class="dropdown-item" href="../test_location.html">Premier League</a></li>
+                                  <li><a class="dropdown-item" href="../test_location.html">La Liga</a></li>
+                                  <li><a class="dropdown-item" href="../test_location.html">Ligue One</a></li>
+                              </div>
+                          </ul>
+                        </li>
+      
+                        <li class="nav-item dropdown">
+                              <a id="basketball" class="nav-link dropdown-toggle" href="#" id="basketballDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Basketball
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="basketballDropdown">
+                                  <div class="subnav">
+                                      <li><a class="dropdown-item" href="../test_location.html">NBA</a></li>
+                                      <li><a class="dropdown-item" href="../test_location.html">NBL</a></li>
+                                      <li><a class="dropdown-item" href="../test_location.html">Bundesliga Basketball</a></li>
+                                  </div>
+                              </ul> 
+                          </li>
+      
+                        <li class="nav-item dropdown">
+                          <a id="cricket" class="nav-link dropdown-toggle" href="#"  id="cricketDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Cricket
+                          </a>
+      
+                          <ul class="dropdown-menu" aria-labelledby="cricketDropdown">
+                              <div class="subnav">
+                                  <li><a class="dropdown-item" href="../test_location.html">Big Bash</a></li>
+                                  <li><a class="dropdown-item" href="../test_location.html">IPL</a></li>
+                                  <li><a class="dropdown-item" href="../test_location.html">International</a></li>
+                              </div>
+                          </ul>
+                        </li>
+      
+                    </ul>
+      
+                </div>
+      
+            </nav>
         </header>
 
         <div class="container-fluid">
             <!-- Select team row -->
-            <div class="row custom-select-team">
-                <div class="col-sm-6 col-md-6 col-lg-6 justify-content-center text-right col-border"> 
-                    <h2> Select team </h2>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-6 d-flex align-items-center">
-                    <select name="Teams" id="teams">
-                        <option value="Arsenal">Arsenal</option>
-                        <option value="Watford">Wolves</option>
-                        <option value="Wolves">Watford</option>
-                    </select>
-                </div>
+            <div class="row custom-select-team justify-content-center text-center">
+                <h2> Select team </h2>
+            </div>
+            <div class="row justify-content-center d-flex align-items-start custom-select-team" style="height:35px;">
+                <select name="Teams" id="teams">
+                    <option value="Arsenal">Arsenal</option>
+                    <option value="Watford">Wolves</option>
+                    <option value="Wolves">Watford</option>
+                </select>
             </div>
             <!-- Content row -->
             <div class="row">
@@ -66,18 +122,28 @@
                         <div class="row custom-select-graph-row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
                                 <h3>Chart settings</h3>
-                                <select name="graphs" id="graphs">
-                                    <option value="Bar chart">Bar chart</option>
-                                    <option value="Line chart">Line chart</option>
-                                    <option value="Pie chart">Pie chart</option>
+                                <select name="graphs" id="graphType" onchange="updateSelect('graphType')">
+                                    <option value="bar">Bar chart</option>
+                                    <option value="line">Line chart</option>
+                                    <option value="scatter">Scatter chart</option>
                                 </select>
-                                <select name="players" id="players">
+                                <select name="players" id="players" onchange="updateSelect('players')">
                                     <option value="Troy Deeny">Troy Deeny</option>
                                     <option value="Harry Kane">Harry Kane</option>
                                     <option value="Robert Firmino">Robert Firmino</option>
                                     <option value="Marcus Rashford">Marcus Rashford</option>
                                 </select>
-                                <select name="stats" id="stats">
+                                <select name="seasons" id="seasons" onchange="updateSelect('seasons')">
+                                    <option value="2018">2018</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                </select>
+                                <select name="statMode" id="statMode" onchange="updateSelect('statMode')">
+                                    <option value="Total">Total</option>
+                                    <option value="Average">Average</option>
+                                </select>
+                                <select name="statType" id="statType" onchange="updateSelect('statType')">
                                     <option value="Goals">Goals</option>
                                     <option value="Assists">Assists</option>
                                     <option value="Red cards">Red cards</option>
