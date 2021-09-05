@@ -28,6 +28,8 @@ var requestOptions = {
 
 var storage_object;
 
+// English Premier League ID is 39 (IDs are found at the dashboard website used to get the keys)
+// First parameter added uses a '?' before it, subsequent parameters use '&'
 fetch("https://v3.football.api-sports.io/leagues?id=39", requestOptions)
   .then((response) => response.json())
   .then((result) => storage_object = result)
