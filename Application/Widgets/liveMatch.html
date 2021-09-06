@@ -5,10 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--Script for the chosen graph-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="../JS Files/LiveMatch.js"></script>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -114,6 +110,7 @@
         <div class="col-sm-4 col-md-12 col-lg-6">
             <div class="Live-stats p-3 border">Live Stats
                 <div id="chart_div" style="height: 40vw;"></div>
+                    <canvas id="scatter_graph" width= "400" height= "400"></canvas>
             </div>
         </div>
         <div class=" key-Events col-sm-4 col-md-12 col-lg-6">
@@ -158,7 +155,9 @@
     </div>
     </div>
 
-
+    <!--Script for the chosen graph-->
+    <script scr="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <script src="../Widgets/LiveMatch.js"></script>
 
     <!-- Optional JavaScript -->
 
