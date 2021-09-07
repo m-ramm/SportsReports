@@ -39,6 +39,11 @@ section {
 .layer2 {
     background-image: url('../images/layered-waves-2.svg');
 }
+
+.layer3 {
+    background-image: url('../images/layered-waves-3.svg');
+}
+
 .bottom {
     position: fixed;
     bottom: 0;
@@ -46,7 +51,7 @@ section {
 }
 
 .glow-text {
-    color: #FFBC66;
+    color: #f55058;
     font-weight: bold;
     text-align: center;
     -webkit-animation: glow 1s ease-in-out infinite alternate;
@@ -56,9 +61,9 @@ section {
 
 @-webkit-keyframes glow {
     from {
-        text-shadow: 0 0 2px #fce1be, 0 0 4px #fce1be;
+        text-shadow: 0 0 2px #f55058, 0 0 4px #f55058;
     }
     to {
-        text-shadow: 0 0 8px #ffc67b, 0 0 10px #ffc67b;
+        text-shadow: 0 0 8px #860007, 0 0 10px #860007;
     }
 }
