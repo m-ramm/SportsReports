@@ -1,0 +1,64 @@
+body {
+    margin: 0;
+    font-family:Arial, Helvetica, sans-serif;
+    color:black;
+    background: white;
+}
+
+section {
+    position: relative;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    min-height: 400px;
+    padding: 100px 20vw;
+}
+
+#mainLogo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.wrapper {
+    padding-bottom: 50px;
+}
+
+.curves {
+    aspect-ratio: 1000/200;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;   
+}
+
+.layer1 {
+    background-image: url('../images/layered-waves-1.svg');
+}
+
+.layer2 {
+    background-image: url('../images/layered-waves-2.svg');
+}
+.bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.glow-text {
+    color: #FFBC66;
+    font-weight: bold;
+    text-align: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 2px #fce1be, 0 0 4px #fce1be;
+    }
+    to {
+        text-shadow: 0 0 8px #ffc67b, 0 0 10px #ffc67b;
+    }
+}
