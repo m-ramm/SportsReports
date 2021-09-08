@@ -1,4 +1,4 @@
-var ctx = document.getElementById('scatter_graph');
+var ctx = document.getElementById('scatter_graph').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {

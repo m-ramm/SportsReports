@@ -11,7 +11,7 @@
 /* For Desktop */
 @media (min-width: 801px){
 
-header {
+.header {
     background-color: var(--SRBlue);
 }
 
