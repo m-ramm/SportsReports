@@ -1,4 +1,4 @@
-//! Dummy data
+//! DUMMY DATA
 let list1 = [0, 1, 1, 1, 3, 6, 1, 6, 0, 0, 0, 1]
 let list2 = [0, 1, 0, 2, 3, 1, 1, 3, 0, 0, 0, 1]
 let list3 = [0, 0, 1, 0, 3, 1, 1, 10, 0, 0, 0, 1]
@@ -7,7 +7,7 @@ let xAxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct
 let yAxis = list1
 //* FETCH FROM API
 
-//* Getting html elements
+//* GETTING HTML ELEMENTS
 let team = document.getElementById('team')
 let graphType = document.getElementById('graphType')
 let players = document.getElementById('players')
@@ -15,35 +15,48 @@ let seasons = document.getElementById('seasons')
 let statMode = document.getElementById('statMode')
 let statType = document.getElementById('statType')
 
-//! Dummy Data for graph
-let selectedTeam = 'Watford'
-let selectedGraph = 'line'
-let selectedPlayer = 'Troy Deeny'
-let selectedSeason = '2020'
-let selectedMode = 'Total'
-let selectedType = 'Goals'
+//* DATA FOR GRAPH AND TABLE
+const graphData = {
+    //! DUMMY DATA FOR GRAPH
+    selectedTeam: 'Watford',
+    selectedGraph: 'line',
+    selectedPlayer: 'Troy Deeny',
+    selectedSeason: '2020',
+    selectedMode: 'Total',
+    selectedType: 'Goals'
+}
 
-//* On change function for select
+const tableData = {
+
+}
+
+//* ON CHANGE FUNCTION FOR SELECT
+/*
+This function handles the on change for all the select elements, when the user changes what is selected the graph and table data should be updated, this is done
+by updating the graph data and table data variables then refreshing the graph and table.
+*/
 function updateSelect(selectID){
     if (selectID == 'players'){
-        selectedPlayer = players.options[players.selectedIndex].value
-        yAxis = updatePlayer(selectedPlayer)
+        graphData.selectedPlayer = players.options[players.selectedIndex].value
+        yAxis = updatePlayer(graphData.selectedPlayer)
         updateChartData(yAxis)
     }else if (selectID == 'graphType'){
-        selectedGraph = graphType.options[graphType.selectedIndex].value
+        graphData.selectedGraph = graphType.options[graphType.selectedIndex].value
         // TODO - create new chart - might have to do something with local storage here
     }else if (selectID == 'seasons'){
-        selectedSeason = seasons.options[seasons.selectedIndex].value
-        yAxis = updateSeason(selectedSeason)
+        graphData.selectedSeason = seasons.options[seasons.selectedIndex].value
+        yAxis = updateSeason(graphData.selectedSeason)
         updateChartData(yAxis)
     }else if (selectID == 'statType'){
-        selectedType = statType.options[statType.selectedIndex].value
-        yAxis = updateStatType(selectedType)
-        myChart.data.datasets[0].label = selectedType
+        graphData.selectedType = statType.options[statType.selectedIndex].value
+        yAxis = updateStatType(graphData.selectedType)
+        myChart.data.datasets[0].label = graphData.selectedType
         updateChartData(yAxis)
     }
 
-    
+    /*
+    Simply takes in a new set of data and sets the yAxis of the chart to the input data
+    */
     function updateChartData(yAxis){
         myChart.data.datasets[0].data = yAxis
         myChart.update()
@@ -86,10 +99,14 @@ function updateSelect(selectID){
     }
 }
 
-//* styling graph
-function styleGraph(){
-    let borders = []
-    let backgrounds = []
+//* STYLING GRAPH
+/*
+Creates the border color and background color for each graph element, for a line graph this is just on value, for a bar graph this is an array of values, where the index corresponds to
+the bar number
+return: {borders:any, backgrounds:any}
+*/
+function styleGraph(selectedGraph){
+    let borders = [], backgrounds = []
     function createBackgrounds(data){
         let backgrounds = []
         for (let i=0; i<data.length; i++){
@@ -114,18 +131,18 @@ function styleGraph(){
     return {borders: borders, backgrounds: backgrounds}
 }
 
-//* Configuring graph
+//* CONFIGURING GRAPH
 Chart.defaults.global.defaultFontColor = "#FFF";
 let ctx = document.getElementById('statsGraph');
 let myChart = new Chart(ctx, {
-    type: selectedGraph, 
+    type: graphData.selectedGraph, 
     data: {
         labels: xAxis,
         datasets: [{
             label: 'Goals',
             data: yAxis, 
-            backgroundColor: styleGraph().backgrounds,
-            borderColor: styleGraph().borders,
+            backgroundColor: styleGraph(graphData.selectedGraph).backgrounds,
+            borderColor: styleGraph(graphData.selectedGraph).borders,
             borderWidth: 1,
         }]
     },
