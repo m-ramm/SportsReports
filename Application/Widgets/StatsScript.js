@@ -124,7 +124,7 @@ let myChart = new Chart(ctx, {
         datasets: [{
             label: 'Goals',
             data: yAxis, 
-            backgroundColor: '#D9484F',
+            backgroundColor: styleGraph().backgrounds,
             borderColor: styleGraph().borders,
             borderWidth: 1,
         }]
