@@ -7,8 +7,6 @@ let xAxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct
 let yAxis = list1
 //* FETCH FROM API
 
-// TODO have class for storing players with their stats 
-
 //* Getting html elements
 let team = document.getElementById('team')
 let graphType = document.getElementById('graphType')
@@ -17,9 +15,7 @@ let seasons = document.getElementById('seasons')
 let statMode = document.getElementById('statMode')
 let statType = document.getElementById('statType')
 
-// TODO: update choices in drop downs
-
-//* Data for graph
+//! Dummy Data for graph
 let selectedTeam = 'Watford'
 let selectedGraph = 'line'
 let selectedPlayer = 'Troy Deeny'
@@ -27,41 +23,6 @@ let selectedSeason = '2020'
 let selectedMode = 'Total'
 let selectedType = 'Goals'
 
-//* function for updating stats
-//! purely test functions
-function updatePlayer(playerName){
-    if (playerName == 'Troy Deeny'){
-        return list1
-    }else if (playerName === 'Harry Kane'){
-        return list2
-    }else if (playerName === 'Robert Firmino'){
-        return list3
-    }else if (playerName === 'Marcus Rashford'){
-        return list4
-    }
-}
-function updateSeason(season){
-    if (season == '2018'){
-        return list1
-    }else if (season === '2019'){
-        return list2
-    }else if (season === '2020'){
-        return list3
-    }else if (season === '2021'){
-        return list4
-    }
-}
-function updateStatType(statType){
-    if (statType == 'Goals'){
-        return list1
-    }else if (statType === 'Assists'){
-        return list2
-    }else if (statType === 'Yellow cards'){
-        return list3
-    }else if (statType === 'Red cards'){
-        return list4
-    }
-}
 //* On change function for select
 function updateSelect(selectID){
     if (selectID == 'players'){
@@ -81,22 +42,76 @@ function updateSelect(selectID){
         myChart.data.datasets[0].label = selectedType
         updateChartData(yAxis)
     }
-}
 
-function updateChartData(yAxis){
-    myChart.data.datasets[0].data = yAxis
-    myChart.update()
+    
+    function updateChartData(yAxis){
+        myChart.data.datasets[0].data = yAxis
+        myChart.update()
+    }
+
+    //* function for updating stats
+    //! purely test functions
+    function updatePlayer(playerName){
+        if (playerName == 'Troy Deeny'){
+            return list1
+        }else if (playerName === 'Harry Kane'){
+            return list2
+        }else if (playerName === 'Robert Firmino'){
+            return list3
+        }else if (playerName === 'Marcus Rashford'){
+            return list4
+        }
+    }
+    function updateSeason(season){
+        if (season == '2018'){
+            return list1
+        }else if (season === '2019'){
+            return list2
+        }else if (season === '2020'){
+            return list3
+        }else if (season === '2021'){
+            return list4
+        }
+    }
+    function updateStatType(statType){
+        if (statType == 'Goals'){
+            return list1
+        }else if (statType === 'Assists'){
+            return list2
+        }else if (statType === 'Yellow cards'){
+            return list3
+        }else if (statType === 'Red cards'){
+            return list4
+        }
+    }
 }
 
 //* styling graph
-let borders = []
-let backgrounds = []
-if (selectedGraph === 'bar') {
-    borders = createBorders(yAxis)
-    backgrounds = createBackgrounds(yAxis)
-}else{
-    borders = '#FFF'
-    backgrounds = '#D9484F'
+function styleGraph(){
+    let borders = []
+    let backgrounds = []
+    function createBackgrounds(data){
+        let backgrounds = []
+        for (let i=0; i<data.length; i++){
+            backgrounds.push('#D9484F')
+        }
+        return backgrounds
+    }
+    function createBorders(data){
+        let borders = []
+        for (let i=0; i<data.length; i++){
+            borders.push('#FFF')
+        }
+        return borders
+    }
+    if (selectedGraph === 'bar') {
+        borders = createBorders(yAxis)
+        backgrounds = createBackgrounds(yAxis)
+    }else{
+        borders = '#FFF'
+        backgrounds = '#D9484F'
+    }
+    return {borders: borders, backgrounds: backgrounds}
 }
 
 //* Configuring graph
@@ -110,7 +125,7 @@ let myChart = new Chart(ctx, {
             label: 'Goals',
             data: yAxis, 
             backgroundColor: '#D9484F',
-            borderColor: borders,
+            borderColor: styleGraph().borders,
             borderWidth: 1,
         }]
     },
@@ -122,19 +137,3 @@ let myChart = new Chart(ctx, {
         },
     }
 });
-
-function createBackgrounds(data){
-    let backgrounds = []
-    for (let i=0; i<data.length; i++){
-        backgrounds.push('#D9484F')
-    }
-    return backgrounds
-}
-
-function createBorders(data){
-    let borders = []
-    for (let i=0; i<data.length; i++){
-        borders.push('#FFF')
-    }
-    return borders
-}

@@ -26,6 +26,15 @@
         td {
             border: 5px solid rgb(255, 255, 255);
         }
+
+        .visible_row{
+            cursor: pointer; 
+        }
+
+        .hidden_row{
+            display: none;
+        }
+
     </style>
 
     <body>     
@@ -102,7 +111,7 @@
                 <th class="points">Points</th>
                 <th class="history">History</th>
             </tr>
-            <tr onclick="showHideRow('hidden_row1');">
+            <tr onclick="showHideRow('hidden_row1');" class="visible_row">
                 <td>1</td>
                 <td>Collingwood</td>
                 <td>4</td>
@@ -120,7 +129,7 @@
                 </td>
             </tr>
 
-            <tr onclick="showHideRow('hidden_row2');">
+            <tr onclick="showHideRow('hidden_row2');" class="visible_row">
                 <td>2</td>
                 <td>Hawthorn</td>
                 <td>4</td>
