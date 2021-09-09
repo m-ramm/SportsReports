@@ -8,12 +8,14 @@ let yAxis = list1
 //* FETCH FROM API
 
 //* GETTING HTML ELEMENTS
-let team = document.getElementById('team')
-let graphType = document.getElementById('graphType')
-let players = document.getElementById('players')
-let seasons = document.getElementById('seasons')
-let statMode = document.getElementById('statMode')
-let statType = document.getElementById('statType')
+const elements = {
+    team: document.getElementById('team'),
+    graphType: document.getElementById('graphType'),
+    players: document.getElementById('players'),
+    seasons: document.getElementById('seasons'),
+    statMode: document.getElementById('statMode'),
+    statType: document.getElementById('statType')
+}
 
 //* DATA FOR GRAPH AND TABLE
 const graphData = {
@@ -37,18 +39,18 @@ by updating the graph data and table data variables then refreshing the graph an
 */
 function updateSelect(selectID){
     if (selectID == 'players'){
-        graphData.selectedPlayer = players.options[players.selectedIndex].value
+        graphData.selectedPlayer = elements.players.options[players.selectedIndex].value
         yAxis = updatePlayer(graphData.selectedPlayer)
         updateChartData(yAxis)
     }else if (selectID == 'graphType'){
-        graphData.selectedGraph = graphType.options[graphType.selectedIndex].value
+        graphData.selectedGraph = elements.graphType.options[graphType.selectedIndex].value
         // TODO - create new chart - might have to do something with local storage here
     }else if (selectID == 'seasons'){
-        graphData.selectedSeason = seasons.options[seasons.selectedIndex].value
+        graphData.selectedSeason = elements.seasons.options[seasons.selectedIndex].value
         yAxis = updateSeason(graphData.selectedSeason)
         updateChartData(yAxis)
     }else if (selectID == 'statType'){
-        graphData.selectedType = statType.options[statType.selectedIndex].value
+        graphData.selectedType = elements.statType.options[statType.selectedIndex].value
         yAxis = updateStatType(graphData.selectedType)
         myChart.data.datasets[0].label = graphData.selectedType
         updateChartData(yAxis)
