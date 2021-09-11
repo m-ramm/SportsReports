@@ -122,6 +122,13 @@
         </nav>
     </header>
     <main>
+        <!-- Potential way of implementing local storage through navbar -->
+        <!-- Loads heading in options page -->
+        <!-- Check comments in navbar.js -->
+        <h2 id="leagueHeading"></h2>
+        <script>
+            document.getElementById("leagueHeading").textContent = window.localStorage.getItem('league')
+        </script>
         <div class="container-fluid">
             <div class="row">
                 <!-- League table column -->

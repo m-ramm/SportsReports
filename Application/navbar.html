@@ -38,11 +38,14 @@
                         Soccer
                     </a>
 
+                    <!-- Potential Way of using local storage through navbar -->
+                    <!-- Check comments in navbar.js -->
+
                     <ul class="dropdown-menu" aria-labelledby="soccerDropdown">
                         <div class="subnav">
-                            <li><a class="dropdown-item" href="./test_location.html">Premier League</a></li>
-                            <li><a class="dropdown-item" href="./test_location.html">La Liga</a></li>
-                            <li><a class="dropdown-item" href="./test_location.html">Ligue One</a></li>
+                            <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('Premier League')">Premier League</a></li>
+                            <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('La Liga')">La Liga</a></li>
+                            <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('Ligue One')">Ligue One</a></li>
                         </div>
                     </ul>
                   </li>
@@ -53,9 +56,9 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="basketballDropdown">
                             <div class="subnav">
-                                <li><a class="dropdown-item" href="./test_location.html">NBA</a></li>
-                                <li><a class="dropdown-item" href="./test_location.html">NBL</a></li>
-                                <li><a class="dropdown-item" href="./test_location.html">Bundesliga Basketball</a></li>
+                                <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('NBA')">NBA</a></li>
+                                <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('NBL')">NBL</a></li>
+                                <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('Bundesliga Basketball')">Bundesliga Basketball</a></li>
                             </div>
                         </ul> 
                     </li>
@@ -67,9 +70,9 @@
 
                     <ul class="dropdown-menu" aria-labelledby="cricketDropdown">
                         <div class="subnav">
-                            <li><a class="dropdown-item" href="./test_location.html">Big Bash</a></li>
-                            <li><a class="dropdown-item" href="./test_location.html">IPL</a></li>
-                            <li><a class="dropdown-item" href="./test_location.html">International</a></li>
+                            <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('Big Bash')">Big Bash</a></li>
+                            <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('IPL')">IPL</a></li>
+                            <li><a class="dropdown-item" href="./test_location.html" onclick="setLeagueStorage('International')">International</a></li>
                         </div>
                     </ul>
                   </li>
@@ -82,6 +85,7 @@
       </header>
 
     <!-- Optional JavaScript -->
+    <script src="./navbar.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
