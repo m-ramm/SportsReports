@@ -5,7 +5,26 @@ let list3 = [0, 0, 1, 0, 3, 1, 1, 10, 0, 0, 0, 1]
 let list4 = [0, 0, 0, 0, 0, 0, 5, 5, 5, 0, 0, 0]
 let xAxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 let yAxis = list1
-//* FETCH FROM API
+//* API
+// league IDs and corresponding names
+const footballLeagueId = [39, 140, 61];
+const footballLeague = ['English Premier League', 'La Liga', 'Ligue One'];
+
+// storage keys
+const TOP_SCORERS_FOOTBALL_KEY = "topScorersFootball";
+
+// api data
+const YOUR_KEY = "69c1a7a3dbc22ffc02a24af7ce74aca6";
+
+myHeaders = {
+  "x-apisports-key": YOUR_KEY,
+};
+
+var requestOptions = {
+  method: "GET",
+  headers: myHeaders,
+  redirect: "follow",
+};
 
 //* GETTING HTML ELEMENTS
 const elements = {
@@ -18,6 +37,7 @@ const elements = {
 }
 
 //* DATA FOR GRAPH AND TABLE
+// hopefully will be able to access api data like data.players[graphData.player].seasons[graphData.season].stats[graphData.selectedType]
 const graphData = {
     //! DUMMY DATA FOR GRAPH
     selectedTeam: 'Watford',
@@ -64,7 +84,10 @@ function updateSelect(selectID){
         myChart.update()
     }
 
-    //* function for updating stats
+    /* 
+    These functions will just filter out the data already provided by the API, e.g if the user selects a new player, these functions will search
+    for the selected player and then set the data to that players data
+    */
     //! purely test functions
     function updatePlayer(playerName){
         if (playerName == 'Troy Deeny'){
@@ -156,3 +179,10 @@ let myChart = new Chart(ctx, {
         },
     }
 });
+
+function main(){
+    //* FETCH DATA
+    // update chart
+}
+
+main()
