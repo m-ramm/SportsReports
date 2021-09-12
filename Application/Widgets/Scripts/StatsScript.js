@@ -5,26 +5,82 @@ let list3 = [0, 0, 1, 0, 3, 1, 1, 10, 0, 0, 0, 1]
 let list4 = [0, 0, 0, 0, 0, 0, 5, 5, 5, 0, 0, 0]
 let xAxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 let yAxis = list1
-//* API
+//* ----------------------------------------------------- FETCHING DATA START ----------------------------------------------------- //
+let playersData = null
+
 // league IDs and corresponding names
 const footballLeagueId = [39, 140, 61];
 const footballLeague = ['English Premier League', 'La Liga', 'Ligue One'];
 
 // storage keys
-const TOP_SCORERS_FOOTBALL_KEY = "topScorersFootball";
+const PLAYERS_FOOTBALL_KEY = "footballPlayers";
 
 // api data
-const YOUR_KEY = "69c1a7a3dbc22ffc02a24af7ce74aca6";
+const KEY = '10b74ce9ebmsh829850853489ac5p14ae76jsn9fd379ce8a94';
+const requestURL = 'https://api-football-v1.p.rapidapi.com/v3/players?'
 
 myHeaders = {
-  "x-apisports-key": YOUR_KEY,
-};
+    "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
+	"x-rapidapi-key": KEY
+}
 
 var requestOptions = {
   method: "GET",
   headers: myHeaders,
   redirect: "follow",
 };
+
+/*
+This function either takes data directly from local storage if it exists or fetches from the API. This is done to
+minamise calls to the API as we only get 100 per day
+*/
+function fetchPlayers(){
+    localStorage.getItem(PLAYERS_FOOTBALL_KEY) ? playersData = JSON.parse(localStorage.getItem(PLAYERS_FOOTBALL_KEY)) : fetchPlayersFromAPI()
+}
+
+/*
+This function fetches the players from the API and returns an object in the form:
+data : {
+    parameters: {...},
+    results: 20,
+    paging: {...},
+    response: [
+        0: {
+            player: {
+                id: int,
+                name: string,
+                etc.
+            },
+            statistics: [
+                0: {
+                    ...,
+                    goals: {total: int},
+                    passes: {key: int} - were just gonna say key passes are assists coz fk it
+                }
+            ]
+        },
+        1: {...},
+        ...
+    ]
+}
+*/
+function fetchPlayersFromAPI(){
+    // api call, storing the data in topScorers object
+    fetch(requestURL.concat(`league=${footballLeagueId[0]}&season=${2020}`), requestOptions)
+    .then(response => response.json())
+    .then((data) => {
+        localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
+        playersData = data.response
+        // on completion of this function we want to call the updateData method, which, will update the table and chart
+        updateData()
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
+
+fetchPlayers() // this is the variable that holds all the data being used in this script
+//* ----------------------------------------------------- FETCHING DATA END ----------------------------------------------------- //
 
 //* GETTING HTML ELEMENTS
 const elements = {
@@ -180,9 +236,15 @@ let myChart = new Chart(ctx, {
     }
 });
 
+/*
+This function simply updates the chart with the players data, this is call after our fetch from the API has been completed
+*/
+function updateData(){
+    console.log(playersData)
+}
+
 function main(){
-    //* FETCH DATA
-    // update chart
+    console.log(playersData)
 }
 
 main()
