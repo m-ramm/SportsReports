@@ -18,13 +18,23 @@
         table {
             width: 90%;
             text-align: center;
-            border: 5px solid rgb(255, 255, 255)
+            border: 5px solid rgb(255, 255, 255);
         }
         th {
             border: 5px solid rgb(255, 255, 255);
         }
         td {
             border: 5px solid rgb(255, 255, 255);
+        }
+
+        .leagueTableDropdownSelect{
+            width: 45%;
+            border: 3px solid rgb(0, 0, 0);
+            text-align: center;
+        }
+
+        .leagueDropdownButton{
+            background-color: #2D8883;
         }
 
         .visible_row{
@@ -99,6 +109,24 @@
       
             </nav>
         </header>
+        <br>
+        <table class="leagueTableDropdownSelect">
+            <th class="leagueTableDropdownSelect">Select Competition :
+                <select name="league_competition" id="league_competition" class="leagueDropdownButton">
+                    <option value="Premier League">Premier League</option>
+                    <option value="La Liga">La Liga</option>
+                    <option value="Ligue One">Ligue One</option>
+                </select>
+            </th>
+            <th class="leagueTableDropdownSelect">Select a season :
+                <select name="league_years" id="league_years" class="leagueDropdownButton">
+                    <option value="league_2021">2021</option>
+                    <option value="league_2020">2020</option>
+                    <option value="league_2019">2019</option>
+                    <option value="league_2018">2018</option>
+                </select>
+            </th>
+        </table>
         <br>
         <table>
             <tr>  
