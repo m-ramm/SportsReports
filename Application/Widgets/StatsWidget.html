@@ -108,10 +108,8 @@
                 <h2> Select team </h2>
             </div>
             <div class="row justify-content-center d-flex align-items-start custom-select-team" style="height:35px;">
-                <select name="Teams" id="teams">
-                    <option value="Arsenal">Arsenal</option>
-                    <option value="Watford">Wolves</option>
-                    <option value="Wolves">Watford</option>
+                <select name="Teams" id="teams" onchange="updateSelectTeams()">
+                    
                 </select>
             </div>
             <!-- Content row -->
@@ -125,12 +123,6 @@
                                     <option value="bar">Bar chart</option>
                                     <option value="line">Line chart</option>
                                     <option value="scatter">Scatter chart</option>
-                                </select>
-                                <select name="players" id="players" onchange="updateSelect('players')">
-                                    <option value="Troy Deeny">Troy Deeny</option>
-                                    <option value="Harry Kane">Harry Kane</option>
-                                    <option value="Robert Firmino">Robert Firmino</option>
-                                    <option value="Marcus Rashford">Marcus Rashford</option>
                                 </select>
                                 <select name="seasons" id="seasons" onchange="updateSelect('seasons')">
                                     <option value="2018">2018</option>
