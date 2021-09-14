@@ -5,20 +5,48 @@ let list3 = [0, 0, 1, 0, 3, 1, 1, 10, 0, 0, 0, 1]
 let list4 = [0, 0, 0, 0, 0, 0, 5, 5, 5, 0, 0, 0]
 let xAxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 let yAxis = list1
-//* ----------------------------------------------------- FETCHING DATA START ----------------------------------------------------- //
-let playersData = null
+
+let teamsData = []
+let playersData = []
 
 // league IDs and corresponding names
 const footballLeagueId = [39, 140, 61];
 const footballLeague = ['English Premier League', 'La Liga', 'Ligue One'];
 
-// storage keys
-const PLAYERS_FOOTBALL_KEY = "footballPlayers";
+//* GETTING HTML ELEMENTS
+const elements = {
+    teams: document.getElementById('teams'),
+    graphType: document.getElementById('graphType'),
+    seasons: document.getElementById('seasons'),
+    statMode: document.getElementById('statMode'),
+    statType: document.getElementById('statType'),
+}
 
+//* DATA FOR GRAPH AND TABLE
+// hopefully will be able to access api data like data.players[graphData.player].seasons[graphData.season].stats[graphData.selectedType]
+const graphData = {
+    leagueID: footballLeagueId[0],
+    selectedTeam: 'Manchester',
+    selectedGraph: 'bar',
+    selectedTeam: {},
+    players: [],
+    selectedSeason: '2020',
+    selectedMode: 'Total',
+    selectedType: 'Goals'
+}
+
+const tableData = {
+
+}
+
+//* ----------------------------------------------------- FETCHING DATA START ----------------------------------------------------- //
+// storage keys
+const TEAMS_FOOTBALL_KEY = "footballTeams";
+const PLAYERS_FOOTBALL_KEY = 'footballPlayers'
 // api data
 const KEY = '10b74ce9ebmsh829850853489ac5p14ae76jsn9fd379ce8a94';
-const requestURL = 'https://api-football-v1.p.rapidapi.com/v3/players?'
-
+const requestTeamsURL = 'https://api-football-v1.p.rapidapi.com/v3/teams?'
+const requestPlayersFromTeamURL = 'https://api-football-v1.p.rapidapi.com/v3/players?'
 myHeaders = {
     "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
 	"x-rapidapi-key": KEY
@@ -34,100 +62,106 @@ var requestOptions = {
 This function either takes data directly from local storage if it exists or fetches from the API. This is done to
 minamise calls to the API as we only get 100 per day
 */
-function fetchPlayers(){
-    localStorage.getItem(PLAYERS_FOOTBALL_KEY) ? playersData = JSON.parse(localStorage.getItem(PLAYERS_FOOTBALL_KEY)) : fetchPlayersFromAPI()
+function fetchTeams(){
+    // localStorage.clear(TEAMS_FOOTBALL_KEY)
+    // localStorage.clear(PLAYERS_FOOTBALL_KEY)
+    localStorage.getItem(TEAMS_FOOTBALL_KEY) ? (teamsData = JSON.parse(localStorage.getItem(TEAMS_FOOTBALL_KEY)), updateOptions()) : fetchFromAPI(requestTeamsURL.concat(`league=${graphData.leagueID}&season=${graphData.selectedSeason}`), 'teams')
 }
 
 /*
-This function fetches the players from the API and returns an object in the form:
-data : {
-    parameters: {...},
-    results: 20,
-    paging: {...},
-    response: [
-        0: {
-            player: {
-                id: int,
-                name: string,
-                etc.
-            },
-            statistics: [
-                0: {
-                    ...,
-                    goals: {total: int},
-                    passes: {key: int} - were just gonna say key passes are assists coz fk it
-                }
-            ]
-        },
-        1: {...},
+This function fetches the teams or players from the API and then sets the teams or players variable
+to an object in the form:
+teamsData : [
+    team: {
+        id: int
+        name: string
         ...
-    ]
-}
+    }
+    venue: {
+        ...
+    }
+]
+
+playersData : [
+    {
+        player: {
+            id: int
+            name: string
+            ...
+        }
+        statistics: {
+            goals: {total: int, conceded: int, ...}
+            ...
+        }
+    },
+    ...
+]
 */
-function fetchPlayersFromAPI(){
+function fetchFromAPI(fetchURL, type){
     // api call, storing the data in topScorers object
-    fetch(requestURL.concat(`league=${footballLeagueId[0]}&season=${2020}`), requestOptions)
+    fetch(fetchURL, requestOptions)
     .then(response => response.json())
     .then((data) => {
-        localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
-        playersData = data.response
-        // on completion of this function we want to call the updateData method, which, will update the table and chart
-        updateData()
+        if (type == 'teams'){
+            localStorage.setItem(TEAMS_FOOTBALL_KEY, JSON.stringify(data.response))
+            teamsData = data.response
+            // on completion of this function we want to call the updateData method, which, will update the table and chart
+            updateOptions()
+            console.log(teamsData)
+        }else{
+            localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
+            playersData = data.response
+            updateData(playersData)
+        }
     })
     .catch(err => {
         console.error(err);
     });
 }
 
-fetchPlayers() // this is the variable that holds all the data being used in this script
-//* ----------------------------------------------------- FETCHING DATA END ----------------------------------------------------- //
-
-//* GETTING HTML ELEMENTS
-const elements = {
-    team: document.getElementById('team'),
-    graphType: document.getElementById('graphType'),
-    players: document.getElementById('players'),
-    seasons: document.getElementById('seasons'),
-    statMode: document.getElementById('statMode'),
-    statType: document.getElementById('statType')
+/*
+This functions updates the teams the user can select from when a league is selected. Note that the 
+value of each option is set to the team id, this is so that later on it is easier to search for players
+by their team id.
+*/
+function updateOptions(){
+    let options = ''
+    teamsData.forEach((item) => {
+        options += `<option value='${item.team.id}'>${item.team.name} </option>`
+    })
+    elements.teams.innerHTML = options
 }
 
-//* DATA FOR GRAPH AND TABLE
-// hopefully will be able to access api data like data.players[graphData.player].seasons[graphData.season].stats[graphData.selectedType]
-const graphData = {
-    //! DUMMY DATA FOR GRAPH
-    selectedTeam: 'Watford',
-    selectedGraph: 'line',
-    selectedPlayer: 'Troy Deeny',
-    selectedSeason: '2020',
-    selectedMode: 'Total',
-    selectedType: 'Goals'
+fetchTeams() // this is the variable that holds all the data being used in this script
+
+//* ----------------------------------------------------- SELECT FUNCTIONS ----------------------------------------------------- //
+
+//* ON CHANGE FUNCTION FOR SELECTS
+/*
+This function changes the current selected team and then fetches the players for that team and stores them
+in the graph data object.
+//! NOTE Please be careful when changing the dropdown as this calls the api
+*/
+function updateSelectTeams(){
+    let team = elements.teams.options[elements.teams.selectedIndex].value
+    graphData.selectedTeam = (teamsData.filter((data) => data.team.id == team))[0].team
+    console.log(graphData.selectedTeam.id)
+    fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}`), 'players')
 }
 
-const tableData = {
-
-}
-
-//* ON CHANGE FUNCTION FOR SELECT
 /*
 This function handles the on change for all the select elements, when the user changes what is selected the graph and table data should be updated, this is done
 by updating the graph data and table data variables then refreshing the graph and table.
 */
 function updateSelect(selectID){
-    if (selectID == 'players'){
-        graphData.selectedPlayer = elements.players.options[players.selectedIndex].value
-        yAxis = updatePlayer(graphData.selectedPlayer)
-        updateChartData(yAxis)
-    }else if (selectID == 'graphType'){
-        graphData.selectedGraph = elements.graphType.options[graphType.selectedIndex].value
+    if (selectID == 'graphType'){
+        graphData.selectedGraph = elements.graphType.options[elements.graphType.selectedIndex].value
         // TODO - create new chart - might have to do something with local storage here
     }else if (selectID == 'seasons'){
-        graphData.selectedSeason = elements.seasons.options[seasons.selectedIndex].value
-        yAxis = updateSeason(graphData.selectedSeason)
+        graphData.selectedSeason = elements.seasons.options[elements.seasons.selectedIndex].value
         updateChartData(yAxis)
     }else if (selectID == 'statType'){
-        graphData.selectedType = elements.statType.options[statType.selectedIndex].value
-        yAxis = updateStatType(graphData.selectedType)
+        graphData.selectedType = elements.statType.options[elements.statType.selectedIndex].value
         myChart.data.datasets[0].label = graphData.selectedType
         updateChartData(yAxis)
     }
@@ -139,47 +173,9 @@ function updateSelect(selectID){
         myChart.data.datasets[0].data = yAxis
         myChart.update()
     }
-
-    /* 
-    These functions will just filter out the data already provided by the API, e.g if the user selects a new player, these functions will search
-    for the selected player and then set the data to that players data
-    */
-    //! purely test functions
-    function updatePlayer(playerName){
-        if (playerName == 'Troy Deeny'){
-            return list1
-        }else if (playerName === 'Harry Kane'){
-            return list2
-        }else if (playerName === 'Robert Firmino'){
-            return list3
-        }else if (playerName === 'Marcus Rashford'){
-            return list4
-        }
-    }
-    function updateSeason(season){
-        if (season == '2018'){
-            return list1
-        }else if (season === '2019'){
-            return list2
-        }else if (season === '2020'){
-            return list3
-        }else if (season === '2021'){
-            return list4
-        }
-    }
-    function updateStatType(statType){
-        if (statType == 'Goals'){
-            return list1
-        }else if (statType === 'Assists'){
-            return list2
-        }else if (statType === 'Yellow cards'){
-            return list3
-        }else if (statType === 'Red cards'){
-            return list4
-        }
-    }
 }
 
+//* ------------------------------------------------------ GRAPH ----------------------------------------------------- *//
 //* STYLING GRAPH
 /*
 Creates the border color and background color for each graph element, for a line graph this is just on value, for a bar graph this is an array of values, where the index corresponds to
@@ -237,14 +233,27 @@ let myChart = new Chart(ctx, {
 });
 
 /*
-This function simply updates the chart with the players data, this is call after our fetch from the API has been completed
+This function simply updates the chart with the players data, this is called after our fetch from the API has been completed
 */
-function updateData(){
-    console.log(playersData)
+function updateData(data){
+    console.log(data)
+    names = data.map((playerObj) => playerObj.player.name)
+    goals = data.map((playerObj) => playerObj.statistics[0].goals.total)
+    goals = goals.map((goal) => goal === null ? 0 : goal)
+    myChart.data.datasets[0].data = goals
+    myChart.data.labels = names
+    myChart.data.datasets[0].backgroundColor = styleGraph(graphData.selectedGraph).backgrounds
+    myChart.data.datasets[0].borderColor = styleGraph(graphData.selectedGraph).borders
+    myChart.update()
 }
 
+//* ------------------------------------------------------ TABLE ----------------------------------------------------- *//
+
+
+//* ------------------------------------------------------ MAIN ----------------------------------------------------- *//
+
 function main(){
-    console.log(playersData)
+    updateSelectTeams()
 }
 
 main()
