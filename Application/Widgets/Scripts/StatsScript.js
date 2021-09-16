@@ -1,18 +1,11 @@
-//! DUMMY DATA
-let list1 = [0, 1, 1, 1, 3, 6, 1, 6, 0, 0, 0, 1]
-let list2 = [0, 1, 0, 2, 3, 1, 1, 3, 0, 0, 0, 1]
-let list3 = [0, 0, 1, 0, 3, 1, 1, 10, 0, 0, 0, 1]
-let list4 = [0, 0, 0, 0, 0, 0, 5, 5, 5, 0, 0, 0]
-let xAxis = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-let yAxis = list1
-
 let teamsData = []
 let playersData = []
 
 // league IDs and corresponding names
 const footballLeagueId = [39, 140, 61];
-const footballLeague = ['English Premier League', 'La Liga', 'Ligue One'];
-
+const footballLeague = ['Premier League', 'La Liga', 'Ligue One'];
+const league = 'Premier League'//localStorage.getItem('league')
+console.log(league)
 //* GETTING HTML ELEMENTS
 const elements = {
     teams: document.getElementById('teams'),
@@ -25,16 +18,16 @@ const elements = {
 //* DATA FOR GRAPH AND TABLE
 // hopefully will be able to access api data like data.players[graphData.player].seasons[graphData.season].stats[graphData.selectedType]
 const graphData = {
-    leagueID: footballLeagueId[0],
-    selectedTeam: 'Manchester',
+    leagueID: footballLeagueId[footballLeague.indexOf(league)],
+    selectedTeam: '',
     selectedGraph: 'bar',
     selectedTeam: {},
     players: [],
-    selectedSeason: '2020',
+    selectedSeason: '2021',
     selectedMode: 'Total',
     selectedType: 'Goals'
 }
-
+console.log(graphData.leagueID)
 const tableData = {
 
 }
@@ -63,8 +56,8 @@ This function either takes data directly from local storage if it exists or fetc
 minamise calls to the API as we only get 100 per day
 */
 function fetchTeams(){
-    // localStorage.clear(TEAMS_FOOTBALL_KEY)
-    // localStorage.clear(PLAYERS_FOOTBALL_KEY)
+    localStorage.clear(TEAMS_FOOTBALL_KEY)
+    localStorage.clear(PLAYERS_FOOTBALL_KEY)
     localStorage.getItem(TEAMS_FOOTBALL_KEY) ? (teamsData = JSON.parse(localStorage.getItem(TEAMS_FOOTBALL_KEY)), updateOptions()) : fetchFromAPI(requestTeamsURL.concat(`league=${graphData.leagueID}&season=${graphData.selectedSeason}`), 'teams')
 }
 
@@ -107,7 +100,7 @@ function fetchFromAPI(fetchURL, type){
             teamsData = data.response
             // on completion of this function we want to call the updateData method, which, will update the table and chart
             updateOptions()
-            console.log(teamsData)
+            updateSelectTeams()
         }else{
             localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
             playersData = data.response
@@ -145,7 +138,6 @@ in the graph data object.
 function updateSelectTeams(){
     let team = elements.teams.options[elements.teams.selectedIndex].value
     graphData.selectedTeam = (teamsData.filter((data) => data.team.id == team))[0].team
-    console.log(graphData.selectedTeam.id)
     fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}`), 'players')
 }
 
@@ -156,22 +148,42 @@ by updating the graph data and table data variables then refreshing the graph an
 function updateSelect(selectID){
     if (selectID == 'graphType'){
         graphData.selectedGraph = elements.graphType.options[elements.graphType.selectedIndex].value
-        // TODO - create new chart - might have to do something with local storage here
+        createNewChart()
+        updateData(playersData)
     }else if (selectID == 'seasons'){
         graphData.selectedSeason = elements.seasons.options[elements.seasons.selectedIndex].value
-        updateChartData(yAxis)
+        fetchFromAPI(requestTeamsURL.concat(`league=${graphData.leagueID}&season=${graphData.selectedSeason}`), 'teams')
     }else if (selectID == 'statType'){
         graphData.selectedType = elements.statType.options[elements.statType.selectedIndex].value
-        myChart.data.datasets[0].label = graphData.selectedType
-        updateChartData(yAxis)
+        updateData(playersData)
     }
-
+    
     /*
-    Simply takes in a new set of data and sets the yAxis of the chart to the input data
+    This function deletes the old chart then creates a new one with the selected chart type. This is used to change the chart type when the user selects a different chart type
     */
-    function updateChartData(yAxis){
-        myChart.data.datasets[0].data = yAxis
-        myChart.update()
+    function createNewChart(){
+        ctx = document.getElementById('statsGraph')
+        myChart.destroy()
+        myChart = new Chart(ctx, {
+            type: graphData.selectedGraph, 
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Goals',
+                    data: [], 
+                    backgroundColor: styleGraph(graphData.selectedGraph).backgrounds,
+                    borderColor: styleGraph(graphData.selectedGraph).borders,
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                scale: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                },
+            }
+        });
     }
 }
 
@@ -199,8 +211,8 @@ function styleGraph(selectedGraph){
         return borders
     }
     if (selectedGraph === 'bar') {
-        borders = createBorders(yAxis)
-        backgrounds = createBackgrounds(yAxis)
+        borders = createBorders(playersData)
+        backgrounds = createBackgrounds(playersData)
     }else{
         borders = '#FFF'
         backgrounds = '#D9484F'
@@ -214,10 +226,10 @@ let ctx = document.getElementById('statsGraph');
 let myChart = new Chart(ctx, {
     type: graphData.selectedGraph, 
     data: {
-        labels: xAxis,
+        labels: [],
         datasets: [{
             label: 'Goals',
-            data: yAxis, 
+            data: [], 
             backgroundColor: styleGraph(graphData.selectedGraph).backgrounds,
             borderColor: styleGraph(graphData.selectedGraph).borders,
             borderWidth: 1,
@@ -236,11 +248,19 @@ let myChart = new Chart(ctx, {
 This function simply updates the chart with the players data, this is called after our fetch from the API has been completed
 */
 function updateData(data){
-    console.log(data)
     names = data.map((playerObj) => playerObj.player.name)
-    goals = data.map((playerObj) => playerObj.statistics[0].goals.total)
-    goals = goals.map((goal) => goal === null ? 0 : goal)
-    myChart.data.datasets[0].data = goals
+    stat = []
+    if (graphData.selectedType == 'Goals'){
+        stat = data.map((playerObj) => playerObj.statistics[0].goals.total)
+    } else if (graphData.selectedType == 'Assists') {
+        stat = data.map((playerObj) => playerObj.statistics[0].passes.key)
+    } else if (graphData.selectedType == 'Yellow card'){
+        stat = data.map((playerObj) => playerObj.statistics[0].cards.yellow)
+    } else {
+        stat = data.map((playerObj) => playerObj.statistics[0].cards.red)
+    }
+    stat = stat.map((stat) => stat === null ? 0 : stat)
+    myChart.data.datasets[0].data = stat
     myChart.data.labels = names
     myChart.data.datasets[0].backgroundColor = styleGraph(graphData.selectedGraph).backgrounds
     myChart.data.datasets[0].borderColor = styleGraph(graphData.selectedGraph).borders

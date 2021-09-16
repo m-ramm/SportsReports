@@ -122,13 +122,12 @@
                                 <select name="graphs" id="graphType" onchange="updateSelect('graphType')">
                                     <option value="bar">Bar chart</option>
                                     <option value="line">Line chart</option>
-                                    <option value="scatter">Scatter chart</option>
                                 </select>
                                 <select name="seasons" id="seasons" onchange="updateSelect('seasons')">
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2021">2021</option>
+                                    <option value="2018">2021</option>
+                                    <option value="2019">2020</option>
+                                    <option value="2020">2019</option>
+                                    <option value="2021">2018</option>
                                 </select>
                                 <select name="statMode" id="statMode" onchange="updateSelect('statMode')">
                                     <option value="Total">Total</option>
@@ -144,7 +143,7 @@
                         </div>
                         <div class="row custom-graph-row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <canvas id="statsGraph" width="400" height="185"></canvas>
+                                <canvas id="statsGraph" width="400%" height="150%"></canvas>
                             </div>
                         </div>
                     </div>
