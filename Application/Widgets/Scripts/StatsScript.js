@@ -4,8 +4,8 @@ let playersData = []
 // league IDs and corresponding names
 const footballLeagueId = [39, 140, 61];
 const footballLeague = ['Premier League', 'La Liga', 'Ligue One'];
-const league = 'Premier League'//localStorage.getItem('league')
-console.log(league)
+const league = localStorage.getItem('league')
+
 //* GETTING HTML ELEMENTS
 const elements = {
     teams: document.getElementById('teams'),
