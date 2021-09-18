@@ -49,11 +49,11 @@ table {
 }
 
 /* colour every other element orange */
-table tr:nth-child(odd) td { 
+table tr:nth-child(odd) td, #topTable tbody:nth-child(odd) td { 
     background-color: var(--SRBlueAccent);
 }
 
-table tr:nth-child(even) td { 
+table tr:nth-child(even) td, #topTable tbody:nth-child(even) td { 
     background-color: var(--SRRedAccent);
 }
 
