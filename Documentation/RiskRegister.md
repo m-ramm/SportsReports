@@ -10,6 +10,8 @@ The following risk register outlines potential risks that could affect the deliv
 7. [Loss of Data/Code](#lossdata)
 8. [Client Unsatisfied Post-Sprint](#unsatisfied)
 9. [API No Longer Supported](#api)
+10. [Limited API calls](#apiLimit)
+11. [Incorrect Workload Allocation](#workload)
 
 # Risk Matrix
 ![RiskMatrix Not Found](Pictures/RiskMatrix.jpg "Risk Matrix")
@@ -112,4 +114,24 @@ The following risk register outlines potential risks that could affect the deliv
 >### **Monitoring Strategy**
 >Continue to check the websites and documentation of the APIs, and be aware of upcoming updates/changes to the API.
 >### **Mitigation Plan**
->Collect a source of alternative APIs just in case the current API no longer is supported. In the long term, the potential to create our own API/data-source will completely mitigate this risk all together.
+>Collect a source of alternative APIs just in case the current API no longer is supported. In the long term, the potential to create our own API/data-source will completely mitigate this risk all together.  
+
+## **10. Limited Daily API calls interferes with development** - 15/9/21<a name="apiLimit"></a>
+>### **Description**
+>Only a certain number of calls can be made to the api each day under the free subscription. Could interfere with development.
+>### **Impact and Likelihood**
+>High likelihood of occurring, as during development there will be phases when many api calls will need to be made to implement certain features and test them. The impact is low, as a new email can be used to sign up to the API quite easily, or can use another team members key for that day (if they are not using it).
+>### **Monitoring Strategy**
+>Be aware of who needs a lot of api calls when assigning PBIs in the sprint planning phase. 
+>### **Mitigation Plan**
+>Contact the group on agreed forms of communication, and ask for their keys, else create a new account for a new key.
+
+## **11. Incorrect Workload Allocations** - 15/9/21<a name="workload"></a>
+>### **Description**
+>Estimation of user stories can be inaccurate, so in sprints, some members may be allocated an unfair share of the workload.
+>### **Impact and Likelihood**
+>High likelihood of this occurring, because user story estimation is not always reliable. Impact is moderate, as there are work arounds to solve this issue if caught early.
+>### **Monitoring Strategy**
+>At team meetings and team check-ins, Scrum Master should assess how everyone is tracking with their tasks and if they are meeting the velocity required to complete their tasks. Furthermore, if a member is struggling, they should reach out to the groupchat. Overall, frequent communication is key.
+>### **Mitigation Plan**
+>Team consultation should be done, preferably in a meeting, to organise if another member who is ahead of velocity can help out. Furthermore, live share (pair programming) can aid where the tasks are difficult

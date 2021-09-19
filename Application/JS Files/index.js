@@ -40,8 +40,8 @@ function main() {
 
 
     //* used for testing
-    data = JSON.parse(localStorage.getItem(TOP_SCORERS_FOOTBALL_KEY));
-    console.log(data);
+    // data = JSON.parse(localStorage.getItem(TOP_SCORERS_FOOTBALL_KEY));
+    // console.log(data);
 
 
     // TODO: other api calls here as required
