@@ -6,6 +6,8 @@ const STANDINGS_FOOTBALL_KEY = "standingsFootball";
 
 const KEY = 'd478817a0fmsh584e04929c59a24p15d9b7jsn193d317fead8';
 
+const RANKING_NUMS = 10;
+
 myHeaders = {
     "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
     "x-rapidapi-key" : KEY
@@ -14,7 +16,6 @@ myHeaders = {
 var requestOptions = {
     method: "GET",
     headers: myHeaders,
-    redirect: "follow",
 };
 
 function checkStorage(key){
@@ -22,29 +23,29 @@ function checkStorage(key){
     return data && data !== null;
 }
 
-function fetchStandings(leagueId, leagueNames, leagueTableStorageKey){
+function fetchStandings(leagueId, leagueNames, leagueTableStorageKey, standingsQuery){
     let standings = {};
     // if storage is already filled, then don't run api request
     if (checkStorage(leagueTableStorageKey)) return;
 
     for(let i = 0; i < leagueId.length; i++) {
-        fetch(`https://api-football-v1.p.rapidapi.com/v3/standings?season=2020&league=${leagueId[i]}`, requestOptions)
+        fetch(`https://api-football-v1.p.rapidapi.com/v3/standings/${standingsQuery}?season=2020&league=${leagueId[i]}`, requestOptions)
         .then(response => response.json())
         .then((data) => {
-            standings[ leagueNames[i] ] = data.response;
+            standings[leagueNames[i]] = data.response;
             // put into localStorage
-            localStorage.setItem(leagueTableStorageKey, JSON.stringify(standings));  
+            localStorage.setItem(leagueTableStorageKey, JSON.stringify(standings)); 
         })
         .catch(error => console.log("error", error));
     }
- 
 }
+ 
 
 const tableElements = {
     leagueTableStats: document.getElementById('leagueTableStats')
 }
 
-function updateTable() {
+function updateStandingsTable() {
 
     let tableData;
     let tempData;
@@ -63,20 +64,20 @@ function updateTable() {
     
     // Loop to access all rows 
     tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY));
-    tableData = tempData[league]; 
+    tableData = tempData[league]
 
     // building table 
-    for(let i = 0; i < 10; i++) {
+    for(var i = 0; i < RANKING_NUMS; i++) {
         leagueTableStats.innerHTML += 
         `<tr>
-        <td>${tableData[i]['standings'][0][i]['rank']}</td>
-        <td>${tableData[i]['standings'][0][i]['team']['name']}</td>
-        <td>${tableData[i]['standings'][0][i]['all']['played']}</td>
-        <td>${tableData[i]['standings'][0][i]['all']['win']}</td>
-        <td>${tableData[i]['standings'][0][i]['all']['draw']}</td>
-        <td>${tableData[i]['standings'][0][i]['all']['lose']}</td>
-        <td>${tableData[i]['standings'][0][i]['points']}</td>
-        <td>${tableData[i]['standings'][0][i]['form']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['rank']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['team']['name']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['all']['played']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['all']['win']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['all']['draw']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['all']['lose']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['points']}</td>
+        <td>${tableData[i]['league']['standings'][0][i]['form']}</td>
         </tr>`;
     }
 }
@@ -86,14 +87,14 @@ Runs when the page loads
 */
 function main() {
 
-    fetchStandings(footballLeagueId, footballLeague, STANDINGS_FOOTBALL_KEY);
+    fetchStandings(footballLeagueId, footballLeague, STANDINGS_FOOTBALL_KEY, 'footballstandings')
 
-    updateTable();
+    updateStandingsTable();
 }
 
-function showHideRow(row) 
-    {
-        $("#" + row).toggle();
-    }
+//function showHideRow(row) {
+//    $("#" + row).toggle();
+//}
+
 
 main();
