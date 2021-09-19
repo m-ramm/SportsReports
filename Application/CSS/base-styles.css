@@ -57,6 +57,14 @@ table tr:nth-child(even) td, #topTable tbody:nth-child(even) td {
     background-color: var(--SRRedAccent);
 }
 
+table tr:nth-child(odd) td, #leagueTableStats tbody:nth-child(odd) td { 
+    background-color: var(--SRBlueAccent);
+}
+
+table tr:nth-child(even) td, #leagueTableStats tbody:nth-child(even) td { 
+    background-color: var(--SRRedAccent);
+}
+
 table th {
     background-color: var(--SRBlue);
     color: #FFF;
