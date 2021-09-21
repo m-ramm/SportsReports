@@ -3,6 +3,7 @@ const footballLeague = ['Premier League', 'La Liga', 'Ligue One'];
 const league = localStorage.getItem('league')
 
 const STANDINGS_FOOTBALL_KEY = "standingsFootball";
+const FIXTURES_FOOTBALL_TEAM_KEY = "fixturesFootballTeams"
 
 const KEY = 'd478817a0fmsh584e04929c59a24p15d9b7jsn193d317fead8';
 
@@ -39,6 +40,23 @@ function fetchStandings(leagueId, leagueNames, leagueTableStorageKey){
         .catch(error => console.log("error", error));
     }
 }
+
+function fetchFixtureByTeamID(leagueId, leagueNames, standingTeamId, leagueTableStorageKey){
+    let standings = {};
+    // if storage is already filled, then don't run api request
+    if (checkStorage(leagueTableStorageKey)) return;
+
+    for(let i = 0; i < leagueId.length; i++) {
+        fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?season=2020&league=${leagueId[i]}&team=${standingTeamId}`, requestOptions)
+        .then(response => response.json())
+        .then((data) => {
+            standings[leagueNames[i]] = data.response;
+            // put into localStorage
+            localStorage.setItem(leagueTableStorageKey, JSON.stringify(standings)); 
+        })
+        .catch(error => console.log("error", error));
+    }
+}
  
 
 const tableElements = {
@@ -66,10 +84,18 @@ function updateStandingsTable() {
     tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY));
     tableData = tempData[league];
 
+    tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
+    hiddenTableData = tempDataFixture[league];
+
+
+
     // building table 
     for(var i = 0; i < RANKING_NUMS; i++) {
+        // Get teamID
+        // standingTeamId = [0]['league']['standings'][0][i]['team']['id']
+
         leagueTableStats.innerHTML += 
-        `<tr>
+        `<tr onclick="showHideRow('hidden_row${i}');" class="visible_row">
         <td>${tableData[0]['league']['standings'][0][i]['rank']}</td>
         <td>${tableData[0]['league']['standings'][0][i]['team']['name']}</td>
         <td>${tableData[0]['league']['standings'][0][i]['all']['played']}</td>
@@ -78,6 +104,11 @@ function updateStandingsTable() {
         <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
         <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
         <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
+
+        <tr id="hidden_row${i}" class="hidden_row">
+            <td colspan=8>
+                ${hiddenTableData[i]['teams']['home']['name']} VS ${hiddenTableData[i]['teams']['away']['name']}
+            </td>
         </tr>`;
     }
 }
@@ -89,12 +120,14 @@ function main() {
 
     fetchStandings(footballLeagueId, footballLeague, STANDINGS_FOOTBALL_KEY)
 
+    fetchFixtureByTeamID(footballLeagueId, footballLeague, 33, FIXTURES_FOOTBALL_TEAM_KEY)
+
     updateStandingsTable();
 }
 
-//function showHideRow(row) {
-//    $("#" + row).toggle();
-//}
+function showHideRow(row) {
+    $("#" + row).toggle();
+}
 
 
 main();
