@@ -56,8 +56,8 @@ This function either takes data directly from local storage if it exists or fetc
 minamise calls to the API as we only get 100 per day
 */
 function fetchTeams(){
-    localStorage.clear(TEAMS_FOOTBALL_KEY)
-    localStorage.clear(PLAYERS_FOOTBALL_KEY)
+    localStorage.removeItem(TEAMS_FOOTBALL_KEY)
+    localStorage.removeItem(PLAYERS_FOOTBALL_KEY)
     localStorage.getItem(TEAMS_FOOTBALL_KEY) ? (teamsData = JSON.parse(localStorage.getItem(TEAMS_FOOTBALL_KEY)), updateOptions()) : fetchFromAPI(requestTeamsURL.concat(`league=${graphData.leagueID}&season=${graphData.selectedSeason}`), 'teams')
 }
 
@@ -164,26 +164,55 @@ function updateSelect(selectID){
     function createNewChart(){
         ctx = document.getElementById('statsGraph')
         myChart.destroy()
-        myChart = new Chart(ctx, {
-            type: graphData.selectedGraph, 
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Goals',
-                    data: [], 
-                    backgroundColor: styleGraph(graphData.selectedGraph).backgrounds,
-                    borderColor: styleGraph(graphData.selectedGraph).borders,
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                scale: {
-                    y: {
-                        beginAtZero: true,
-                    }
+        if (graphData.selectedGraph === 'pie') {
+            myChart = new Chart(ctx,{
+                type: 'pie',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Goals',
+                        data: [], 
+                        backgroundColor: styleGraph(graphData.selectedGraph).backgrounds,
+                        borderColor: styleGraph(graphData.selectedGraph).borders,
+                        borderWidth: 1,
+                    }]
                 },
-            }
-        });
+                options: {
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: 'top',
+                    },
+                    title: {
+                    //   display: true,
+                    //   text: 'Chart.js Pie Chart'
+                    }
+                  }
+                },
+              });
+        }
+        else {
+            myChart = new Chart(ctx, {
+                type: graphData.selectedGraph, 
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Goals',
+                        data: [], 
+                        backgroundColor: styleGraph(graphData.selectedGraph).backgrounds,
+                        borderColor: styleGraph(graphData.selectedGraph).borders,
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    scale: {
+                        y: {
+                            beginAtZero: true,
+                        }
+                    },
+                }
+            });
+        }      
     }
 }
 
@@ -251,7 +280,9 @@ function updateData(data){
     names = data.map((playerObj) => playerObj.player.name)
     stat = []
     if (graphData.selectedType == 'Goals'){
+        // stat = data.map((playerObj) => {if (playerObj.statistics[0].goals.total > 0) { playerObj.statistics[0].goals.total }})
         stat = data.map((playerObj) => playerObj.statistics[0].goals.total)
+        // stat = stat.filter((goals)=>{goals>0});
     } else if (graphData.selectedType == 'Assists') {
         stat = data.map((playerObj) => playerObj.statistics[0].passes.key)
     } else if (graphData.selectedType == 'Yellow card'){
@@ -260,6 +291,7 @@ function updateData(data){
         stat = data.map((playerObj) => playerObj.statistics[0].cards.red)
     }
     stat = stat.map((stat) => stat === null ? 0 : stat)
+    // stat = stat.filter(num => num > 0);
     myChart.data.datasets[0].data = stat
     myChart.data.labels = names
     myChart.data.datasets[0].backgroundColor = styleGraph(graphData.selectedGraph).backgrounds
