@@ -56,8 +56,8 @@ This function either takes data directly from local storage if it exists or fetc
 minamise calls to the API as we only get 100 per day
 */
 function fetchTeams(){
-    // localStorage.clear(TEAMS_FOOTBALL_KEY)
-    // localStorage.clear(PLAYERS_FOOTBALL_KEY)
+    localStorage.clear(TEAMS_FOOTBALL_KEY)
+    localStorage.clear(PLAYERS_FOOTBALL_KEY)
     localStorage.getItem(TEAMS_FOOTBALL_KEY) ? (teamsData = JSON.parse(localStorage.getItem(TEAMS_FOOTBALL_KEY)), updateOptions()) : fetchFromAPI(requestTeamsURL.concat(`league=${graphData.leagueID}&season=${graphData.selectedSeason}`), 'teams')
 }
 
@@ -266,8 +266,6 @@ function updateData(data){
     myChart.data.datasets[0].borderColor = styleGraph(graphData.selectedGraph).borders
     myChart.update()
 }
-
-//* ------------------------------------------------------ TABLE ----------------------------------------------------- *//
 
 
 //* ------------------------------------------------------ MAIN ----------------------------------------------------- *//
