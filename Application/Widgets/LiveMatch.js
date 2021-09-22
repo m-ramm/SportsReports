@@ -1,3 +1,4 @@
+// ----------------------------- graph ---------------------- >>
 var ctx = document.getElementById('scatter_graph').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -64,12 +65,13 @@ function getDataforLocation(FetchURL){
     });
 }
 
-getDataforLocation("https://api-football-v1.p.rapidapi.com/v3/fixtures?live=all")
+getData("https://api-football-v1.p.rapidapi.com/v3/fixtures?live=all")
 
 // get location from the API:
 function setText(data){
     let locs = document.getElementById('Loc1');
     for(i = 0; i < data.length; i++){
-        locs.innerHTML += `<p1>${data[i].fixture.venue.name} <br/>`;
+        locs.innerHTML += `<p1>Venue: ${data[i].fixture.venue.name}  <br />`;
     }
 }
+

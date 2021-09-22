@@ -95,40 +95,22 @@
         </div>
         <div class=" key-Events col-sm-4 col-md-12 col-lg-6">
             <div class="p-3 border align-items-center">Key Events</div>
-
-
-            <table class="tabled">
-                <tr> 
-                    <th> This one contains time and live report </th>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-                <tr>
-                    <td>Some sample test data will be put in here</td>
-                </tr>
-            </table>
+            <div class="tabled" id = "liveScores">
+                <div id="wg-api-football-livescore"
+                    data-host="api-football-v1.p.rapidapi.com"
+                    data-refresh="3440"
+                    data-key="35d8517127mshdf20e1fe84837bbp18973fjsn99f4faf52300"
+                    data-theme=""
+                    data-show-errors="True"
+                    class="api_football_loader">
+                </div>
+                <script
+                    type="module"
+                    src="https://widgets.api-sports.io/football/1.1.8/widget.js">
+                </script>
             <div class="custom-row">
-                <div class="p-3 border ">Location and Time
-                    <div class="Time-Loc align-items-center "> Display location and time when the match starts </div> 
+                <div class="p-3 border  ">Location and Time
+                    <div class="Time-Loc align-items-center" id = "Loc1"> </div> 
                 </div> 
             </div>
         </div>    
