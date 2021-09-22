@@ -100,7 +100,12 @@ function fetchFromAPI(fetchURL, type){
             updateSelectTeams()
         }else{
             localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
-            playersData = data.response
+            playersData.push(data.response)
+            console.log(playersData)
+            let pages = data.paging
+            if (pages.current < pages.total){
+                fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}&page=${pages.current + 1}`), 'players')
+            }
             updateData(playersData)
         }
     })
@@ -208,8 +213,8 @@ function styleGraph(selectedGraph){
         return borders
     }
     if (selectedGraph === 'bar') {
-        borders = createBorders(playersData)
-        backgrounds = createBackgrounds(playersData)
+        borders = createBorders(playersData.flat(1))
+        backgrounds = createBackgrounds(playersData.flat(1))
     }else{
         borders = '#FFF'
         backgrounds = '#D9484F'
@@ -245,19 +250,25 @@ let myChart = new Chart(ctx, {
 This function simply updates the chart with the players data, this is called after our fetch from the API has been completed
 */
 function updateData(data){
-    names = data.map((playerObj) => playerObj.player.name)
-    stat = []
-    if (graphData.selectedType == 'Goals'){
-        stat = data.map((playerObj) => playerObj.statistics[0].goals.total)
-    } else if (graphData.selectedType == 'Assists') {
-        stat = data.map((playerObj) => playerObj.statistics[0].passes.key)
-    } else if (graphData.selectedType == 'Yellow card'){
-        stat = data.map((playerObj) => playerObj.statistics[0].cards.yellow)
-    } else {
-        stat = data.map((playerObj) => playerObj.statistics[0].cards.red)
-    }
-    stat = stat.map((stat) => stat === null ? 0 : stat)
-    myChart.data.datasets[0].data = stat
+    stats = []
+    names = []
+    data.forEach((page) => {
+        names.push(page.map((playerObj) => playerObj.player.name))
+        if (graphData.selectedType == 'Goals'){
+            stat = page.map((playerObj) => playerObj.statistics[0].goals.total)
+        } else if (graphData.selectedType == 'Assists') {
+            stat = page.map((playerObj) => playerObj.statistics[0].passes.key)
+        } else if (graphData.selectedType == 'Yellow card'){
+            stat = page.map((playerObj) => playerObj.statistics[0].cards.yellow)
+        } else {
+            stat = page.map((playerObj) => playerObj.statistics[0].cards.red)
+        }
+        stats.push(stat.map((stat) => stat === null ? 0 : stat))
+        console.log(stats)
+    })
+    stats = stats.flat(1)
+    names = names.flat(1)
+    myChart.data.datasets[0].data = stats
     myChart.data.labels = names
     myChart.data.datasets[0].backgroundColor = styleGraph(graphData.selectedGraph).backgrounds
     myChart.data.datasets[0].borderColor = styleGraph(graphData.selectedGraph).borders
