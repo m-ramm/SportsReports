@@ -114,19 +114,18 @@
         </header>
         <br>
         <table class="leagueTableDropdownSelect">
-            <th class="leagueTableDropdownSelect">Select Competition :
-                <select name="league_competition" id="league_competition" class="leagueDropdownButton">
+            <th class="leagueTableDropdownSelect" id="currentLeague">
+                <!--<select name="league_competition" id="league_competition" class="leagueDropdownButton">
                     <option value="Premier League">Premier League</option>
                     <option value="La Liga">La Liga</option>
-                    <option value="Ligue One">Ligue One</option>
+                    <option value="Ligue One">Ligue One</option>-->
                 </select>
             </th>
             <th class="leagueTableDropdownSelect">Select a season :
-                <select name="league_years" id="league_years" class="leagueDropdownButton">
+                <select name="seasonStandings" id="seasonStandings" class="leagueDropdownButton" onchange="updateSeasons('seasonStandings')">
                     <option value="league_2021">2021</option>
                     <option value="league_2020">2020</option>
                     <option value="league_2019">2019</option>
-                    <option value="league_2018">2018</option>
                 </select>
             </th>
         </table>
