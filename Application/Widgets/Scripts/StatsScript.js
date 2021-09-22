@@ -140,6 +140,8 @@ in the graph data object.
 function updateSelectTeams(){
     let team = elements.teams.options[elements.teams.selectedIndex].value
     graphData.selectedTeam = (teamsData.filter((data) => data.team.id == team))[0].team
+    // resetting player data when new team is selected
+    playersData = []
     fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}`), 'players')
 }
 
