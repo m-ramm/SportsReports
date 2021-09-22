@@ -104,8 +104,7 @@ function fetchFromAPI(fetchURL){
 //     teamsLength = teamsData[0]['league']['standings'][0].length
 // 
 //     for(let i = 0; i < leagueId.length; i++) {
-//         for(let j = 0; j < teamsLength; j++) {
-//             teamsId[leagueNames[i]] = teamsId[leagueNames[i]].concat(teamsData[0]['league']['standings'][j]['team']['id'])
+//         teamsId[leagueNames[i]] = teamsId[leagueNames[i]].concat(teamsData[0]['league']['standings'][j]['team']['id'])
 // 
 //             localStorage.setItem(TEAM_ID_KEYS, JSON.stringify(teamsId))
 //         }
@@ -150,16 +149,13 @@ function updateStandingsTable() {
         <td>${tableData[0]['league']['standings'][0][i]['all']['draw']}</td>
         <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
         <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
-        <td>${tableData[0]['league']['standings'][0][i]['form']}</td>`;
-        //for(var j = 0; j < 5; j++) {
-        //    getTeamId();
-        //    leagueTableStats.innerHTML += 
-        //    `<tr id="hidden_row${j}" class="hidden_row">
-        //        <td colspan=8>
-        //            ${hiddenTableData[0]['teams']['home']['name']} VS ${hiddenTableData[0]['teams']['away']['name']}
-        //        </td>
-        //    </tr>`;
-        //}
+        <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
+
+        <tr id="hidden_row${i}" class="hidden_row">
+            <td colspan=8>
+            </td>
+        </tr>`;
+        
     }
 }
 
