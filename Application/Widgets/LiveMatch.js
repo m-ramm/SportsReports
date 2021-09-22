@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // ----------------------------- graph ---------------------- >>
+=======
+>>>>>>> master
 var ctx = document.getElementById('scatter_graph').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -33,6 +36,7 @@ var myChart = new Chart(ctx, {
             }
         }
     }
+<<<<<<< HEAD
 });
 
 
@@ -75,3 +79,6 @@ function setText(data){
     }
 }
 
+=======
+});
+>>>>>>> master
