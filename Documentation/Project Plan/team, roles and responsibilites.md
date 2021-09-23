@@ -13,16 +13,16 @@ Means of communication:
 - Messenger
 - Emails
 
-We are Majorly using slack for communication between team Members, but for convinience we are using messenger. The team also sometimes communicates and shares files using email.
+We are Majorly using slack for communication between team Members, but for convenience we are using messenger. The team also sometimes communicates and shares files using email.
 
 Roles and Responsibilites:
 
-The roles have not been fixed yet:
-1. Antony Loose: Stats widget 
-2. Eric Chen: CSS 
-3. Max Ramm: League Table
-4. Mursal Ashraf: App Navigation (tab bar etc.) CSS
-5. Suryadeep Singh: Live match widget
+Roles:
+1. Antony Loose: Full Stack Developer 
+2. Eric Chen: Full Stack Developer  
+3. Max Ramm: Full Stack Developer 
+4. Mursal Ashraf: Full Stack Developer 
+5. Suryadeep Singh: Full Stack Developer 
 
 Responsibilites of a Team member:
 1. Working and cooperating along with team members
