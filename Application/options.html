@@ -130,7 +130,11 @@
         <!-- Potential way of implementing local storage through navbar -->
         <!-- Loads heading in options page -->
         <!-- Check comments in navbar.js -->
-        <h2 id="leagueHeading"></h2>
+        <div id="headline">
+            <img id="league_logo_left" src="" alt="">
+            <h2 id="leagueHeading"></h2>
+            <img id="league_logo_right" src="" alt="">
+        </div>
         <script>
             document.getElementById("leagueHeading").textContent = window.localStorage.getItem('league')
         </script>
