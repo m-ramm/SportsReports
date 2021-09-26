@@ -78,3 +78,11 @@ table td {
 .Time-Loc{
     color: #FFF
 }
+
+/* Options page additional styling */
+
+#headline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
