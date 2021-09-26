@@ -84,5 +84,43 @@ table td {
 #headline {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+    /* justify-content: space-evenly; */
+    padding: 50px;
 }
+#league_logo_left {
+    padding-right: 10px;
+}
+#leagueHeading {
+    color: white;
+    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
+    padding-left: 10px;
+}
+
+/* Background Gradient */
+
+/* element {
+    background: linear-gradient(225deg, #2d8883, #74dfd9, #025d5a);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 19s ease infinite;
+    -moz-animation: AnimationName 19s ease infinite;
+    animation: AnimationName 19s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 99%}
+    50%{background-position:100% 2%}
+    100%{background-position:0% 99%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 99%}
+    50%{background-position:100% 2%}
+    100%{background-position:0% 99%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 99%}
+    50%{background-position:100% 2%}
+    100%{background-position:0% 99%}
+} */
