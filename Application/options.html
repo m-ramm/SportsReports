@@ -65,6 +65,14 @@
             font-size: 20px;
         }
 
+        .optionImage {
+            transform: scale(1.5);
+            transition: transform 0.5s;
+        }
+
+        .button:hover > .optionImage{
+            transform: scale(2.5);
+        }
     </style>
 </head>
 <body>
@@ -142,23 +150,26 @@
             <div class="row">
                 <!-- League table column -->
                 <div class="col-sm-6 col-md-6 col-lg-6 justify-content-center columnStyle">
-                    <button onclick="location.href='./Widgets/leagueTable.html'" type="button" class="leagueTableButton">
-                        League Table
+                    <button onclick="location.href='./Widgets/leagueTable.html'" type="button" class="leagueTableButton button">
+                        <img src="./images/icons/table_chart_white_24dp.svg" alt="" class="optionImage"><br><br>
+                        <span>League Table</span><br>
                     </button>
                 </div>
                 <!-- stats and live match column -->
                 <div class="col-sm-6 col-md-6 col-lg-6 justify-content-center columnStyle">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12 columnTwoStyle">
-                            <button onclick="location.href='./Widgets/StatsWidget.html'" type="button" class="liveMatchButton">
-                                Statistics
+                            <button onclick="location.href='./Widgets/StatsWidget.html'" type="button" class="liveMatchButton button">
+                                <img src="./images/icons/bar_chart_white_24dp.svg" alt="" class="optionImage"><br><br>
+                                <span>Statistics</span>
                             </button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12 columnTwoStyle">
-                            <button onclick="location.href='./Widgets/liveMatch.html'" type="button" class="liveMatchButton">
-                                Live Match
+                            <button onclick="location.href='./Widgets/liveMatch.html'" type="button" class="liveMatchButton button">
+                                <img src="./images/icons/sensors_white_24dp.svg" alt="" class="optionImage"><br><br>
+                                <span>Live Match</span>
                             </button>
                         </div>
                     </div>
