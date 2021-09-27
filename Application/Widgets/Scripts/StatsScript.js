@@ -33,7 +33,7 @@ const graphData = {
 const TEAMS_FOOTBALL_KEY = "footballTeams";
 const PLAYERS_FOOTBALL_KEY = 'footballPlayers'
 // api data
-const KEY = '10b74ce9ebmsh829850853489ac5p14ae76jsn9fd379ce8a94';
+// const KEY = '10b74ce9ebmsh829850853489ac5p14ae76jsn9fd379ce8a94';
 const requestTeamsURL = 'https://api-football-v1.p.rapidapi.com/v3/teams?'
 const requestPlayersFromTeamURL = 'https://api-football-v1.p.rapidapi.com/v3/players?'
 myHeaders = {

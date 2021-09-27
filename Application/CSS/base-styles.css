@@ -28,6 +28,7 @@ h3 {
     margin: 0;
 }
 
+/* https://prevwong.github.io/awesome-select/ */
 select {
     background: var(--SRBlueAccent);
     border-color: transparent;
@@ -46,6 +47,7 @@ table {
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 /* colour every other element orange */
@@ -68,15 +70,20 @@ table tr:nth-child(even) td, #leagueTableStats tbody:nth-child(even) td {
 table th {
     background-color: var(--SRBlue);
     color: #FFF;
-    padding: 3px 55px 3px 55px
+    padding: 3px 55px 3px 55px;
+    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
 }
 
 table td {
     padding: 4px 10px 10px;
-    color: #FFF
+    color: #FFF;
+    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
 }
+
+
 .Time-Loc{
-    color: #FFF
+    color: #FFF;
+    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
 }
 
 /* Options page additional styling */
