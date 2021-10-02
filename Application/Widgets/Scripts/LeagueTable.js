@@ -147,78 +147,83 @@ function updateStandingsTable() {
 
     switch(seasonStandings.value) {
         case '2021':
-        // Loop to access all rows 
-        tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
-        tableData= tempData[footballSeasons[0]];
+            // Loop to access all rows 
+            tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
+            tableData= tempData[footballSeasons[0]];
 
-        // tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
-        // hiddenTableData = tempDataFixture[league];
-        // building table 
-        for(var i = 0; i < RANKING_NUMS; i++) {
-            leagueTableStats.innerHTML += 
-            `<tr onclick="showHideRow('hidden_row${i}');" class="visible_row">
-            <td>${tableData[0]['league']['standings'][0][i]['rank']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['team']['name']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['played']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['win']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['draw']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
-            <tr id="hidden_row${i}" class="hidden_row">
-                <td colspan=8>
-                </td>
-            </tr>`;
-        }
+            // tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
+            // hiddenTableData = tempDataFixture[league];
+            // building table 
+            for(var i = 0; i < RANKING_NUMS; i++) {
+                leagueTableStats.innerHTML += 
+                `<tr onclick="showHideRow('hidden_row${i}');" class="visible_row">
+                <td>${tableData[0]['league']['standings'][0][i]['rank']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['team']['name']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['played']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['win']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['draw']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
+                <tr id="hidden_row${i}" class="hidden_row">
+                    <td colspan=8>
+                    </td>
+                </tr>`;
+            }
+            break;
+
         case '2020':
-        // Loop to access all rows 
-        tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
-        tableData= tempData[footballSeasons[1]];
+            // Loop to access all rows 
+            tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
+            tableData= tempData[footballSeasons[1]];
 
-        // tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
-        // hiddenTableData = tempDataFixture[league];
-        // building table 
-        for(var i = 0; i < RANKING_NUMS; i++) {
-            leagueTableStats.innerHTML += 
-            `<tr onclick="showHideRow('hidden_row${i}');" class="visible_row">
-            <td>${tableData[0]['league']['standings'][0][i]['rank']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['team']['name']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['played']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['win']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['draw']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
-            <tr id="hidden_row${i}" class="hidden_row">
-                <td colspan=8>
-                </td>
-            </tr>`;
-        }
+            // tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
+            // hiddenTableData = tempDataFixture[league];
+            // building table 
+            for(var i = 0; i < RANKING_NUMS; i++) {
+                leagueTableStats.innerHTML += 
+                `<tr onclick="showHideRow('hidden_row${i}');" class="visible_row">
+                <td>${tableData[0]['league']['standings'][0][i]['rank']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['team']['name']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['played']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['win']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['draw']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
+                <tr id="hidden_row${i}" class="hidden_row">
+                    <td colspan=8>
+                    </td>
+                </tr>`;
+            }
+            break;
+
         case '2019':
-        // Loop to access all rows 
-        tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
-        tableData= tempData[footballSeasons[2]];
+            // Loop to access all rows 
+            tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
+            tableData= tempData[footballSeasons[2]];
 
-        // tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
-        // hiddenTableData = tempDataFixture[league];
-        // building table 
-        for(var i = 0; i < RANKING_NUMS; i++) {
-            leagueTableStats.innerHTML += 
-            `<tr onclick="showHideRow('hidden_row${i}');" class="visible_row">
-            <td>${tableData[0]['league']['standings'][0][i]['rank']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['team']['name']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['played']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['win']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['draw']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
-            <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
-            <tr id="hidden_row${i}" class="hidden_row">
-                <td colspan=8>
-                </td>
-            </tr>`;
-        }
-    }
+            // tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
+            // hiddenTableData = tempDataFixture[league];
+            // building table 
+            for(var i = 0; i < RANKING_NUMS; i++) {
+                leagueTableStats.innerHTML += 
+                `<tr onclick="showHideRow('hidden_row${i}');" class="visible_row">
+                <td>${tableData[0]['league']['standings'][0][i]['rank']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['team']['name']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['played']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['win']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['draw']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['all']['lose']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['points']}</td>
+                <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
+                <tr id="hidden_row${i}" class="hidden_row">
+                    <td colspan=8>
+                    </td>
+                </tr>`;
+            }
+            break;
+    }   
 }
 
 
