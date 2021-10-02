@@ -33,7 +33,7 @@ const graphData = {
 const TEAMS_FOOTBALL_KEY = "footballTeams";
 const PLAYERS_FOOTBALL_KEY = 'footballPlayers'
 // api data
-// const KEY = '10b74ce9ebmsh829850853489ac5p14ae76jsn9fd379ce8a94';
+const KEY = '10b74ce9ebmsh829850853489ac5p14ae76jsn9fd379ce8a94';
 const requestTeamsURL = 'https://api-football-v1.p.rapidapi.com/v3/teams?'
 const requestPlayersFromTeamURL = 'https://api-football-v1.p.rapidapi.com/v3/players?'
 myHeaders = {
@@ -140,6 +140,10 @@ in the graph data object.
 function updateSelectTeams(){
     let team = elements.teams.options[elements.teams.selectedIndex].value
     graphData.selectedTeam = (teamsData.filter((data) => data.team.id == team))[0].team
+    
+    // update the team logo
+    document.getElementById('teamLogo').src = (teamsData.filter((data) => data.team.id == team))[0].team.logo;
+
     // resetting player data when new team is selected
     playersData = []
     fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}`), 'players')

@@ -31,7 +31,8 @@ h3 {
 /* https://prevwong.github.io/awesome-select/ */
 select {
     background: var(--SRBlueAccent);
-    border-color: transparent;
+    border: 2px solid white;
+    border-radius: 8px;
     color: #FFF;
     text-shadow: 0 1px 0 black;
 }
@@ -41,13 +42,31 @@ select option {
     color: #FFF;
     text-shadow: 0 1px 0 black;
 }
-
+.selectContainer {
+    justify-content: space-between;
+    margin-right: 30px;
+    margin-left: 30px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+    border-radius: 25px;
+    border-color: #FFF;
+    border-style: solid;
+    border-width: 3px;
+    background-color: var(--SRBlue);
+    color: #FFF;
+}
+.titleContainer {
+    justify-content: center;
+    text-align: center;
+}
 /* Table styling */ 
+.tableWrapper {
+    overflow-x: auto;
+}
 table {
     border-collapse: collapse;
     margin-left: auto;
     margin-right: auto;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
 }
 
 /* colour every other element orange */
