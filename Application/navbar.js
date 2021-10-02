@@ -22,11 +22,11 @@ const leageVal = window.localStorage.getItem('league');
 function getImagePath(local_league){
     var ret_val = "";
     if (local_league == "Premier League"){
-        ret_val = "./images/soccer/premier-league.png";
+        ret_val = "/Application/images/soccer/premier-league.png";
     } else if (local_league == "La Liga"){
-        ret_val = "./images/soccer/la-liga.png";
+        ret_val = "/Application/images/soccer/la-liga.png";
     } else if (local_league == "Ligue One") {
-        ret_val = "./images/soccer/ligue-one.png";
+        ret_val = "/Application/images/soccer/ligue-one.png";
     }
 
     return ret_val;
@@ -34,20 +34,20 @@ function getImagePath(local_league){
 
 function setImageSrc(path){
     var image_left = document.getElementById('league_logo_left');
-    var image_right = document.getElementById('league_logo_right');
+    // var image_right = document.getElementById('league_logo_right');
 
     //set paths and dimensions
     image_left.src = path;
     image_left.style.height = '50px';
     image_left.style.width = '50px';
 
-    image_right.src = path;
-    image_right.style.height = '50px';
-    image_right.style.width = '50px';
+    // image_right.src = path;
+    // image_right.style.height = '50px';
+    // image_right.style.width = '50px';
 
     //set alt attributes
     image_left.alt = 'logo of ' + leageVal
-    image_right.alt = 'logo of ' + leageVal
+    // image_right.alt = 'logo of ' + leageVal
 }
 
 var imagePath = getImagePath(leageVal)
