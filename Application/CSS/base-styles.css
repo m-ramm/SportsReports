@@ -76,6 +76,7 @@ table td {
     color: #FFF
 }
 .Time-Loc{
+<<<<<<< Updated upstream
     color: #FFF
 }
 
@@ -85,4 +86,8 @@ table td {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+=======
+    color: #FFF;
+    background-color: var(--SRRedAccent);
+>>>>>>> Stashed changes
 }

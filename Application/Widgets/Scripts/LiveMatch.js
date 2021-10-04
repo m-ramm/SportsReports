@@ -1,18 +1,18 @@
 var ctx = document.getElementById('scatter_graph').getContext('2d');
 var myChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'line',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: [],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [],
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'red',
+                'red',
+                'red',
+                'red',
+                'red',
+                'red'
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -57,7 +57,27 @@ function getDataforLocation(FetchURL){
     .then((data) => {
         venueData = data.response
         console.log(venueData)
-        setText(venueData) 
+        setText(venueData)
+
+        // get fixture ID:
+        for(i = 0; i < venueData.length; i++){
+            if(venueData[i].fixture.id == 39){
+                reqEventData = getLiveEventDataByID("39");
+                graphData(reqEventData);
+
+            }
+            else if(venueData[i].fixture.id == 140){
+                reqEventData = getLiveEventDataByID("140");
+                graphData(reqEventData);
+
+            }
+            else if(venueData[i].fixture.id == 61){
+                reqEventData = getLiveEventDataByID("140");
+                graphData(reqEventData);
+
+            }
+        }
+
     })
     .catch(err => {
         console.log(err);
@@ -66,6 +86,8 @@ function getDataforLocation(FetchURL){
 
 getDataforLocation("https://api-football-v1.p.rapidapi.com/v3/fixtures?live=all")
 
+
+// ----------------------------------------get Events ------------------------>>
 // get location from the API:
 function setText(data){
     let locs = document.getElementById('Loc1');
@@ -73,3 +95,59 @@ function setText(data){
         locs.innerHTML += `<p1>${data[i].fixture.venue.name} <br/>`;
     }
 }
+
+// get events
+//function getEvents(FetchURL){
+//    fetch(FetchURL, requestOptions)
+//    .then(response => response.json())
+//    .then((data) => {
+//        eventsdata = data.response
+//        console.log(eventsdata)
+//    })
+//}
+//getEvents("https://api-football-v1.p.rapidapi.com/v3/fixtures/statistics?fixture=215662&team=463")
+
+
+// -------------------------------- graph data ----------------------->>
+function getLiveEventDataByID(FixutureID){
+    let Eventurl = "https://api-football-v1.p.rapidapi.com/v3/fixtures/events";
+    Eventurl += Eventurl +"?fixture=" + FixutureID;
+    fetch(Eventurl, requestOptions)
+    .then(response => response.json())
+    .then((data) => {
+        eventsData = data.response;
+    return eventsData;
+    })
+
+function graphData(eventsData){
+    team1 = eventsData[0].team.name;
+    for(i = 0; i < data.length; i++){
+        // get the name of team1:
+        let team1 = eventsData[i].team.name;
+
+        // nested if:
+        if(eventsData[i].team.name == team1){
+            if(eventsData[i].type == "Goal"){
+                // get time:
+                myChart.data.labels.push(eventsData[i].time.elapsed);
+                // goals scored:
+                myChart.data.datasets.data.push(1);
+                myChart.update();
+            }
+        // if name is not team1:
+        else{
+            if(eventsData[i].type == "Goal"){
+                myChart.data.datasets.data.push(-1);
+                myChart.update();
+            }
+        }
+        }
+
+        
+
+    }
+}
+
+
+        }
+
