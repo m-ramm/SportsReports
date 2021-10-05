@@ -10,7 +10,7 @@ const TEAM_ID_KEYS = "teamIdsFootball"
 
 const KEY = 'd478817a0fmsh584e04929c59a24p15d9b7jsn193d317fead8';
 
-const requestStandingsFromTeamURL = "https://api-football-v1.p.rapidapi.com/v3/standings?"
+const requestStandingsFromURL = "https://api-football-v1.p.rapidapi.com/v3/standings?"
 
 const RANKING_NUMS = 20;
 
@@ -44,7 +44,7 @@ function checkStorage(key){
 
 function fetchStandings(){
     for(let i = 0; i < footballSeasons.length; i++) {
-        fetchFromAPI(requestStandingsFromTeamURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`))
+        fetchFromAPI(requestStandingsFromURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`))
     }
 }
 
@@ -53,7 +53,7 @@ function fetchStandings(){
     if (checkStorage(STANDINGS_FOOTBALL_KEY)) return;
     // api call, storing the data in topScorers object
     for(let i = 0; i < footballSeasons.length; i++) {
-        fetch(requestStandingsFromTeamURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
+        fetch(requestStandingsFromURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
         .then(response => response.json())
         .then((data) => {
             standingsData[footballSeasons[i]] = data.response
