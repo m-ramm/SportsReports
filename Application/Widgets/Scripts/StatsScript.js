@@ -1,3 +1,5 @@
+
+
 let teamsData = []
 let playersData = []
 
@@ -101,7 +103,6 @@ function fetchFromAPI(fetchURL, type){
         }else{
             localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
             playersData.push(data.response)
-            console.log(playersData)
             let pages = data.paging
             if (pages.current < pages.total){
                 fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}&page=${pages.current + 1}`), 'players')
@@ -200,6 +201,7 @@ return: {borders:any, backgrounds:any}
 */
 function styleGraph(selectedGraph){
     let borders = [], backgrounds = []
+    //* Helper functions
     function createBackgrounds(data){
         let backgrounds = []
         for (let i=0; i<data.length; i++){
@@ -214,9 +216,19 @@ function styleGraph(selectedGraph){
         }
         return borders
     }
-    if (selectedGraph === 'bar') {
+    if (selectedGraph == 'bar') {
         borders = createBorders(playersData.flat(1))
         backgrounds = createBackgrounds(playersData.flat(1))
+    }else if (selectedGraph == 'pie'){
+        for (let i=0; i<playersData.flat(1).length; i++){
+            borders.push('#FFF')
+            backgrounds.push('#FFF')
+        }
+        let r = 217; let g = 72; let b = 79
+        backgrounds = backgrounds.map(() => {
+            b <= 255 ? (r -= 10, b += 20) : (r -= 10, g += 20)
+            return `rgb(${r}, ${g}, ${b})`
+        })
     }else{
         borders = '#FFF'
         backgrounds = '#D9484F'
@@ -252,8 +264,32 @@ let myChart = new Chart(ctx, {
 This function simply updates the chart with the players data, this is called after our fetch from the API has been completed
 */
 function updateData(data){
-    stats = []
-    names = []
+    //* Helper functions
+    /*
+    Basically this filterPage function just takes the and filters out all the players that dont have a stat
+    */
+    const filterPage = (page) => {
+        let filteredPage = page.filter((player) => checkPlayerHasStat(player))
+        return filteredPage
+    }
+    /*
+    Simple switch case function, returns false if the player doesn't have a stat, otherwise returns true
+    */
+    const checkPlayerHasStat = (player) => {
+        switch (graphData.selectedType){
+            case 'Goals':
+                return player.statistics[0].goals.total != null && player.statistics[0].goals.total != 0
+            case 'Assists':
+                return player.statistics[0].passes.key != null && player.statistics[0].passes.key != 0
+            case 'Yellow card':
+                return player.statistics[0].cards.yellow != null && player.statistics[0].cards.yellow != 0
+            case 'Red card':
+                return player.statistics[0].cards.red != null && player.statistics[0].cards.red != 0
+        }
+    }
+    //* Turning objects into workable data
+    stats = []; names = []
+    data = data.map((page) => filterPage(page))
     data.forEach((page) => {
         names.push(page.map((playerObj) => playerObj.player.name))
         if (graphData.selectedType == 'Goals'){
@@ -266,7 +302,6 @@ function updateData(data){
             stat = page.map((playerObj) => playerObj.statistics[0].cards.red)
         }
         stats.push(stat.map((stat) => stat === null ? 0 : stat))
-        console.log(stats)
     })
     stats = stats.flat(1)
     names = names.flat(1)
