@@ -1,4 +1,4 @@
-
+// JS for liveMatch.html:
 var ctx = document.getElementById('scatter_graph').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
@@ -133,6 +133,7 @@ function getLiveEventDataByID(FixutureID){
     .then((data) => {
         eventsData = data.response;
         graphfromData(eventsData);
+        myChart.update();
     //return eventsData;
     })
 
@@ -178,12 +179,14 @@ function graphfromData(eventsData){
                 myChart.update();
             }
         }
-        }``
-
+        }
 
     }
 }
+}
 
+//-------------------------------------------------------------------->>
+// the page should work according to the league selected:
+// dont know how to do it right now..
 
-        }
 
