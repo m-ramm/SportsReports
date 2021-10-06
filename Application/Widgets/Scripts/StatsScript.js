@@ -1,8 +1,6 @@
-
-
 let teamsData = []
 let playersData = []
-
+let teamStats = []
 // league IDs and corresponding names
 const footballLeagueId = [39, 140, 61];
 const footballLeague = ['Premier League', 'La Liga', 'Ligue One'];
@@ -38,6 +36,7 @@ const PLAYERS_FOOTBALL_KEY = 'footballPlayers'
 const KEY = '10b74ce9ebmsh829850853489ac5p14ae76jsn9fd379ce8a94';
 const requestTeamsURL = 'https://api-football-v1.p.rapidapi.com/v3/teams?'
 const requestPlayersFromTeamURL = 'https://api-football-v1.p.rapidapi.com/v3/players?'
+const requestsTeamStatsURL = 'https://api-football-v1.p.rapidapi.com/v3/teams/statistics?'
 myHeaders = {
     "x-rapidapi-host": "api-football-v1.p.rapidapi.com",
 	"x-rapidapi-key": KEY
@@ -100,8 +99,15 @@ function fetchFromAPI(fetchURL, type){
             // on completion of this function we want to call the updateData method, which, will update the table and chart
             updateOptions()
             updateSelectTeams()
+        }else if (type == 'teamHistory'){
+            // TODO: set team history
+            console.log(data.response)
+            teamStats.push(data.response)
+            teamStats = teamStats.flat(1)
+            updateData(teamStats)
         }else{
             localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
+            
             playersData.push(data.response)
             let pages = data.paging
             if (pages.current < pages.total){
@@ -161,6 +167,19 @@ function updateSelect(selectID){
     }else if (selectID == 'statType'){
         graphData.selectedType = elements.statType.options[elements.statType.selectedIndex].value
         updateData(playersData)
+    }else if (selectID == 'statMode'){
+        graphData.selectedMode = elements.statMode.options[elements.statMode.selectedIndex].value
+        // TODO: fetch teams stats from api
+        if (graphData.selectedMode == 'Average'){
+            let seasons = ['2016', '2017', '2018', '2019', '2020']
+            seasons.forEach((season) => {
+                fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=${season}&team=${graphData.selectedTeam.id}`, 'teamHistory')
+            })
+        }else{
+            teamStats = []
+            updateData(playersData)
+        }
+        // TODO: depending on what is selected, remove or add certain options for user
     }
     
     /*
@@ -199,7 +218,7 @@ Creates the border color and background color for each graph element, for a line
 the bar number
 return: {borders:any, backgrounds:any}
 */
-function styleGraph(selectedGraph){
+function styleGraph(selectedGraph, data=playersData.flat(1)){
     let borders = [], backgrounds = []
     //* Helper functions
     function createBackgrounds(data){
@@ -217,10 +236,10 @@ function styleGraph(selectedGraph){
         return borders
     }
     if (selectedGraph == 'bar') {
-        borders = createBorders(playersData.flat(1))
-        backgrounds = createBackgrounds(playersData.flat(1))
+        borders = createBorders(data)
+        backgrounds = createBackgrounds(data)
     }else if (selectedGraph == 'pie'){
-        for (let i=0; i<playersData.flat(1).length; i++){
+        for (let i=0; i<data.length; i++){
             borders.push('#FFF')
             backgrounds.push('#FFF')
         }
@@ -287,29 +306,66 @@ function updateData(data){
                 return player.statistics[0].cards.red != null && player.statistics[0].cards.red != 0
         }
     }
-    //* Turning objects into workable data
-    stats = []; names = []
-    data = data.map((page) => filterPage(page))
-    data.forEach((page) => {
-        names.push(page.map((playerObj) => playerObj.player.name))
-        if (graphData.selectedType == 'Goals'){
-            stat = page.map((playerObj) => playerObj.statistics[0].goals.total)
-        } else if (graphData.selectedType == 'Assists') {
-            stat = page.map((playerObj) => playerObj.statistics[0].passes.key)
-        } else if (graphData.selectedType == 'Yellow card'){
-            stat = page.map((playerObj) => playerObj.statistics[0].cards.yellow)
-        } else {
-            stat = page.map((playerObj) => playerObj.statistics[0].cards.red)
-        }
-        stats.push(stat.map((stat) => stat === null ? 0 : stat))
-    })
-    stats = stats.flat(1)
-    names = names.flat(1)
-    myChart.data.datasets[0].data = stats
-    myChart.data.labels = names
-    myChart.data.datasets[0].backgroundColor = styleGraph(graphData.selectedGraph).backgrounds
-    myChart.data.datasets[0].borderColor = styleGraph(graphData.selectedGraph).borders
+    // Basically total just means we show the total goals/assists/etc for each player for the currently selected team
+    // Average gets the average goals for the selected team for the last 6 years then extrapolates that data out to make a prediction
+    if (graphData.selectedMode == 'Total'){
+        //* Turning objects into workable data
+        stats = []; names = []
+        data = data.map((page) => filterPage(page))
+        data.forEach((page) => {
+            names.push(page.map((playerObj) => playerObj.player.name))
+            if (graphData.selectedType == 'Goals'){
+                stat = page.map((playerObj) => playerObj.statistics[0].goals.total)
+            } else if (graphData.selectedType == 'Assists') {
+                stat = page.map((playerObj) => playerObj.statistics[0].passes.key)
+            } else if (graphData.selectedType == 'Yellow card'){
+                stat = page.map((playerObj) => playerObj.statistics[0].cards.yellow)
+            } else {
+                stat = page.map((playerObj) => playerObj.statistics[0].cards.red)
+            }
+            stats.push(stat.map((stat) => stat === null ? 0 : stat))
+        })
+        stats = stats.flat(1)
+        names = names.flat(1)
+        myChart.data.datasets[0].data = stats
+        myChart.data.labels = names
+    }else{
+        console.log(data)
+        goals = data.map((team) => team.goals.for.average.total)
+        goals = goals.map((goal) => Number(goal))
+        console.log(extrapolateData(goals, 10))
+        myChart.data.datasets[0].data = extrapolateData(goals, 10)
+        myChart.data.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025']      // hard coding it isn't good, should prolly use dates to make it always work for the last 6 years
+    }
+    myChart.data.datasets[0].backgroundColor = styleGraph(graphData.selectedGraph, graphData.selectedMode == 'Total' ? playersData.flat(1) : ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025']).backgrounds
+    myChart.data.datasets[0].borderColor = styleGraph(graphData.selectedGraph, graphData.selectedMode == 'Total' ? playersData.flat(1) : ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025']).borders
     myChart.update()
+}
+
+/*
+param data: array of numbers
+param fitCount: the number of values you to extrapolate to
+this code was found at: https://stackoverflow.com/questions/67868049/javascript-extrapolate-an-array-of-numbers
+*/
+function extrapolateData(data, fitCount){
+    let newData = []
+    let springFactor = Number((data.length - 1) / (fitCount - 1))
+    let linearInterpolate = (before, after, atPoint) => {
+        return before + (after - before) * atPoint
+    };
+      
+    for (var i = 0; i < fitCount - 1; i++) {
+        let tmp = i * springFactor
+        let before = Number(Math.floor(tmp)).toFixed()
+        let after = Number(Math.ceil(tmp)).toFixed()
+        let atPoint = tmp - before
+        newData.push(linearInterpolate(data[before], data[after], atPoint))
+    }
+    
+    // for new allocation
+    newData[fitCount - 1] = data[data.length - 1]
+        
+    return data.slice(0, 5).concat(newData.slice(5, fitCount))        // these are again hard coded which is bad but it'll work for the next year
 }
 
 
