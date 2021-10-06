@@ -1,3 +1,5 @@
+let standingsTeamsData = []
+
 const footballLeagueId = [39, 140, 61];
 const footballLeague = ['Premier League', 'La Liga', 'Ligue One'];
 const standingTeamIds = [33, 452, 96];
@@ -10,17 +12,20 @@ const TEAM_ID_KEYS = "teamIdsFootball"
 
 const KEY = 'd478817a0fmsh584e04929c59a24p15d9b7jsn193d317fead8';
 
-const requestStandingsFromURL = "https://api-football-v1.p.rapidapi.com/v3/standings?"
+const requestStandingsURL = "https://api-football-v1.p.rapidapi.com/v3/standings?"
+const requestTeamsFromStandingsURL = "https://api-football-v1.p.rapidapi.com/v3/fixtures?"
 
 const RANKING_NUMS = 20;
 
 const standingsElements = {
+    leagueTableTeams: document.getElementById('leagueTableTeams'),
     leagueTableStats: document.getElementById('leagueTableStats'),
     seasonStandings: document.getElementById('seasonStandings')
 }
 const standingsTableData = {
     leagueID: footballLeagueId[footballLeague.indexOf(league)],
     selectedSeason: '2021',
+    selectedTeam: {}
 }
 
 myHeaders = {
@@ -44,21 +49,22 @@ function checkStorage(key){
 
 function fetchStandings(){
     for(let i = 0; i < footballSeasons.length; i++) {
-        fetchFromAPI(requestStandingsFromURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`))
+        fetchFromAPI(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), 'standings')
     }
 }
 
-function fetchStandings(){
+function fetchStandingsAPI(){
     let standingsData = {};
     if (checkStorage(STANDINGS_FOOTBALL_KEY)) return;
     // api call, storing the data in topScorers object
     for(let i = 0; i < footballSeasons.length; i++) {
-        fetch(requestStandingsFromURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
+        fetch(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
         .then(response => response.json())
         .then((data) => {
             standingsData[footballSeasons[i]] = data.response
 
             localStorage.setItem(STANDINGS_FOOTBALL_KEY, JSON.stringify(standingsData))
+            getTeamIds()
         })
         .catch(err => {
             console.error(err);
@@ -67,71 +73,43 @@ function fetchStandings(){
     
 }
 
-// function fetchStandings(leagueId, standingsYear, leagueNames, leagueTableStorageKey){
-//     let standings = {};
-// 
-//     // if storage is already filled, then don't run api request
-//     if (checkStorage(leagueTableStorageKey)) return;
-// 
-//     for(let i = 0; i < leagueId.length; i++) {
-//         fetch(`https://api-football-v1.p.rapidapi.com/v3/standings?season=${standingsYear}&league=${leagueId[i]}`, requestOptions)
-//         .then(response => response.json())
-//         .then((data) => {
-//             standings[leagueNames[i]] = data.response;
-//             // put into localStorage
-//             localStorage.setItem(leagueTableStorageKey, JSON.stringify(standings)); 
-//         })
-//         .catch(error => console.log("error", error));
-//     }
-// 
-// }
-// 
-// function fetchFixtureByTeamID(leagueId, leagueNames, leagueTableStorageKey){
-//     let fixture = {};
-//     // if storage is already filled, then don't run api request
-//     if (checkStorage(leagueTableStorageKey)) return;
-// 
-//     for(let i = 0; i < leagueId.length; i++) {
-//         for(let j = 0; j < teamsLength; j++) {
-//             fetch(`https://api-football-v1.p.rapidapi.com/v3/fixtures?season=2020&league=${leagueId[i]}`, requestOptions)
-//             .then(response => response.json())
-//             .then((data) => {
-//                 fixture[leagueNames[i]] = data.response;
-//                 // put into localStorage
-//                 localStorage.setItem(leagueTableStorageKey, JSON.stringify(fixture)); 
-//             })
-//             .catch(error => console.log("error", error));
-//         }
-//     }
-// }
+function getTeamIds(){
+    let tempData;
 
-// function checkId(leagueId, leagueNames){
-//     const teamsId = []
-//     let teamsData;
-//     let tempData;
-// 
-//     tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY));
-//     teamsData = tempData[league]
-//     teamsLength = teamsData[0]['league']['standings'][0].length
-// 
-//     for(let i = 0; i < leagueId.length; i++) {
-//         teamsId[leagueNames[i]] = teamsId[leagueNames[i]].concat(teamsData[0]['league']['standings'][j]['team']['id'])
-// 
-//             localStorage.setItem(TEAM_ID_KEYS, JSON.stringify(teamsId))
-//         }
-//     }
-// }
+    tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
+    season = tempData[footballSeasons[0]]
+    for(var j = 0; j < RANKING_NUMS; j++) {
+        teamIds = season[0]['league']['standings'][0][j]['team']['id']
+        standingsTeamsData.push(teamIds)
+    }
 
-//function updateSeasons(){
-//    standingsTableData.selectedSeason = standingsElements.seasonStandings.options[standingsElements.seasonStandings.selectedIndex].value
-//    fetchStandings();
-//    updateStandingsTable();
-//}
+}
+
+
+function fetchFixturesAPI(){
+    let fixturesData = {};
+    getTeamIds()
+    if (checkStorage(FIXTURES_FOOTBALL_TEAM_KEY)) return;
+    // api call, storing the data in topScorers object
+    for(let i = 0; i < standingsTeamsData.length; i++){
+        fetch(requestTeamsFromStandingsURL.concat(`team=${standingsTeamsData[i]}&league=${standingsTableData.leagueID}&season=${standingsTableData.selectedSeason}`), requestOptions)
+        .then(response => response.json())
+        .then((data) => {
+            fixturesData[standingsTeamsData[i]] = data.response
+            localStorage.setItem(FIXTURES_FOOTBALL_TEAM_KEY, JSON.stringify(fixturesData))
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
+}
 
 function updateStandingsTable() {
 
     let tempData;
+    let tempTeamData;
     let tableData;
+    let teamData;
 
     leagueTableStats.innerHTML = 
         `<tr> 
@@ -150,6 +128,7 @@ function updateStandingsTable() {
             // Loop to access all rows 
             tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
             tableData= tempData[footballSeasons[0]];
+            teamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY))
 
             // tempDataFixture = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY));
             // hiddenTableData = tempDataFixture[league];
@@ -167,6 +146,8 @@ function updateStandingsTable() {
                 <td>${tableData[0]['league']['standings'][0][i]['form']}</td>
                 <tr id="hidden_row${i}" class="hidden_row">
                     <td colspan=8>
+                    ${teamData[standingsTeamsData[i]][0]['teams']['home']['name']['winner']},${teamData[standingsTeamsData[i]][0]['teams']['home']['name']} VS 
+                    ${teamData[standingsTeamsData[i]][0]['teams']['away']['name']},${teamData[standingsTeamsData[i]][0]['teams']['away']['name']['winner']}
                     </td>
                 </tr>`;
             }
@@ -239,7 +220,8 @@ function main() {
 
     //fetchFixtureByTeamID(footballLeagueId, footballLeague, FIXTURES_FOOTBALL_TEAM_KEY)
 
-    fetchStandings();
+    fetchStandingsAPI();
+    fetchFixturesAPI()
 
     updateStandingsTable();
 
