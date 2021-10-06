@@ -221,9 +221,7 @@ function main() {
     //fetchFixtureByTeamID(footballLeagueId, footballLeague, FIXTURES_FOOTBALL_TEAM_KEY)
 
     fetchStandingsAPI();
-    fetchFixturesAPI()
-
-    updateStandingsTable();
+    fetchFixturesAPI();
 
 }
 
@@ -231,5 +229,5 @@ function showHideRow(row) {
     $("#" + row).toggle();
 }
 
-
 main();
+updateStandingsTable();
