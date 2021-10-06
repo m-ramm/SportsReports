@@ -155,6 +155,7 @@ function updateSelectTeams(){
     graphData.selectedTeam = (teamsData.filter((data) => data.team.id == team))[0].team
     // updating team stats
     localStorage.removeItem('TEAM_STATISTICS')
+    teamStats = []
     fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=2016&team=${graphData.selectedTeam.id}`, 'teamHistory')
     if (graphData.selectedMode == 'Total'){
         elements.graphTitle.innerText = `${graphData.selectedTeam.name} player statistics`
