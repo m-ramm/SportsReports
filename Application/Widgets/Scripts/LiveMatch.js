@@ -72,20 +72,25 @@ function getDataforLocation(FetchURL){
 
         // get fixture ID:
         for(i = 0; i < venueData.length; i++){
-            if(venueData[i].fixture.id == 39){
-                reqEventData = getLiveEventDataByID("39");
+            if(venueData[i].league.id == 39){
+                reqEventData = getLiveEventDataByID(venueData[i].fixture.id);
                 graphfromData(reqEventData);
 
             }
-            else if(venueData[i].fixture.id == 140){
-                reqEventData = getLiveEventDataByID("140");
+            else if(venueData[i].league.id == 140){
+                reqEventData = getLiveEventDataByID(venueData[i].fixture.id);
                 graphfromData(reqEventData);
 
             }
-            else if(venueData[i].fixture.id == 61){
-                reqEventData = getLiveEventDataByID("140");
+            else if(venueData[i].league.id == 61){
+                reqEventData = getLiveEventDataByID(venueData[i].fixture.id);
                 graphfromData(reqEventData);
 
+            }
+            else if(venueData[i].fixture.id == 727854){
+                getLiveEventDataByID(venueData[i].fixture.id);
+                //console.log(reqEventData)
+                //graphfromData(reqEventData);
             }
         }
 
@@ -122,32 +127,37 @@ function setText(data){
 // -------------------------------- graph data ----------------------->>
 function getLiveEventDataByID(FixutureID){
     let Eventurl = "https://api-football-v1.p.rapidapi.com/v3/fixtures/events";
-    Eventurl += Eventurl +"?fixture=" + FixutureID;
+    Eventurl = Eventurl +"?fixture=" + FixutureID;
     fetch(Eventurl, requestOptions)
     .then(response => response.json())
     .then((data) => {
         eventsData = data.response;
-    return eventsData;
+        graphfromData(eventsData);
+    //return eventsData;
     })
 
 function graphfromData(eventsData){
-    team1 = eventsData[0].team.name;
-    for(i = 0; i < data.length; i++){
+    console.log(eventsData);
+    let teamF = eventsData[0].team.name;
+    for(i = 0; i < eventsData.length; i++){
         // get the name of team1:
         let team1 = eventsData[i].team.name;
+        console.log(team1)
 
         // nested if:
-        if(eventsData[i].team.name == team1){
+        if(eventsData[i].team.name == teamF){
             if(eventsData[i].type == "Goal"){
-                
+                console.log('True')
                 // get time:
                 current_time = eventsData[i].time.elapsed;
+                console.log(current_time)
 
                 // might need to delete next line:
                 //myChart.data.labels.push(eventsData[i].time.elapsed);
 
                 // goals scored:
-                for(j = current_time; j < myChart.data.datasets.data.length; j++){
+                for(j = current_time; j < myChart.data.datasets[0].data.length; j++){
+                    console.log(j);
                     myChart.data.datasets[0].data[j] = 1;
                 }
 
@@ -158,18 +168,18 @@ function graphfromData(eventsData){
         // if name is not team1:
         else{
             if(eventsData[i].type == "Goal"){
-                for(j = current_time; j < myChart.data.datasets.data.length; j++){
+                for(j = current_time; j < myChart.data.datasets[0].data.length; j++){
                     myChart.data.datasets[0].data[j] = -1;
+                    console.log(myChart.data.datasets[0].data[j])
                 }
 
                 // delete this line
-                myChart.data.datasets.data.push(-1);
+                //myChart.data.datasets.data.push(-1);
                 myChart.update();
             }
         }
-        }
+        }``
 
-        
 
     }
 }
