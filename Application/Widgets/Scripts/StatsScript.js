@@ -13,6 +13,8 @@ const elements = {
     seasons: document.getElementById('seasons'),
     statMode: document.getElementById('statMode'),
     statType: document.getElementById('statType'),
+    graphTitle: document.getElementById('graphTitle'),
+    removableSelects: document.getElementById('removableSelects')
 }
 
 //* DATA FOR GRAPH AND TABLE
@@ -88,7 +90,7 @@ playersData : [
     ...
 ]
 */
-function fetchFromAPI(fetchURL, type){
+function fetchFromAPI(fetchURL, type, season='2016'){
     // api call, storing the data in topScorers object
     fetch(fetchURL, requestOptions)
     .then(response => response.json())
@@ -101,10 +103,14 @@ function fetchFromAPI(fetchURL, type){
             updateSelectTeams()
         }else if (type == 'teamHistory'){
             // TODO: set team history
-            console.log(data.response)
             teamStats.push(data.response)
             teamStats = teamStats.flat(1)
+            console.log(teamStats + fetchURL)
+            if (Number(season) < 2020){
+                fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=${season}&team=${graphData.selectedTeam.id}`, 'teamHistory', String(Number(season)+1))
+            }
             updateData(teamStats)
+            localStorage.setItem('TEAM_STATISTICS', teamStats)
         }else{
             localStorage.setItem(PLAYERS_FOOTBALL_KEY, JSON.stringify(data.response))
             
@@ -134,7 +140,7 @@ function updateOptions(){
     elements.teams.innerHTML = options
 }
 
-fetchTeams() // this is the variable that holds all the data being used in this script
+fetchTeams() 
 
 //* ----------------------------------------------------- SELECT FUNCTIONS ----------------------------------------------------- //
 
@@ -147,6 +153,14 @@ in the graph data object.
 function updateSelectTeams(){
     let team = elements.teams.options[elements.teams.selectedIndex].value
     graphData.selectedTeam = (teamsData.filter((data) => data.team.id == team))[0].team
+    // updating team stats
+    localStorage.removeItem('TEAM_STATISTICS')
+    fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=2016&team=${graphData.selectedTeam.id}`, 'teamHistory')
+    if (graphData.selectedMode == 'Total'){
+        elements.graphTitle.innerText = `${graphData.selectedTeam.name} player statistics`
+    }else{
+        elements.graphTitle.innerText = `${graphData.selectedTeam.name} average goals per game`
+    }
     // resetting player data when new team is selected
     playersData = []
     fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}`), 'players')
@@ -160,7 +174,12 @@ function updateSelect(selectID){
     if (selectID == 'graphType'){
         graphData.selectedGraph = elements.graphType.options[elements.graphType.selectedIndex].value
         createNewChart()
-        updateData(playersData)
+        switch (graphData.selectedMode){
+            case 'Total':
+                updateData(playersData)
+            case 'Average':
+                updateData(teamStats)
+        }
     }else if (selectID == 'seasons'){
         graphData.selectedSeason = elements.seasons.options[elements.seasons.selectedIndex].value
         fetchFromAPI(requestTeamsURL.concat(`league=${graphData.leagueID}&season=${graphData.selectedSeason}`), 'teams')
@@ -168,18 +187,17 @@ function updateSelect(selectID){
         graphData.selectedType = elements.statType.options[elements.statType.selectedIndex].value
         updateData(playersData)
     }else if (selectID == 'statMode'){
+        teamStats = []
         graphData.selectedMode = elements.statMode.options[elements.statMode.selectedIndex].value
         // TODO: fetch teams stats from api
         if (graphData.selectedMode == 'Average'){
             let seasons = ['2016', '2017', '2018', '2019', '2020']
-            seasons.forEach((season) => {
-                fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=${season}&team=${graphData.selectedTeam.id}`, 'teamHistory')
-            })
+            fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=2016&team=${graphData.selectedTeam.id}`, 'teamHistory')
+            statModeChange('Average')
         }else{
-            teamStats = []
             updateData(playersData)
+            statModeChange('Total')
         }
-        // TODO: depending on what is selected, remove or add certain options for user
     }
     
     /*
@@ -211,6 +229,24 @@ function updateSelect(selectID){
     }
 }
 
+/*
+This function updates the selects shown on screen to the user, basically, 
+*/
+function statModeChange(statMode){
+    if (statMode == 'Total'){
+        elements.graphTitle.innerText = `${graphData.selectedTeam.name} player statistics`
+        // adding options
+        elements.removableSelects.innerHTML += '<select name="seasons" id="seasons" onchange="updateSelect(`seasons`)"> <option value="2018">2021</option> <option value="2019">2020</option> <option value="2020">2019</option> <option value="2021">2018</option> </select>'
+        elements.removableSelects.innerHTML += '<select name="statType" id="statType" onchange="updateSelect(`statType`)"> <option value="Goals">Goals</option> <option value="Assists">Assists</option> <option value="Red cards">Red cards</option> <option value="Yellow cards">Yellow cards</option> </select>'
+        elements.seasons = document.getElementById('seasons')
+        elements.statType = document.getElementById('statType')
+    }else{
+        elements.graphTitle.innerText = `${graphData.selectedTeam.name} average goals per game`
+        // removing options
+        elements.statType.remove()
+        elements.seasons.remove()
+    }
+}
 //* ------------------------------------------------------ GRAPH ----------------------------------------------------- *//
 //* STYLING GRAPH
 /*
@@ -330,10 +366,8 @@ function updateData(data){
         myChart.data.datasets[0].data = stats
         myChart.data.labels = names
     }else{
-        console.log(data)
         goals = data.map((team) => team.goals.for.average.total)
         goals = goals.map((goal) => Number(goal))
-        console.log(extrapolateData(goals, 10))
         myChart.data.datasets[0].data = extrapolateData(goals, 10)
         myChart.data.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025']      // hard coding it isn't good, should prolly use dates to make it always work for the last 6 years
     }
@@ -365,7 +399,7 @@ function extrapolateData(data, fitCount){
     // for new allocation
     newData[fitCount - 1] = data[data.length - 1]
         
-    return data.slice(0, 5).concat(newData.slice(5, fitCount))        // these are again hard coded which is bad but it'll work for the next year
+    return data.concat(newData.slice(5, fitCount))        // these are again hard coded which is bad but it'll work for the next year
 }
 
 

@@ -123,28 +123,30 @@
                     <div class="col-sm-8 col-md-8 col-lg-8 justify-content-center text-center col-border">
                         <div class="row custom-select-graph-row">
                             <div class="col-sm-12 col-md-12 col-lg-12">
-                                <h3>Chart settings</h3>
+                                <select name="statMode" id="statMode" onchange="updateSelect('statMode')">
+                                    <option value="Total">Player stats</option>
+                                    <option value="Average">Teams stats</option>
+                                </select>
+                                <h3 id='graphTitle'>Player stats</h3>
                                 <select name="graphs" id="graphType" onchange="updateSelect('graphType')">
                                     <option value="bar">Bar chart</option>
                                     <option value="line">Line chart</option>
                                     <option value="pie">Pie chart</option>
                                 </select>
-                                <select name="seasons" id="seasons" onchange="updateSelect('seasons')">
-                                    <option value="2018">2021</option>
-                                    <option value="2019">2020</option>
-                                    <option value="2020">2019</option>
-                                    <option value="2021">2018</option>
-                                </select>
-                                <select name="statMode" id="statMode" onchange="updateSelect('statMode')">
-                                    <option value="Total">Total</option>
-                                    <option value="Average">Average</option>
-                                </select>
-                                <select name="statType" id="statType" onchange="updateSelect('statType')">
-                                    <option value="Goals">Goals</option>
-                                    <option value="Assists">Assists</option>
-                                    <option value="Red cards">Red cards</option>
-                                    <option value="Yellow cards">Yellow cards</option>
-                                </select>
+                                <div id='removableSelects'>
+                                    <select name="seasons" id="seasons" onchange="updateSelect('seasons')">
+                                        <option value="2018">2021</option>
+                                        <option value="2019">2020</option>
+                                        <option value="2020">2019</option>
+                                        <option value="2021">2018</option>
+                                    </select>
+                                    <select name="statType" id="statType" onchange="updateSelect('statType')">
+                                        <option value="Goals">Goals</option>
+                                        <option value="Assists">Assists</option>
+                                        <option value="Red cards">Red cards</option>
+                                        <option value="Yellow cards">Yellow cards</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="row custom-graph-row">
