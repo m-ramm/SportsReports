@@ -1,11 +1,12 @@
+
 var ctx = document.getElementById('scatter_graph').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: [],
+        labels: new Array(91).fill(0),
         datasets: [{
-            label: '# of Votes',
-            data: [],
+            label: 'Goals Scored',
+            data: new Array(91).fill(0),
             backgroundColor: [
                 'red',
                 'red',
@@ -34,6 +35,16 @@ var myChart = new Chart(ctx, {
     }
 });
 
+// Fill the array with time:
+let lab = myChart.data.labels
+for(i = 0; i < lab.length; i++){
+    myChart.data.labels[i] = i;
+}
+
+//console.log(myChart.data.labels);
+
+// change page title to display whatever league is selected:
+//document.getElementById('title').innerHTML = `Statistics - ${league}`;
 
 // --------------------------------- API testing ---------------->>
 const data_key = "35d8517127mshdf20e1fe84837bbp18973fjsn99f4faf52300";
@@ -63,17 +74,17 @@ function getDataforLocation(FetchURL){
         for(i = 0; i < venueData.length; i++){
             if(venueData[i].fixture.id == 39){
                 reqEventData = getLiveEventDataByID("39");
-                graphData(reqEventData);
+                graphfromData(reqEventData);
 
             }
             else if(venueData[i].fixture.id == 140){
                 reqEventData = getLiveEventDataByID("140");
-                graphData(reqEventData);
+                graphfromData(reqEventData);
 
             }
             else if(venueData[i].fixture.id == 61){
                 reqEventData = getLiveEventDataByID("140");
-                graphData(reqEventData);
+                graphfromData(reqEventData);
 
             }
         }
@@ -119,7 +130,7 @@ function getLiveEventDataByID(FixutureID){
     return eventsData;
     })
 
-function graphData(eventsData){
+function graphfromData(eventsData){
     team1 = eventsData[0].team.name;
     for(i = 0; i < data.length; i++){
         // get the name of team1:
@@ -128,15 +139,30 @@ function graphData(eventsData){
         // nested if:
         if(eventsData[i].team.name == team1){
             if(eventsData[i].type == "Goal"){
+                
                 // get time:
-                myChart.data.labels.push(eventsData[i].time.elapsed);
+                current_time = eventsData[i].time.elapsed;
+
+                // might need to delete next line:
+                //myChart.data.labels.push(eventsData[i].time.elapsed);
+
                 // goals scored:
-                myChart.data.datasets.data.push(1);
+                for(j = current_time; j < myChart.data.datasets.data.length; j++){
+                    myChart.data.datasets[0].data[j] = 1;
+                }
+
+                // delete next line
+                //myChart.data.datasets.data.push(1);
                 myChart.update();
             }
         // if name is not team1:
         else{
             if(eventsData[i].type == "Goal"){
+                for(j = current_time; j < myChart.data.datasets.data.length; j++){
+                    myChart.data.datasets[0].data[j] = -1;
+                }
+
+                // delete this line
                 myChart.data.datasets.data.push(-1);
                 myChart.update();
             }
