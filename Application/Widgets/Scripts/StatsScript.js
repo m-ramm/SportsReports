@@ -386,7 +386,7 @@ function extrapolateData(data, fitCount){
     let newData = []
     let springFactor = Number((data.length - 1) / (fitCount - 1))
     let linearInterpolate = (before, after, atPoint) => {
-        return before + (after - before) * atPoint
+        return parseFloat((before + (after - before) * atPoint).toFixed(2))
     };
       
     for (var i = 0; i < fitCount - 1; i++) {
