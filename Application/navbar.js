@@ -16,7 +16,7 @@ function setLeagueStorage(value){
     window.localStorage.setItem('league', value)
 }
 
-//set logo based of local storage value in options page
+// set logo based of local storage value in options page
 const leageVal = window.localStorage.getItem('league');
 
 function getImagePath(local_league){
@@ -50,5 +50,7 @@ function setImageSrc(path){
     // image_right.alt = 'logo of ' + leageVal
 }
 
-var imagePath = getImagePath(leageVal)
-setImageSrc(imagePath);
+if (window.location.pathname.split("/").pop() != 'index.html'){
+    var imagePath = getImagePath(leageVal)
+    setImageSrc(imagePath);
+}
