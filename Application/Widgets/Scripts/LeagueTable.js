@@ -66,6 +66,7 @@ function fetchStandingsAPI() {
                 standingsData[footballSeasons[i]] = data.response
                 localStorage.setItem(STANDINGS_FOOTBALL_KEY, JSON.stringify(standingsData))
                 getTeamIds()
+                fetchFixturesAPI();
             })
             .catch(err => {
                 console.error(err);
@@ -97,6 +98,7 @@ function fetchFixturesAPI() {
             .then((data) => {
                 fixturesData[footballSeasons[i]] = data.response
                 localStorage.setItem(FIXTURES_FOOTBALL_TEAM_KEY_test, JSON.stringify(fixturesData))
+                updateStandingsTable();
             })
             .catch(err => {
                 console.error(err);
@@ -336,7 +338,6 @@ Runs when the page loads
 function main() {
 
     fetchStandingsAPI();
-    fetchFixturesAPI();
     updateStandingsTable();
 
 }
@@ -346,3 +347,4 @@ function showHideRow(row) {
 }
 
 main();
+updateStandingsTable();
