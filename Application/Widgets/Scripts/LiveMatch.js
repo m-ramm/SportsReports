@@ -44,7 +44,7 @@ for(i = 0; i < lab.length; i++){
 //console.log(myChart.data.labels);
 
 // change page title to display whatever league is selected:
-document.getElementById('title').innerHTML = `Statistics - ${league}`;
+//document.getElementById('title').innerHTML = `Statistics - ${league}`;
 
 // --------------------------------- API testing ---------------->>
 const data_key = "35d8517127mshdf20e1fe84837bbp18973fjsn99f4faf52300";
@@ -75,17 +75,23 @@ function getDataforLocation(FetchURL){
             if(venueData[i].league.id == 39){
                 getLiveEventDataByID(venueData[i].fixture.id);
                 //graphfromData(reqEventData);
+                break
 
             }
             else if(venueData[i].league.id == 140){
                 getLiveEventDataByID(venueData[i].fixture.id);
                 //graphfromData(reqEventData);
+                break
 
             }
             else if(venueData[i].league.id == 61){
                 getLiveEventDataByID(venueData[i].fixture.id);
                 //graphfromData(reqEventData);
-
+                break
+            }
+            else if(venueData[i].league.id == 275){
+                getLiveEventDataByID(venueData[i].fixture.id);
+                break
             }
         }
 
@@ -129,6 +135,7 @@ function getLiveEventDataByID(FixutureID){
         eventsData = data.response;
         graphfromData(eventsData);
         myChart.update();
+    // no need to return changed the type
     //return eventsData;
     })
 
