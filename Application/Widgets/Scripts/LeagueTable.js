@@ -54,9 +54,10 @@ function fetchStandings() {
     }
 }
 
+// Be careful when refreshing page because it calls the api 6 times everytime the page refreshes.
 function fetchStandingsAPI() {
     let standingsData = {};
-    if (checkStorage(STANDINGS_FOOTBALL_KEY)) return;
+    // if (checkStorage(STANDINGS_FOOTBALL_KEY)) return;
     // api call, storing the data in topScorers object
     for (let i = 0; i < footballSeasons.length; i++) {
         fetch(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
@@ -65,6 +66,7 @@ function fetchStandingsAPI() {
                 standingsData[footballSeasons[i]] = data.response
                 localStorage.setItem(STANDINGS_FOOTBALL_KEY, JSON.stringify(standingsData))
                 getTeamIds()
+                fetchFixturesAPI();
             })
             .catch(err => {
                 console.error(err);
@@ -88,7 +90,7 @@ function getTeamIds() {
 function fetchFixturesAPI() {
     let fixturesData = {};
     getTeamIds()
-    if (checkStorage(FIXTURES_FOOTBALL_TEAM_KEY_test)) return;
+    // if (checkStorage(FIXTURES_FOOTBALL_TEAM_KEY_test)) return;
     // api call, storing the data in topScorers object
     for (let i = 0; i < footballSeasons.length; i++) {
         fetch(requestTeamsFromStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
@@ -96,6 +98,7 @@ function fetchFixturesAPI() {
             .then((data) => {
                 fixturesData[footballSeasons[i]] = data.response
                 localStorage.setItem(FIXTURES_FOOTBALL_TEAM_KEY_test, JSON.stringify(fixturesData))
+                updateStandingsTable();
             })
             .catch(err => {
                 console.error(err);
@@ -166,6 +169,7 @@ function updateStandingsTable() {
                     homeResult = teamData[j]['teams']['home']['winner']
                     //&#10004;&#65039; = green tick
                     //&#10060; = red cross
+                    //&#68; = D(draw)
                     if (awayResult == true) {
                         aResult = `&#10004;&#65039;`
                         hResult = `&#10060;`
@@ -173,6 +177,10 @@ function updateStandingsTable() {
                     if (homeResult == true) {
                         aResult = `&#10060;`
                         hResult = `&#10004;&#65039;`
+                    }
+                    if (awayResult == null){
+                        aResult = `<b>&#68;</b>`
+                        hResult = `<b>&#68;</b>`
                     }
 
                     if (currentTeam == homeTeam) {
@@ -228,6 +236,7 @@ function updateStandingsTable() {
                     homeResult = teamData[j]['teams']['home']['winner']
                     //&#10004;&#65039; = green tick
                     //&#10060; = red cross
+                    //&#68; = D(draw)
                     if (awayResult == true) {
                         aResult = `&#10004;&#65039;`
                         hResult = `&#10060;`
@@ -235,6 +244,10 @@ function updateStandingsTable() {
                     if (homeResult == true) {
                         aResult = `&#10060;`
                         hResult = `&#10004;&#65039;`
+                    }
+                    if (awayResult == null){
+                        aResult = `<b>&#68;</b>`
+                        hResult = `<b>&#68;</b>`
                     }
 
                     if (currentTeam == homeTeam) {
@@ -289,6 +302,7 @@ function updateStandingsTable() {
                     homeResult = teamData[j]['teams']['home']['winner']
                     //&#10004;&#65039; = green tick
                     //&#10060; = red cross
+                    //&#68; = D(draw)
                     if (awayResult == true) {
                         aResult = `&#10004;&#65039;`
                         hResult = `&#10060;`
@@ -296,6 +310,10 @@ function updateStandingsTable() {
                     if (homeResult == true) {
                         aResult = `&#10060;`
                         hResult = `&#10004;&#65039;`
+                    }
+                    if (awayResult == null){
+                        aResult = `<b>&#68;</b>`
+                        hResult = `<b>&#68;</b>`
                     }
 
                     if (currentTeam == homeTeam) {
@@ -320,7 +338,6 @@ Runs when the page loads
 function main() {
 
     fetchStandingsAPI();
-    fetchFixturesAPI();
     updateStandingsTable();
 
 }
