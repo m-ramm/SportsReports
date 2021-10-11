@@ -319,6 +319,7 @@ function main() {
 
     fetchStandingsAPI();
     fetchFixturesAPI();
+    updateStandingsTable();
 
 }
 
