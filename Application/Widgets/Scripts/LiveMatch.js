@@ -44,7 +44,7 @@ for(i = 0; i < lab.length; i++){
 //console.log(myChart.data.labels);
 
 // change page title to display whatever league is selected:
-//document.getElementById('title').innerHTML = `Statistics - ${league}`;
+document.getElementById('title').innerHTML = `Statistics - ${league}`;
 
 // --------------------------------- API testing ---------------->>
 const data_key = "35d8517127mshdf20e1fe84837bbp18973fjsn99f4faf52300";
@@ -73,24 +73,19 @@ function getDataforLocation(FetchURL){
         // get fixture ID:
         for(i = 0; i < venueData.length; i++){
             if(venueData[i].league.id == 39){
-                reqEventData = getLiveEventDataByID(venueData[i].fixture.id);
-                graphfromData(reqEventData);
+                getLiveEventDataByID(venueData[i].fixture.id);
+                //graphfromData(reqEventData);
 
             }
             else if(venueData[i].league.id == 140){
-                reqEventData = getLiveEventDataByID(venueData[i].fixture.id);
-                graphfromData(reqEventData);
+                getLiveEventDataByID(venueData[i].fixture.id);
+                //graphfromData(reqEventData);
 
             }
             else if(venueData[i].league.id == 61){
-                reqEventData = getLiveEventDataByID(venueData[i].fixture.id);
-                graphfromData(reqEventData);
-
-            }
-            else if(venueData[i].fixture.id == 727854){
                 getLiveEventDataByID(venueData[i].fixture.id);
-                //console.log(reqEventData)
                 //graphfromData(reqEventData);
+
             }
         }
 
@@ -159,7 +154,7 @@ function graphfromData(eventsData){
                 // goals scored:
                 for(j = current_time; j < myChart.data.datasets[0].data.length; j++){
                     console.log(j);
-                    myChart.data.datasets[0].data[j] = 1;
+                    myChart.data.datasets[0].data[j] += 1;
                 }
 
                 // delete next line
@@ -170,7 +165,7 @@ function graphfromData(eventsData){
         else{
             if(eventsData[i].type == "Goal"){
                 for(j = current_time; j < myChart.data.datasets[0].data.length; j++){
-                    myChart.data.datasets[0].data[j] = -1;
+                    myChart.data.datasets[0].data[j] -= 1;
                     console.log(myChart.data.datasets[0].data[j])
                 }
 
