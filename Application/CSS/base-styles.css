@@ -112,7 +112,7 @@ table td {
     flex-direction: row;
     justify-content: space-evenly;
     color: #FFF;
-    background-color: var(--SRRedAccent);
+    background-color: var(--SRBlueAccent);
     justify-content: center;
     align-items: center;
     /* justify-content: space-evenly; */
