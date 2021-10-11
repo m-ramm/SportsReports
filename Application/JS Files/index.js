@@ -25,18 +25,41 @@ var requestOptions = {
 /*
 Runs when the page loads 
 */
-function main() {
-    //top scorers
-    fetchTopX(footballLeagueId, footballLeague, TOP_SCORERS_FOOTBALL_KEY, 'topscorers');
+async function main() {
+    // remove glowing text element
+    document.getElementById('glow-text').setAttribute("style", "visibility: hidden;");
+    // render loading animation
+    document.getElementById('loader').setAttribute("style", "visibility: visible;");
+    // hide navbar
+    document.getElementById('navbar').style.visibility = 'hidden';
+    
+    let soccerCalls = await new Promise((resolve, reject) => {
+        if (checkStorage(TOP_SCORERS_FOOTBALL_KEY) && checkStorage(TOP_ASSISTS_FOOTBALL_KEY) && checkStorage(TOP_RED_FOOTBALL_KEY) && checkStorage(TOP_YELLOW_FOOTBALL_KEY)) {
+            resolve('success');
+        }
+        //top scorers
+        fetchTopX(footballLeagueId, footballLeague, TOP_SCORERS_FOOTBALL_KEY, 'topscorers');
+        // top assists
+        fetchTopX(footballLeagueId, footballLeague, TOP_ASSISTS_FOOTBALL_KEY, 'topassists');
+        // top reds
+        fetchTopX(footballLeagueId, footballLeague, TOP_RED_FOOTBALL_KEY, 'topredcards');
+        // top yellows
+        fetchTopX(footballLeagueId, footballLeague, TOP_YELLOW_FOOTBALL_KEY, 'topyellowcards');
+        // setting timeout functions to allow the calls to finish
+        setTimeout(()=>{resolve('success')}, 6000)
+    });
+    // // //top scorers
+    // // await fetchTopX(footballLeagueId, footballLeague, TOP_SCORERS_FOOTBALL_KEY, 'topscorers');
 
-    //top assists
-    fetchTopX(footballLeagueId, footballLeague, TOP_ASSISTS_FOOTBALL_KEY, 'topassists');
+    // // // top assists
+    // // await fetchTopX(footballLeagueId, footballLeague, TOP_ASSISTS_FOOTBALL_KEY, 'topassists');
 
-    //top reds 
-    fetchTopX(footballLeagueId, footballLeague, TOP_RED_FOOTBALL_KEY, 'topredcards');
+    // // //top reds 
+    // // await fetchTopX(footballLeagueId, footballLeague, TOP_RED_FOOTBALL_KEY, 'topredcards');
 
-    //top yellows 
-    fetchTopX(footballLeagueId, footballLeague, TOP_YELLOW_FOOTBALL_KEY, 'topyellowcards');
+    // // //top yellows 
+    // // await fetchTopX(footballLeagueId, footballLeague, TOP_YELLOW_FOOTBALL_KEY, 'topyellowcards');
+
 
 
     //* used for testing
@@ -45,7 +68,13 @@ function main() {
 
 
     // TODO: other api calls here as required
-    
+
+
+    // remove loading animation   
+    document.getElementById('glow-text').setAttribute("style", "visibility: visible;");
+    document.getElementById('loader').setAttribute("style", "visibility: hidden;");
+    document.getElementById('navbar').style.visibility = 'visible';
+
 }
 
 
@@ -75,26 +104,35 @@ Inputs :
 Outputs :
     None
 */
-function fetchTopX(leagueId, leagueNames, storageKey, topXQuery){
+async function fetchTopX(leagueId, leagueNames, storageKey, topXQuery){
     let topX = {};
     // if storage is already filled, then don't run api request
     if (checkStorage(storageKey)) return;
+
     // TODO implement date checker here (IE if 1 week out of date, then do another call)(low priority)
 
     // TODO: adjust following code to get data from multiple seasons. Currently only 2021 season
     // api call, storing the data in topX object
-    for(let i = 0; i<leagueId.length; i++) {
-        fetch(`https://v3.football.api-sports.io/players/${topXQuery}?season=2021&league=${leagueId[i]}`, requestOptions)
-        .then(response => response.json())
-        .then((data) => {
-            topX[ leagueNames[i] ] = data.response;
-            // put into localStorage
-            localStorage.setItem(storageKey, JSON.stringify(topX));  
-        })
-        .catch(error => console.log("error", error));
-    }
-
-    
+    // for(let i = 0; i<leagueId.length; i++) {
+    //     fetch(`https://v3.football.api-sports.io/players/${topXQuery}?season=2021&league=${leagueId[i]}`, requestOptions)
+    //     .then(response => response.json())
+    //     .then((data) => {
+    //         topX[ leagueNames[i] ] = data.response;
+    //         // put into localStorage
+    //         localStorage.setItem(storageKey, JSON.stringify(topX));  
+    //     })
+    //     .catch(error => console.log("error", error));
+    // }
+    await Promise.all([
+        fetch(`https://v3.football.api-sports.io/players/${topXQuery}?season=2021&league=${leagueId[0]}`, requestOptions).then(res => res.json()),
+        fetch(`https://v3.football.api-sports.io/players/${topXQuery}?season=2021&league=${leagueId[1]}`, requestOptions).then(res => res.json()),
+        fetch(`https://v3.football.api-sports.io/players/${topXQuery}?season=2021&league=${leagueId[1]}`, requestOptions).then(res => res.json())
+    ]).then(([league1, league2, league3]) => {
+        topX[ leagueNames[0] ] = league1.response;
+        topX[ leagueNames[1] ] = league2.response;
+        topX[ leagueNames[2] ] = league3.response;
+        localStorage.setItem(storageKey, JSON.stringify(topX));
+    })
 }
 
 

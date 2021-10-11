@@ -38,33 +38,91 @@
         }
 
         .columnStyle {
-            width: 100vw;
-            height: 90vh;   
+            width: 90vw;
+            height: 76vh;  
+            padding-bottom: 2vh; 
         }
 
         .columnTwoStyle {
-            height: 45vh;
+            height: 38vh;
+            padding-bottom: 2vh;
         }
-
+        /* 
         .leagueTableButton {
+            display: block;
             border-radius: 25px;
-            height: 90vh;
-            width: 45vw;
             border-color: #FFF;
+            border-width: 5px;
+            height: 100%;
+            width: 100%;
             background-color: #D9484F;
             color: #FFF;
             font-size: 20px;
         }
         .liveMatchButton {
+            display: block;
             border-radius: 25px;
-            height: 45vh;
-            width: 45vw;
             border-color: #FFF;
+            border-width: 5px;
+            height: 100%;
+            width: 100%;
+            background-color: #D9484F;
+            color: #FFF;
+            font-size: 20px;
+        } */
+
+        .optionText {
+            text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
+        }
+
+        .optionImage {
+            transform: scale(1.5);
+            transition: transform 0.5s;
+        }
+
+        .button {
+            box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+            display: block;
+            border-radius: 25px;
+            border-color: #FFF;
+            border-style: solid;
+            border-width: 5px;
+            height: 100%;
+            width: 100%;
             background-color: #D9484F;
             color: #FFF;
             font-size: 20px;
         }
 
+        /* comment out the following to remove gradient effect from buttons */
+        /* https://www.gradient-animator.com/ */
+        .button {
+            background: linear-gradient(219deg, #d9484f, #f55058, #ee676d);
+            background-size: 600% 600%;
+
+            -webkit-animation: AnimationName 9s ease infinite;
+            -moz-animation: AnimationName 9s ease infinite;
+            animation: AnimationName 9s ease infinite;
+        }
+
+        @-webkit-keyframes AnimationName {
+            0%{background-position:0% 91%}
+            50%{background-position:100% 10%}
+            100%{background-position:0% 91%}
+        }
+        @-moz-keyframes AnimationName {
+            0%{background-position:0% 91%}
+            50%{background-position:100% 10%}
+            100%{background-position:0% 91%}
+        }
+        @keyframes AnimationName {
+            0%{background-position:0% 91%}
+            50%{background-position:100% 10%}
+            100%{background-position:0% 91%}
+        }
+        .button:hover > .optionImage{
+            transform: scale(2.5);
+        }
     </style>
 </head>
 <body>
@@ -133,7 +191,7 @@
         <div id="headline">
             <img id="league_logo_left" src="" alt="">
             <h2 id="leagueHeading"></h2>
-            <img id="league_logo_right" src="" alt="">
+            <!-- <img id="league_logo_right" src="" alt=""> -->
         </div>
         <script>
             document.getElementById("leagueHeading").textContent = window.localStorage.getItem('league')
@@ -142,23 +200,26 @@
             <div class="row">
                 <!-- League table column -->
                 <div class="col-sm-6 col-md-6 col-lg-6 justify-content-center columnStyle">
-                    <button onclick="location.href='./Widgets/leagueTable.html'" type="button" class="leagueTableButton">
-                        League Table
+                    <button onclick="location.href='./Widgets/leagueTable.html'" type="button" class="leagueTableButton button">
+                        <img src="./images/icons/table_chart_white_24dp.svg" alt="" class="optionImage"><br><br>
+                        <span class="optionText">League Table</span><br>
                     </button>
                 </div>
                 <!-- stats and live match column -->
                 <div class="col-sm-6 col-md-6 col-lg-6 justify-content-center columnStyle">
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12 columnTwoStyle">
-                            <button onclick="location.href='./Widgets/StatsWidget.html'" type="button" class="liveMatchButton">
-                                Statistics
+                            <button onclick="location.href='./Widgets/StatsWidget.html'" type="button" class="liveMatchButton button">
+                                <img src="./images/icons/bar_chart_white_24dp.svg" alt="" class="optionImage"><br><br>
+                                <span class="optionText">Statistics</span>
                             </button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 col-md-12 col-lg-12 columnTwoStyle">
-                            <button onclick="location.href='./Widgets/liveMatch.html'" type="button" class="liveMatchButton">
-                                Live Match
+                            <button onclick="location.href='./Widgets/liveMatch.html'" type="button" class="liveMatchButton button">
+                                <img src="./images/icons/sensors_white_24dp.svg" alt="" class="optionImage"><br><br>
+                                <span class="optionText">Live Match</span>
                             </button>
                         </div>
                     </div>
