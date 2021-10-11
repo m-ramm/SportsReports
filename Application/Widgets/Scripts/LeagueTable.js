@@ -214,7 +214,7 @@ function updateStandingsTable() {
                     </tr>`;
 
                 currentTeam = tableData[0]['league']['standings'][0][i]['team']['id'];
-                var x = document.getElementById(`leagueHiddenTableStats${i}`)
+                var hiddenStats = document.getElementById(`leagueHiddenTableStats${i}`)
 
                 for (var j = 379; j > 269; j--) {
                     awayTeam = teamData[j]['teams']['away']['id']
@@ -243,7 +243,7 @@ function updateStandingsTable() {
                     }
                     if (currentTeam == awayTeam) {
                         hiddenStats.innerHTML +=
-                        `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
+                            `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
                     }
                 }
             }
@@ -271,12 +271,11 @@ function updateStandingsTable() {
 
                     <tr id="hidden_row${i}" class="hidden_row">
                         <td colspan=8 id="leagueHiddenTableStats${i}">
-
                         </td>
                     </tr>`;
 
                 currentTeam = tableData[0]['league']['standings'][0][i]['team']['id'];
-                var x = document.getElementById(`leagueHiddenTableStats${i}`)
+                var hiddenStats = document.getElementById(`leagueHiddenTableStats${i}`)
 
                 for (var j = 379; j > 269; j--) {
                     awayTeam = teamData[j]['teams']['away']['id']
@@ -305,7 +304,7 @@ function updateStandingsTable() {
                     }
                     if (currentTeam == awayTeam) {
                         hiddenStats.innerHTML +=
-                        `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
+                            `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
                     }
                 }
             }
