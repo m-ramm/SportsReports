@@ -8,7 +8,6 @@ const league = localStorage.getItem('league')
 
 const STANDINGS_FOOTBALL_KEY = "standingsFootball";
 const FIXTURES_FOOTBALL_TEAM_KEY = "fixturesFootballTeams"
-const FIXTURES_FOOTBALL_TEAM_KEY_test = "fixturesFootballTeamsTest"
 const TEAM_ID_KEYS = "teamIdsFootball"
 
 const KEY = 'd478817a0fmsh584e04929c59a24p15d9b7jsn193d317fead8';
@@ -48,11 +47,11 @@ function checkStorage(key) {
     return data && data !== null;
 }
 
-function fetchStandings() {
-    for (let i = 0; i < footballSeasons.length; i++) {
-        fetchFromAPI(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), 'standings')
-    }
-}
+//function fetchStandings() {
+//    for (let i = 0; i < footballSeasons.length; i++) {
+//        fetchFromAPI(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), 'standings')
+//    }
+//}
 
 // Be careful when refreshing page because it calls the api 6 times everytime the page refreshes.
 function fetchStandingsAPI() {
@@ -65,8 +64,6 @@ function fetchStandingsAPI() {
             .then((data) => {
                 standingsData[footballSeasons[i]] = data.response
                 localStorage.setItem(STANDINGS_FOOTBALL_KEY, JSON.stringify(standingsData))
-                getTeamIds()
-                fetchFixturesAPI();
             })
             .catch(err => {
                 console.error(err);
@@ -75,29 +72,16 @@ function fetchStandingsAPI() {
 
 }
 
-function getTeamIds() {
-    let tempData;
-
-    tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
-    season = tempData[footballSeasons[0]]
-    for (var j = 0; j < RANKING_NUMS; j++) {
-        teamIds = season[0]['league']['standings'][0][j]['team']['id']
-        standingsTeamsData.push(teamIds)
-    }
-
-}
-
 function fetchFixturesAPI() {
     let fixturesData = {};
-    getTeamIds()
-    // if (checkStorage(FIXTURES_FOOTBALL_TEAM_KEY_test)) return;
+    // if (checkStorage(FIXTURES_FOOTBALL_TEAM_KEY)) return;
     // api call, storing the data in topScorers object
     for (let i = 0; i < footballSeasons.length; i++) {
         fetch(requestTeamsFromStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
             .then(response => response.json())
             .then((data) => {
                 fixturesData[footballSeasons[i]] = data.response
-                localStorage.setItem(FIXTURES_FOOTBALL_TEAM_KEY_test, JSON.stringify(fixturesData))
+                localStorage.setItem(FIXTURES_FOOTBALL_TEAM_KEY, JSON.stringify(fixturesData))
                 updateStandingsTable();
             })
             .catch(err => {
@@ -130,7 +114,7 @@ function updateStandingsTable() {
             // Loop to access all rows 
             tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
             tableData = tempData[footballSeasons[0]];
-            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY_test))
+            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY))
             teamData = tempTeamData[footballSeasons[0]];
 
             // building table 
@@ -199,7 +183,7 @@ function updateStandingsTable() {
             // Loop to access all rows 
             tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
             tableData = tempData[footballSeasons[1]];
-            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY_test))
+            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY))
             teamData = tempTeamData[footballSeasons[1]];
 
             // building table 
@@ -266,7 +250,7 @@ function updateStandingsTable() {
             // Loop to access all rows 
             tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
             tableData = tempData[footballSeasons[2]];
-            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY_test))
+            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY))
             teamData = tempTeamData[footballSeasons[2]];
 
             // building table 
@@ -338,6 +322,7 @@ Runs when the page loads
 function main() {
 
     fetchStandingsAPI();
+    fetchFixturesAPI();
     updateStandingsTable();
 
 }
