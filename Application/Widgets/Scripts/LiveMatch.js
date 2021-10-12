@@ -49,6 +49,7 @@ for(i = 0; i < lab.length; i++){
 // --------------------------------- API testing ---------------->>
 const data_key = "35d8517127mshdf20e1fe84837bbp18973fjsn99f4faf52300";
 const ids = "allTheIDs";
+const league = localStorage.getItem('league');
 let venueData = [];
 // ------------------------------get Fixtures--------------------->>
 myHeaders = {
@@ -89,7 +90,7 @@ function getDataforLocation(FetchURL){
                 //graphfromData(reqEventData);
                 break
             }
-            else if(venueData[i].league.id == 275){
+            else if(venueData[i].league.id == 886){
                 getLiveEventDataByID(venueData[i].fixture.id);
                 break
             }
@@ -160,20 +161,26 @@ function graphfromData(eventsData){
 
                 // goals scored:
                 for(j = current_time; j < myChart.data.datasets[0].data.length; j++){
-                    console.log(j);
+                    //console.log(j);
                     myChart.data.datasets[0].data[j] += 1;
+                    console.log(myChart.data.datasets[0].data)
                 }
 
                 // delete next line
                 //myChart.data.datasets.data.push(1);
                 myChart.update();
             }
+        }
         // if name is not team1:
-        else{
+        else if(eventsData[i].team.name != teamF){
             if(eventsData[i].type == "Goal"){
-                for(j = current_time; j < myChart.data.datasets[0].data.length; j++){
+                console.log('second team')
+                // get time
+                new_current_time = eventsData[i].time.elapsed;
+                console.log(current_time)
+                for(j = new_current_time; j < myChart.data.datasets[0].data.length; j++){
                     myChart.data.datasets[0].data[j] -= 1;
-                    console.log(myChart.data.datasets[0].data[j])
+                    console.log(myChart.data.datasets[0].data)
                 }
 
                 // delete this line
@@ -185,7 +192,7 @@ function graphfromData(eventsData){
 
     }
 }
-}
+
 
 //-------------------------------------------------------------------->>
 // the page should work according to the league selected:
