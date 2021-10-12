@@ -14,7 +14,10 @@ const elements = {
     statMode: document.getElementById('statMode'),
     statType: document.getElementById('statType'),
     graphTitle: document.getElementById('graphTitle'),
-    removableSelects: document.getElementById('removableSelects')
+    removableSelects: document.getElementById('removableSelects'),
+    statLabel: document.getElementById('statTypeLabel'),
+    seasonsLabel: document.getElementById('seasonsLabel'),
+    selectRow: document.getElementById('selectRow')
 }
 
 //* DATA FOR GRAPH AND TABLE
@@ -105,7 +108,6 @@ function fetchFromAPI(fetchURL, type, season='2016'){
             // TODO: set team history
             teamStats.push(data.response)
             teamStats = teamStats.flat(1)
-            console.log(teamStats + fetchURL)
             if (Number(season) < 2020){
                 fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=${season}&team=${graphData.selectedTeam.id}`, 'teamHistory', String(Number(season)+1))
             }
@@ -157,11 +159,10 @@ function updateSelectTeams(){
     localStorage.removeItem('TEAM_STATISTICS')
     teamStats = []
     fetchFromAPI(`${requestsTeamStatsURL}league=${graphData.leagueID}&season=2016&team=${graphData.selectedTeam.id}`, 'teamHistory')
-    if (graphData.selectedMode == 'Total'){
-        elements.graphTitle.innerText = `${graphData.selectedTeam.name} player statistics`
-    }else{
-        elements.graphTitle.innerText = `${graphData.selectedTeam.name} average goals per game`
-    }
+    
+    // update the team logo
+    document.getElementById('teamLogo').src = (teamsData.filter((data) => data.team.id == team))[0].team.logo;
+
     // resetting player data when new team is selected
     playersData = []
     fetchFromAPI(requestPlayersFromTeamURL.concat(`team=${graphData.selectedTeam.id}&season=${graphData.selectedSeason}`), 'players')
@@ -234,18 +235,16 @@ function updateSelect(selectID){
 This function updates the selects shown on screen to the user, basically, 
 */
 function statModeChange(statMode){
-    if (statMode == 'Total'){
-        elements.graphTitle.innerText = `${graphData.selectedTeam.name} player statistics`
-        // adding options
-        elements.removableSelects.innerHTML += '<select name="seasons" id="seasons" onchange="updateSelect(`seasons`)"> <option value="2018">2021</option> <option value="2019">2020</option> <option value="2020">2019</option> <option value="2021">2018</option> </select>'
-        elements.removableSelects.innerHTML += '<select name="statType" id="statType" onchange="updateSelect(`statType`)"> <option value="Goals">Goals</option> <option value="Assists">Assists</option> <option value="Red cards">Red cards</option> <option value="Yellow cards">Yellow cards</option> </select>'
-        elements.seasons = document.getElementById('seasons')
-        elements.statType = document.getElementById('statType')
+    if (statMode == 'Average'){
+        elements.seasons.hidden = true
+        elements.statType.hidden = true
+        elements.seasonsLabel.hidden = true
+        elements.statLabel.hidden = true
     }else{
-        elements.graphTitle.innerText = `${graphData.selectedTeam.name} average goals per game`
-        // removing options
-        elements.statType.remove()
-        elements.seasons.remove()
+        elements.seasons.hidden = false
+        elements.statType.hidden = false
+        elements.seasonsLabel.hidden = false
+        elements.statLabel.hidden = false
     }
 }
 //* ------------------------------------------------------ GRAPH ----------------------------------------------------- *//

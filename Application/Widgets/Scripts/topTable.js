@@ -17,10 +17,9 @@ const tableElements = {
     topTable: document.getElementById('topTable')
 }
 
-
 // changing page title to display what league is selected
 //! in future, may want to include which sport it is as well
-document.getElementById('title').innerHTML = `Statistics - ${league}`;
+// document.getElementById('title').innerHTML = `Statistics - ${league}`;
 
 // attaching onchange event listener to 'tableStats'
 // means that whenever the statistic wanted changes, then the updateTable function will run

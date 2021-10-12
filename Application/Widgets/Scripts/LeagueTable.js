@@ -8,7 +8,6 @@ const league = localStorage.getItem('league')
 
 const STANDINGS_FOOTBALL_KEY = "standingsFootball";
 const FIXTURES_FOOTBALL_TEAM_KEY = "fixturesFootballTeams"
-const FIXTURES_FOOTBALL_TEAM_KEY_test = "fixturesFootballTeamsTest"
 const TEAM_ID_KEYS = "teamIdsFootball"
 
 const KEY = 'd478817a0fmsh584e04929c59a24p15d9b7jsn193d317fead8';
@@ -48,15 +47,16 @@ function checkStorage(key) {
     return data && data !== null;
 }
 
-function fetchStandings() {
-    for (let i = 0; i < footballSeasons.length; i++) {
-        fetchFromAPI(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), 'standings')
-    }
-}
+//function fetchStandings() {
+//    for (let i = 0; i < footballSeasons.length; i++) {
+//        fetchFromAPI(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), 'standings')
+//    }
+//}
 
+// Be careful when refreshing page because it calls the api 6 times everytime the page refreshes.
 function fetchStandingsAPI() {
     let standingsData = {};
-    if (checkStorage(STANDINGS_FOOTBALL_KEY)) return;
+    // if (checkStorage(STANDINGS_FOOTBALL_KEY)) return;
     // api call, storing the data in topScorers object
     for (let i = 0; i < footballSeasons.length; i++) {
         fetch(requestStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
@@ -64,7 +64,6 @@ function fetchStandingsAPI() {
             .then((data) => {
                 standingsData[footballSeasons[i]] = data.response
                 localStorage.setItem(STANDINGS_FOOTBALL_KEY, JSON.stringify(standingsData))
-                getTeamIds()
             })
             .catch(err => {
                 console.error(err);
@@ -73,29 +72,17 @@ function fetchStandingsAPI() {
 
 }
 
-function getTeamIds() {
-    let tempData;
-
-    tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
-    season = tempData[footballSeasons[0]]
-    for (var j = 0; j < RANKING_NUMS; j++) {
-        teamIds = season[0]['league']['standings'][0][j]['team']['id']
-        standingsTeamsData.push(teamIds)
-    }
-
-}
-
 function fetchFixturesAPI() {
     let fixturesData = {};
-    getTeamIds()
-    if (checkStorage(FIXTURES_FOOTBALL_TEAM_KEY_test)) return;
+    // if (checkStorage(FIXTURES_FOOTBALL_TEAM_KEY)) return;
     // api call, storing the data in topScorers object
     for (let i = 0; i < footballSeasons.length; i++) {
         fetch(requestTeamsFromStandingsURL.concat(`league=${standingsTableData.leagueID}&season=${footballSeasons[i]}`), requestOptions)
             .then(response => response.json())
             .then((data) => {
                 fixturesData[footballSeasons[i]] = data.response
-                localStorage.setItem(FIXTURES_FOOTBALL_TEAM_KEY_test, JSON.stringify(fixturesData))
+                localStorage.setItem(FIXTURES_FOOTBALL_TEAM_KEY, JSON.stringify(fixturesData))
+                updateStandingsTable();
             })
             .catch(err => {
                 console.error(err);
@@ -127,7 +114,7 @@ function updateStandingsTable() {
             // Loop to access all rows 
             tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
             tableData = tempData[footballSeasons[0]];
-            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY_test))
+            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY))
             teamData = tempTeamData[footballSeasons[0]];
 
             // building table 
@@ -166,6 +153,7 @@ function updateStandingsTable() {
                     homeResult = teamData[j]['teams']['home']['winner']
                     //&#10004;&#65039; = green tick
                     //&#10060; = red cross
+                    //&#68; = D(draw)
                     if (awayResult == true) {
                         aResult = `&#10004;&#65039;`
                         hResult = `&#10060;`
@@ -173,6 +161,10 @@ function updateStandingsTable() {
                     if (homeResult == true) {
                         aResult = `&#10060;`
                         hResult = `&#10004;&#65039;`
+                    }
+                    if (awayResult == null){
+                        aResult = `<b>&#68;</b>`
+                        hResult = `<b>&#68;</b>`
                     }
 
                     if (currentTeam == homeTeam) {
@@ -191,7 +183,7 @@ function updateStandingsTable() {
             // Loop to access all rows 
             tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
             tableData = tempData[footballSeasons[1]];
-            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY_test))
+            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY))
             teamData = tempTeamData[footballSeasons[1]];
 
             // building table 
@@ -214,7 +206,7 @@ function updateStandingsTable() {
                     </tr>`;
 
                 currentTeam = tableData[0]['league']['standings'][0][i]['team']['id'];
-                var x = document.getElementById(`leagueHiddenTableStats${i}`)
+                var hiddenStats = document.getElementById(`leagueHiddenTableStats${i}`)
 
                 for (var j = 379; j > 269; j--) {
                     awayTeam = teamData[j]['teams']['away']['id']
@@ -228,6 +220,7 @@ function updateStandingsTable() {
                     homeResult = teamData[j]['teams']['home']['winner']
                     //&#10004;&#65039; = green tick
                     //&#10060; = red cross
+                    //&#68; = D(draw)
                     if (awayResult == true) {
                         aResult = `&#10004;&#65039;`
                         hResult = `&#10060;`
@@ -236,6 +229,10 @@ function updateStandingsTable() {
                         aResult = `&#10060;`
                         hResult = `&#10004;&#65039;`
                     }
+                    if (awayResult == null){
+                        aResult = `<b>&#68;</b>`
+                        hResult = `<b>&#68;</b>`
+                    }
 
                     if (currentTeam == homeTeam) {
                         hiddenStats.innerHTML +=
@@ -243,7 +240,7 @@ function updateStandingsTable() {
                     }
                     if (currentTeam == awayTeam) {
                         hiddenStats.innerHTML +=
-                        `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
+                            `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
                     }
                 }
             }
@@ -253,7 +250,7 @@ function updateStandingsTable() {
             // Loop to access all rows 
             tempData = JSON.parse(localStorage.getItem(STANDINGS_FOOTBALL_KEY))
             tableData = tempData[footballSeasons[2]];
-            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY_test))
+            tempTeamData = JSON.parse(localStorage.getItem(FIXTURES_FOOTBALL_TEAM_KEY))
             teamData = tempTeamData[footballSeasons[2]];
 
             // building table 
@@ -271,12 +268,11 @@ function updateStandingsTable() {
 
                     <tr id="hidden_row${i}" class="hidden_row">
                         <td colspan=8 id="leagueHiddenTableStats${i}">
-
                         </td>
                     </tr>`;
 
                 currentTeam = tableData[0]['league']['standings'][0][i]['team']['id'];
-                var x = document.getElementById(`leagueHiddenTableStats${i}`)
+                var hiddenStats = document.getElementById(`leagueHiddenTableStats${i}`)
 
                 for (var j = 379; j > 269; j--) {
                     awayTeam = teamData[j]['teams']['away']['id']
@@ -290,6 +286,7 @@ function updateStandingsTable() {
                     homeResult = teamData[j]['teams']['home']['winner']
                     //&#10004;&#65039; = green tick
                     //&#10060; = red cross
+                    //&#68; = D(draw)
                     if (awayResult == true) {
                         aResult = `&#10004;&#65039;`
                         hResult = `&#10060;`
@@ -298,6 +295,10 @@ function updateStandingsTable() {
                         aResult = `&#10060;`
                         hResult = `&#10004;&#65039;`
                     }
+                    if (awayResult == null){
+                        aResult = `<b>&#68;</b>`
+                        hResult = `<b>&#68;</b>`
+                    }
 
                     if (currentTeam == homeTeam) {
                         hiddenStats.innerHTML +=
@@ -305,7 +306,7 @@ function updateStandingsTable() {
                     }
                     if (currentTeam == awayTeam) {
                         hiddenStats.innerHTML +=
-                        `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
+                            `Round ${roundNum}: ${aResult} ${awayTeamName} VS ${homeTeamName} ${hResult} <br>`;
                     }
                 }
             }

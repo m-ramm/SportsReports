@@ -1,0 +1,39 @@
+main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: #fff;
+    align-items: center;
+}
+
+#bold {
+    font-weight: bold;
+    color: black;
+    font-size: 5em;
+}
+
+button {
+    background-color: #D9484F;
+    color: black;
+    border: none;
+}
+
+button:hover {
+    background-color: #fff;
+}
+
+#gif {
+    width: 75%;
+}
+
+/* desktop/laptop adjustments */
+@media (min-width: 1025px){
+    #bold {
+        font-size: 13em;
+    }
+
+    #gif {
+        width: fit-content;
+        /* height: fit-content; */
+    }
+}
