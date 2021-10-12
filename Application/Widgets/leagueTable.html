@@ -114,17 +114,15 @@
         </header>
         <div class="row" style="justify-content: center; text-align: center;">
             <div id="headline">
+                <img id="league_logo_left" src="" alt="">
+                <h2 id="leagueHeading"></h2>
                 <h2 id="leagueHeading">League Table</h2>
             </div>
         </div>
         <br>
         <table class="leagueTableDropdownSelect">
             <th class="leagueTableDropdownSelect" id="currentLeague">
-                <!--<select name="league_competition" id="league_competition" class="leagueDropdownButton">
-                    <option value="Premier League">Premier League</option>
-                    <option value="La Liga">La Liga</option>
-                    <option value="Ligue One">Ligue One</option>-->
-                </select>
+
             </th>
             <th class="leagueTableDropdownSelect">Select a season :
                 <select name="seasonStandings" id="seasonStandings" class="leagueDropdownButton">
@@ -136,52 +134,6 @@
         </table>
         <br>
         <table id="leagueTableStats">
-            <!--<tr>  
-                <th class="position">Position</td>
-                <th class="team">Team</th>
-                <th class="played">Played</th>
-                <th class="won">Won</th>
-                <th class="drawn">Drawn</th>
-                <th class="lost">Lost</th>
-                <th class="points">Points</th>
-                <th class="history">History</th>
-            </tr>-->
-            <!--<tr onclick="showHideRow('hidden_row1');" class="visible_row">
-                <td>1</td>
-                <td>Collingwood</td>
-                <td>4</td>
-                <td>2</td>
-                <td>0</td>
-                <td>2</td>
-                <td>4</td> -->
-
-                <!--&#10004;&#65039; = green tick -->
-                <!--&#10060; = red cross-->
-                <!--<td>&#10004;&#65039; &#10060;</td> 
-            </tr>-->
-            <!--<tr id="hidden_row1" class="hidden_row">
-                <td colspan=8>
-                    &#10004;&#65039; Collingwood vs Hawthorn &#10060;
-                </td>
-            </tr>-->
-
-            <!--<tr onclick="showHideRow('hidden_row2');" class="visible_row">
-                <td>2</td>
-                <td>Hawthorn</td>
-                <td>4</td>
-                <td>2</td>
-                <td>0</td>
-                <td>2</td>
-                <td>4</td>-->
-                <!--&#10004;&#65039; = green tick -->
-                <!--&#10060; = red cross-->
-                <!--<td>&#10004;&#65039; &#10060;</td>
-            </tr> -->
-            <!--<tr id="hidden_row2" class="hidden_row">
-                <td colspan=8>
-                    &#10060; Hawthorn vs Collingwood &#10004;&#65039;
-                </td>
-            </tr>-->
 
         </table>
         <br>
@@ -191,6 +143,9 @@
      <!-- Optional JavaScript -->
      <script src="../navbar.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- Gets name of the League-->
+    <script>document.getElementById("leagueHeading").textContent = window.localStorage.getItem('league')</script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
