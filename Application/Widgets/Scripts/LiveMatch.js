@@ -90,7 +90,7 @@ function getDataforLocation(FetchURL){
                 //graphfromData(reqEventData);
                 break
             }
-            else if(venueData[i].league.id == 263){
+            else if(venueData[i].league.id == 650){
                 getLiveEventDataByID(venueData[i].fixture.id);
                 break
             }
@@ -177,7 +177,7 @@ function graphfromData(eventsData){
                 console.log('second team')
                 // get time
                 new_current_time = eventsData[i].time.elapsed;
-                console.log(current_time)
+                console.log(new_current_time)
                 for(j = new_current_time; j < myChart.data.datasets[0].data.length; j++){
                     myChart.data.datasets[0].data[j] -= 1;
                     console.log(myChart.data.datasets[0].data)
