@@ -11,7 +11,8 @@ The following risk register outlines potential risks that could affect the deliv
 8. [Client Unsatisfied Post-Sprint](#unsatisfied)
 9. [API No Longer Supported](#api)
 10. [Limited API calls](#apiLimit)
-11. [Incorrect Workload Allocation](#workload)
+11. [Incorrect Workload Allocation](#workload)  
+11. [Introduce major bug to live build](#bug)
 
 # Risk Matrix
 ![RiskMatrix Not Found](Pictures/RiskMatrix.jpg "Risk Matrix")
@@ -134,4 +135,13 @@ The following risk register outlines potential risks that could affect the deliv
 >### **Monitoring Strategy**
 >At team meetings and team check-ins, Scrum Master should assess how everyone is tracking with their tasks and if they are meeting the velocity required to complete their tasks. Furthermore, if a member is struggling, they should reach out to the groupchat. Overall, frequent communication is key.
 >### **Mitigation Plan**
->Team consultation should be done, preferably in a meeting, to organise if another member who is ahead of velocity can help out. Furthermore, live share (pair programming) can aid where the tasks are difficult
+>Team consultation should be done, preferably in a meeting, to organise if another member who is ahead of velocity can help out. Furthermore, live share (pair programming) can aid where the tasks are difficult  
+## **12. Recoverability** - 14/10/21<a name="bug"></a> 
+>### **Description**
+> If bugs are unknowingly introduced during a patch/iteration.  
+>### **Impact and Likelihood**  
+>Low likelihood of happening, as sprint reviews and acceptance tests should in theory prevent major bugs from being introduced. High impact if it does occur, as faults in the app could compromise functionality drastically.  
+>### **Monitoring Strategy**  
+>Conduct thorough QA and end-to-end testing when deploying a new patch.  
+>### **Mitigation Plan**
+>If a major bug ends up being introduced in a live version, depending on the severity of the bug, a previous version of the application can be reinstated directly from the gitlab repository.  
